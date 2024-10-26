@@ -1,0 +1,60 @@
+---
+import type { OpenPlannerType } from '../type'
+interface Props {
+    sponsorCategories: OpenPlannerType['sponsors']
+}
+
+const { sponsorCategories } = Astro.props
+---
+
+<div class="container">
+    <h1>Sponsors de 2024</h1>
+
+    {
+        sponsorCategories.map(
+            (sponsorCategory: { name: string; sponsors: { website: string; name: string; logoUrl: string }[] }) => (
+                <div>
+                    <h4 class="block-title">{sponsorCategory.name}</h4>
+                    <div class="logos-wrapper">
+                        {sponsorCategory.sponsors.map((sponsor: { website: string; name: string; logoUrl: string }) => (
+                            <a
+                                class="logo-item"
+                                href={sponsor.website}
+                                title={sponsor.name}
+                                target="_blank"
+                                rel="noopener noreferrer">
+                                <img class="logo-img" src={sponsor.logoUrl} alt={sponsor.name} loading="lazy" />
+                            </a>
+                        ))}
+                    </div>
+                </div>
+            )
+        )
+    }
+</div>
+
+<style>
+    .logos-wrapper {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 8px;
+    }
+
+    .logo-item {
+        padding: 12px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        border-radius: 4px;
+    }
+
+    .logo-img {
+        width: 100%;
+        height: 84px;
+        object-fit: contain;
+    }
+
+    @media (min-width: 640px) {
+        .logos-wrapper {
+            grid-template-columns: repeat(4, 1fr);
+        }
+    }
+</style>

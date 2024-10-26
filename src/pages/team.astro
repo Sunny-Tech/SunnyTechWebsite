@@ -1,0 +1,59 @@
+---
+import type { OpenPlannerType } from '../type'
+
+const OPENPLANNER_URL = import.meta.env.OPENPLANNER_URL
+const response = await fetch(OPENPLANNER_URL)
+const openPlannerData: OpenPlannerType = await response.json()
+---
+
+<div class="container">
+    {
+        openPlannerData.team.map((block) => (
+            <div class="block">
+                <div class="content">
+                    <img src={block.photoUrl} alt={block.name} />
+                    <h2>{block.name}</h2>
+                    <ul>
+                        {block.socials.map((social) => (
+                            <li>
+                                <a href={social.url} target="_blank" rel="noopener noreferrer">
+                                    <span>{social.name}</span>
+                                </a>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            </div>
+        ))
+    }
+</div>
+
+<style>
+    .container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2rem;
+    }
+
+    .block {
+        display: flex;
+        margin-bottom: 2rem;
+    }
+
+    .image-wrapper {
+        width: 40%;
+    }
+
+    .content {
+        width: 60%;
+    }
+
+    @media (max-width: 768px) {
+        .image-wrapper {
+            display: none;
+        }
+        .content {
+            width: 100%;
+        }
+    }
+</style>
