@@ -1,0 +1,105 @@
+---
+import SubscribeFormFooter from './SubscribeFormFooter.astro'
+const footerRelBlock = [
+    {
+        title: 'A propos',
+        links: [
+            { name: "Découvrez l'équipe organisatrice", url: '/team', newTab: false },
+            { name: 'Code de conduite', url: '/coc', newTab: false },
+        ],
+    },
+    {
+        title: 'Voir les éditions antérieures',
+        links: [
+            { name: 'Sunny Tech 2023', url: 'https://2023.sunny-tech.io', newTab: true },
+            { name: 'Sunny Tech 2022', url: 'https://2022.sunny-tech.io', newTab: true },
+            { name: 'Sunny Tech 2019', url: 'https://2019.sunny-tech.io', newTab: true },
+            { name: 'Sunny Tech 2018', url: 'https://2018.sunny-tech.io', newTab: true },
+        ],
+    },
+]
+---
+
+<footer>
+    {
+        footerRelBlock.map((footerRel) => (
+            <div class="col">
+                <div class="col-heading">{footerRel.title}</div>
+                <ul class="nav">
+                    {footerRel.links.map((link) => (
+                        <li>
+                            {!link.newTab ? (
+                                <a href={link.url}>{link.name}</a>
+                            ) : (
+                                <a href={link.url} target="_blank" rel="noopener noreferrer">
+                                    {link.name}
+                                </a>
+                            )}
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        ))
+    }
+
+    <div class="col">
+        <div class="col-heading">Souscrire</div>
+        <span>Pas de spam, seulement les dernières nouvelles</span>
+        <SubscribeFormFooter />
+    </div>
+</footer>
+
+<style>
+    footer {
+        border-top: 1px solid var(--border-light-color);
+        border-bottom: 1px solid var(--border-light-color);
+        margin: 0 20px;
+        overflow: auto;
+        overflow-y: hidden;
+        padding: 10px 0;
+        color: var(--footer-text-color);
+        display: grid;
+        grid-gap: 16px;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
+
+    .col-heading {
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 21px;
+        margin-top: 25px;
+        margin-bottom: 10px;
+    }
+
+    .nav {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    a {
+        color: var(--footer-text-color);
+        padding-bottom: 2px;
+        text-decoration: none;
+    }
+
+    li {
+        line-height: 25px;
+    }
+
+    li:hover {
+        text-decoration: underline;
+    }
+
+    @media (min-width: 768px) {
+        footer {
+            margin: 15px 0;
+            padding: 30px 0;
+        }
+
+        .col-heading {
+            font-size: 18px;
+            margin-top: 0;
+        }
+    }
+</style>
