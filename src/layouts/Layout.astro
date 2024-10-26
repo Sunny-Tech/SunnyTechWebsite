@@ -1,9 +1,21 @@
 ---
 interface Props {
     title: string
+    description?: string
 }
 
-const { title } = Astro.props
+const { title, description } = Astro.props
+const url = import.meta.env.SITE
+const image = url + '/social-share3.jpg'
+const titleHtml = title || 'Sunny Tech'
+const descriptionHtml =
+    description ||
+    'Sunny Tech est la 1ère conférence Tech organisée à Montpellier. Une conférence annuelle des technologies du numérique, créée par des passionnés, pour des passionnés avec l’ambition de rayonner nationalement, et même internationalement, à travers l’intervention de conférenciers étrangers de renom.'
+const keywords =
+    'sunnytech, évènement, event, montpellier, Sunny, Tech, programming, android, chrome, developers, web, cloud, conférence, seatechandsun, docker, devops, ux, design, back, scala, fonctionnel'
+
+const organizerName = 'Sunny Tech'
+const organizerTwitter = '@sunnyTech_MTP'
 ---
 
 <!doctype html>
@@ -13,7 +25,40 @@ const { title } = Astro.props
         <meta name="description" content="Astro description" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link href="manifest.json" rel="manifest" />
+        <!-- Add to homescreen for Chrome on Android -->
+        <meta content="yes" name="mobile-web-app-capable" />
         <meta name="generator" content={Astro.generator} />
+
+        <!-- fallback for manifest.json -->
+        <meta content={titleHtml} name="application-name" />
+
+        <!-- Add to homescreen for Safari on iOS -->
+        <meta content="yes" name="apple-mobile-web-app-capable" />
+        <meta content="black-translucent" name="apple-mobile-web-app-status-bar-style" />
+        <meta content={titleHtml} name="apple-mobile-web-app-title" />
+
+        <meta content={descriptionHtml} name="description" />
+        <meta content={keywords} name="keywords" />
+        <meta content={organizerName} name="author" />
+
+        <!-- Facebook sharing meta data -->
+        <meta content={titleHtml} property="og:title" />
+        <meta content={titleHtml} property="og:site_name" />
+        <meta content="website" property="og:type" />
+        <meta content={url} property="og:url" />
+        <meta content={descriptionHtml} property="og:description" />
+        <meta content="Event" property="og:type" />
+        <meta content={image} property="og:image" />
+        <meta content="image/jpeg" property="og:image:type" />
+
+        <!-- Twitter meta data -->
+        <meta content="summary_large_image" name="twitter:card" />
+        <meta content={organizerTwitter} name="twitter:creator" />
+        <meta content={titleHtml} name="twitter:title" />
+        <meta content={descriptionHtml} name="twitter:description" />
+        <meta content={image} name="twitter:image" />
+
         <title>{title}</title>
     </head>
     <body>
