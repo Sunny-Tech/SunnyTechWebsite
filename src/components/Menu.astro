@@ -1,0 +1,145 @@
+---
+const routeName = Astro.url.pathname
+const FAQ_LINK = 'https://www.sunny-tech.io/faq'
+
+const navigation = [
+    { label: 'Home', route: '/' },
+    { label: 'Team', route: '/team' },
+    { label: 'Code de conduite', route: '/coc' },
+    { label: 'FAQ', route: FAQ_LINK },
+]
+---
+
+<header class:list={['header-toolbar']}>
+    <div class="header">
+        <div class="logo-container laptop-plus">
+            <a href="/" class="toolbar-logo" title="SunnyTech"></a>
+        </div>
+
+        {
+            (
+                <nav class="nav-items laptop-plus">
+                    {navigation.map((nav) => (
+                        <a href={nav.route} class:list={['nav-item', { active: routeName === nav.route }]}>
+                            {nav.label}
+                        </a>
+                    ))}
+                </nav>
+            )
+        }
+    </div>
+</header>
+
+<style>
+    .header-toolbar {
+        z-index: 1;
+        border-bottom: 1px solid var(--divider-color);
+        background-color: var(--primary-background-color);
+        transition:
+            background-color var(--animation),
+            border-bottom-color var(--animation),
+            color var(--animation);
+        color: var(--primary-text-color);
+        position: sticky;
+        top: 0;
+        left: 0;
+        right: 0;
+    }
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        max-width: var(--max-container-width);
+        margin: 0 auto;
+    }
+
+    .transparent {
+        background-color: transparent;
+        border-bottom-color: transparent;
+        color: #fff;
+    }
+
+    .toolbar-logo {
+        display: block;
+        width: 150px;
+        height: 32px;
+        background-color: var(--default-primary-color);
+        transition: background-color var(--animation);
+        mask: url('/logos-sunnytech/logo-monochrome.svg') no-repeat;
+        mask-size: contain;
+    }
+
+    .nav-item {
+        display: inline-block;
+        line-height: 64px;
+        height: 64px;
+        padding: 0 14px;
+        text-transform: uppercase;
+        text-decoration: none;
+        color: rgb(33, 33, 33);
+        transition: border-color var(--animation);
+        cursor: pointer;
+        font-weight: 600;
+        border-bottom: 2px solid transparent;
+    }
+    .nav-item:hover {
+        border-bottom-color: var(--default-primary-color);
+    }
+    .nav-item.active:visited {
+        color: rgb(33, 33, 33);
+    }
+    .nav-item.active {
+        color: var(--default-primary-color) !important;
+        border-bottom-color: var(--default-primary-color) !important;
+        font-weight: 700;
+    }
+
+    .profile-image {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background-position: center;
+        background-size: cover;
+    }
+
+    .profile-details .profile-image {
+        margin-right: 16px;
+        width: 48px;
+        height: 48px;
+    }
+
+    .profile-name,
+    .profile-email {
+        font-size: 14px;
+        display: block;
+        white-space: nowrap;
+        color: var(--secondary-text-color);
+    }
+
+    .profile-action {
+        margin-top: 4px;
+        text-transform: uppercase;
+        color: var(--default-primary-color);
+        font-size: 14px;
+        cursor: pointer;
+    }
+
+    .laptop-plus {
+        display: none;
+    }
+
+    .logo-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    @media (min-width: 640px) {
+    }
+
+    @media (min-width: 768px) {
+        .laptop-plus {
+            display: flex;
+        }
+    }
+</style>
