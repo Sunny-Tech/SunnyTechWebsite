@@ -1,0 +1,77 @@
+---
+
+---
+
+<div class="container">
+    <div class="content">
+        <img src="/logos-sunnytech/logo.svg" alt="SunnyTech" loading="lazy" />
+
+        <h1>26 et 27 juin 2025 à Montpellier</h1>
+        <h2>#SeaTechAndSun ☀️️️</h2>
+
+        <a href="https://2024.sunny-tech.io" target="_blank">édition 2024</a>
+    </div>
+    <div class="overlay"></div>
+</div>
+
+<style>
+    .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding-top: 100px;
+        background: url('/backgrounds/home.jpg') no-repeat center center;
+        background-size: cover;
+
+        height: calc(100vh - 65px);
+        max-height: calc(100vh + 1px);
+    }
+
+    .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 0;
+    }
+
+    .content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+        z-index: 1;
+    }
+
+    .content img {
+        width: 200px;
+        height: 200px;
+    }
+
+    .content h1 {
+        font-size: 40px;
+        font-weight: 700;
+        color: #fff;
+    }
+
+    .content h2 {
+        font-size: 20px;
+        font-weight: 400;
+        color: #fff;
+    }
+
+    a {
+        color: #fff;
+        text-decoration: none;
+        border-radius: 4px;
+        background-color: var(--default-primary-color);
+        transition: background-color var(--animation);
+        padding: 8px 16px;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+</style>
