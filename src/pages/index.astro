@@ -5,6 +5,7 @@ import SponsorsBlock from '../components/SponsorsBlock.astro'
 import FooterBlock from '../components/footer/FooterBlock.astro'
 import Menu from '../components/Menu.astro'
 import Hero from '../components/Hero.astro'
+import HoneContentBlock from '../components/HoneContentBlock.astro'
 
 const OPENPLANNER_URL = import.meta.env.OPENPLANNER_URL
 const response = await fetch(OPENPLANNER_URL)
@@ -15,6 +16,8 @@ const openPlannerData: OpenPlannerType = await response.json()
     <Menu />
     <main>
         <Hero />
+
+        <HoneContentBlock />
 
         <SponsorsBlock sponsorCategories={openPlannerData.sponsors} />
     </main>
