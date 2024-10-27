@@ -1,6 +1,51 @@
 {
     "hosting": {
         "public": "dist",
-        "ignore": ["firebase.json", "**/.*", "**/node_modules/**"]
+        "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+        "redirects": [
+            {
+                "source": "/sponsoring",
+                "destination": "https://docs.google.com/presentation/d/1AkKtxpy0y74qsyWJAHfkCL6oLu4hhIXS6A2qs2XhHfo/preview",
+                "type": 302
+            },
+            {
+                "source": "/faq",
+                "destination": "https://openplanner.fr/public/event/ML7vHjW9pdzqLgYqaYYf/faq",
+                "type": 302
+            },
+            {
+                "source": "/gladia",
+                "destination": "https://openplanner.fr/public/event/ML7vHjW9pdzqLgYqaYYf/transcription",
+                "type": 302
+            }
+        ],
+        "headers": [
+            {
+                "source": "**",
+                "headers": [
+                    {
+                        "key": "X-Content-Type-Options",
+                        "value": "nosniff"
+                    },
+                    {
+                        "key": "X-XSS-Protection",
+                        "value": "1; mode=block"
+                    },
+                    {
+                        "key": "Referrer-Policy",
+                        "value": "same-origin"
+                    }
+                ]
+            },
+            {
+                "source": "/@(service-worker|firebase-messaging-sw).js",
+                "headers": [
+                    {
+                        "key": "Cache-Control",
+                        "value": "no-cache, no-store, must-revalidate"
+                    }
+                ]
+            }
+        ]
     }
 }

@@ -1,6 +1,7 @@
 export type OpenPlannerType = {
     sponsors: {
         name: string
+        order: number
         sponsors: {
             website: string
             name: string
