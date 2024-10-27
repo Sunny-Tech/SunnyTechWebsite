@@ -1,32 +1,38 @@
 ---
 import type { OpenPlannerType } from '../type'
+import Layout from '../layouts/Layout.astro'
+import Menu from '../components/Menu.astro'
 
 const OPENPLANNER_URL = import.meta.env.OPENPLANNER_URL
 const response = await fetch(OPENPLANNER_URL)
 const openPlannerData: OpenPlannerType = await response.json()
 ---
 
-<div class="container">
-    {
-        openPlannerData.team.map((block) => (
-            <div class="block">
-                <div class="content">
-                    <img src={block.photoUrl} alt={block.name} />
-                    <h2>{block.name}</h2>
-                    <ul>
-                        {block.socials.map((social) => (
-                            <li>
-                                <a href={social.url} target="_blank" rel="noopener noreferrer">
-                                    <span>{social.name}</span>
-                                </a>
-                            </li>
-                        ))}
-                    </ul>
+<Layout title="SunnyTech Team">
+    <Menu />
+
+    <div class="container">
+        {
+            openPlannerData.team.map((block) => (
+                <div class="block">
+                    <div class="content">
+                        <img src={block.photoUrl} alt={block.name} />
+                        <h2>{block.name}</h2>
+                        <ul>
+                            {block.socials.map((social) => (
+                                <li>
+                                    <a href={social.url} target="_blank" rel="noopener noreferrer">
+                                        <span>{social.name}</span>
+                                    </a>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
                 </div>
-            </div>
-        ))
-    }
-</div>
+            ))
+        }
+    </div>
+</Layout>
 
 <style>
     .container {

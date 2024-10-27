@@ -2,7 +2,8 @@
 import type { OpenPlannerType } from '../type'
 import Layout from '../layouts/Layout.astro'
 import SponsorsBlock from '../components/SponsorsBlock.astro'
-import FooterBlock from '../components/FooterBlock.astro'
+import FooterBlock from '../components/footer/FooterBlock.astro'
+import Menu from '../components/Menu.astro'
 
 const OPENPLANNER_URL = import.meta.env.OPENPLANNER_URL
 const response = await fetch(OPENPLANNER_URL)
@@ -10,6 +11,7 @@ const openPlannerData: OpenPlannerType = await response.json()
 ---
 
 <Layout title="SunnyTech">
+    <Menu />
     <main>
         <h1>SunnyTech</h1>
 
