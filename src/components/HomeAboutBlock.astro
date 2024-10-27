@@ -1,0 +1,108 @@
+---
+import ButtonLink from './ui-elements/ButtonLink.astro'
+
+const blocks = [
+    {
+        title: "Qu'est-ce que Sunny Tech?",
+        description:
+            'Sunny Tech est la 1ère conférence Tech organisée à Montpellier. Une conférence annuelle des technologies du numérique, créée par des passionnés, pour des passionnés avec l’ambition de rayonner nationalement, et même internationalement, à travers l’intervention de conférenciers étrangers de renom.',
+    },
+    {
+        title: 'Équipe organisatrice',
+        description:
+            'Sunny Tech est une association bénévole à but non lucratif composée de développeurs, orateurs, designers et membres de meetups',
+        callToAction: {
+            label: "Découvrez l'équipe organisatrice",
+            link: '/team',
+        },
+    },
+]
+---
+
+<div class="container">
+    <div class="image-container isLaptopPlus">
+        <a href="/team" class="image-link">
+            <img class="organizers-photo" src="/backgrounds/team.jpg" alt="Organizer" loading="lazy" />
+        </a>
+    </div>
+
+    <div class="description-block">
+        {
+            blocks.map((block) => (
+                <div class="block">
+                    <h3>{block.title}</h3>
+                    <div class="description">{block.description}</div>
+
+                    {block.callToAction && (
+                        <ButtonLink href={block.callToAction.link}>
+                            {block.callToAction.label}
+
+                            <Fragment slot="icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                    <title>arrow-right-bold-circle</title>
+                                    <path d="M2,12A10,10 0 0,1 12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12M17,12L12,7V10H8V14H12V17L17,12Z" />
+                                </svg>
+                            </Fragment>
+                        </ButtonLink>
+                    )}
+                </div>
+            ))
+        }
+    </div>
+</div>
+
+<style>
+    .container {
+        display: flex;
+        max-width: var(--max-container-width);
+        margin: 0 auto;
+        padding: 64px 0;
+    }
+
+    .image-container {
+        flex: 1;
+        margin-inline-end: 32px;
+        border-radius: 4px;
+        overflow: hidden;
+    }
+
+    .block:not(:last-of-type) {
+        margin-bottom: 32px;
+    }
+    h3 {
+        font-weight: 500;
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    .image-link {
+        width: 80%;
+        height: 80%;
+    }
+    .organizers-photo {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .description-block {
+        flex: 1.5;
+    }
+    .description {
+        color: var(--secondary-text-color);
+    }
+    .cta-button {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .isLaptopPlus {
+        display: block;
+    }
+
+    @media (max-width: 720px) {
+        .isLaptopPlus {
+            display: none;
+        }
+    }
+</style>
