@@ -1,0 +1,46 @@
+---
+interface Props {
+    href: string
+    target?: string
+    rel?: string
+}
+
+const { href, target = '', rel = '' } = Astro.props
+---
+
+<a class="become" href={href} target={target} rel={rel}>
+    <slot />
+
+    <span> <slot name="icon" /> </span>
+</a>
+
+<style>
+    a {
+        color: var(--default-primary-color);
+        text-decoration: none;
+        padding: 8px 16px;
+        font-weight: 600;
+        text-transform: uppercase;
+        border-radius: 4px;
+        transition: all var(--animation);
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        width: fit-content;
+    }
+
+    a span {
+        margin-left: 8px;
+        width: 16px;
+        height: 16px;
+        fill: var(--default-primary-color);
+    }
+
+    a:hover {
+        background-color: var(--default-primary-color);
+        color: #fff;
+        svg {
+            fill: #fff;
+        }
+    }
+</style>
