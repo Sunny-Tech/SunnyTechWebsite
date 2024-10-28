@@ -3,20 +3,29 @@ interface Props {
     href: string
     target?: string
     rel?: string
+    variant?: 'primary' | 'transparent'
 }
 
-const { href, target = '', rel = '' } = Astro.props
+const { href, target = '', rel = '', variant = 'primary' } = Astro.props
 ---
 
-<a class="become" href={href} target={target} rel={rel}>
+<a class={variant} href={href} target={target} rel={rel}>
     <slot />
-
-    <span> <slot name="icon" /> </span>
+    <span><slot name="icon" /></span>
 </a>
 
 <style>
-    a {
+    .primary {
         color: var(--default-primary-color);
+        background: transparent;
+    }
+
+    .transparent {
+        color: #fff;
+        background: transparent;
+    }
+
+    a {
         text-decoration: none;
         padding: 8px 16px;
         font-weight: 600;
@@ -29,18 +38,19 @@ const { href, target = '', rel = '' } = Astro.props
         width: fit-content;
     }
 
+    a:hover {
+        background-color: var(--default-primary-color);
+        color: #fff;
+    }
+    a.transparent:hover {
+        background-color: var(--dark-primary-color);
+        color: #fff;
+    }
+
     a span {
         margin-left: 8px;
         width: 16px;
         height: 16px;
-        fill: var(--default-primary-color);
-    }
-
-    a:hover {
-        background-color: var(--default-primary-color);
-        color: #fff;
-        svg {
-            fill: #fff;
-        }
+        fill: currentColor;
     }
 </style>

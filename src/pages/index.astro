@@ -1,10 +1,11 @@
 ---
 import type { OpenPlannerType } from '../type'
 import Layout from '../layouts/Layout.astro'
-import SponsorsBlock from '../components/SponsorsBlock.astro'
-import Hero from '../components/Hero.astro'
-import HomeContentBlock from '../components/HomeContentBlock.astro'
-import HomeAboutBlock from '../components/HomeAboutBlock.astro'
+import SponsorsBlock from '../components/home/SponsorsBlock.astro'
+import Hero from '../components/home/Hero.astro'
+import HomeContentBlock from '../components/home/HomeContentBlock.astro'
+import HomeAboutBlock from '../components/home/HomeAboutBlock.astro'
+import HomeGalleryBlock from '../components/home/HomeGalleryBlock.astro'
 
 const OPENPLANNER_URL = import.meta.env.OPENPLANNER_URL
 const response = await fetch(OPENPLANNER_URL)
@@ -15,6 +16,7 @@ const openPlannerData: OpenPlannerType = await response.json()
     <Hero />
 
     <HomeContentBlock />
+    <HomeGalleryBlock />
     <HomeAboutBlock />
 
     <SponsorsBlock sponsorCategories={openPlannerData.sponsors} />
