@@ -1,0 +1,144 @@
+---
+import ButtonLink from '../ui-elements/ButtonLink.astro'
+
+const gallery = [
+    'https://firebasestorage.googleapis.com/v0/b/sunnytech-2024.appspot.com/o/miniature-gallerie-site%2FIMG_1125.jpg?alt=media&token=c3f9c4d6-10d3-42da-a739-123726d0b109',
+    'https://firebasestorage.googleapis.com/v0/b/sunnytech-2024.appspot.com/o/miniature-gallerie-site%2F20240704_185656(1).jpg?alt=media&token=ef0a68d2-14ae-49d0-b79b-18971ddb04cf',
+    'https://firebasestorage.googleapis.com/v0/b/sunnytech-2024.appspot.com/o/miniature-gallerie-site%2FIMG_1192.jpg?alt=media&token=9aab2010-91bb-4f21-9ff2-2d36d7007634',
+    'https://firebasestorage.googleapis.com/v0/b/sunnytech-2024.appspot.com/o/miniature-gallerie-site%2FIMG_1300.jpg?alt=media&token=c828cba9-1708-45e3-a4c9-62335d2c1e05',
+    'https://firebasestorage.googleapis.com/v0/b/sunnytech-2024.appspot.com/o/miniature-gallerie-site%2FIMG_1268.jpg?alt=media&token=7d6516b0-ea0c-4699-bcbe-673c7a1b5b02',
+    'https://firebasestorage.googleapis.com/v0/b/sunnytech-2024.appspot.com/o/miniature-gallerie-site%2FIMG_1185.jpg?alt=media&token=ca7b7e77-9de3-4de0-991a-7eec38ffc1cd',
+    'https://firebasestorage.googleapis.com/v0/b/sunnytech-2024.appspot.com/o/miniature-gallerie-site%2FIMG_1230.jpg?alt=media&token=1886b50e-012e-45de-8a7a-a078f6434641',
+    'https://firebasestorage.googleapis.com/v0/b/sunnytech-2024.appspot.com/o/miniature-gallerie-site%2FIMG_1193.jpg?alt=media&token=a0ad5ae0-e318-42f0-bf32-837604852ffe',
+]
+---
+
+<div class="photos-grid">
+    {gallery.map((photo) => <img class="grid-item" src={photo} alt="gallery photo" loading="lazy" />)}
+
+    <div class="gallery-info">
+        <div>
+            <h2>Moments forts de Sunny Tech 2024</h2>
+            <p>Grâce à nos photographes, revivez l'édition 2024</p>
+        </div>
+        <ButtonLink
+            href="https://photos.app.goo.gl/BjqfEkdeMh1WzeNAA"
+            target="_blank"
+            rel="noopener noreferrer"
+            variant="transparent">
+            Grâce à nos photographes, revivez l'édition 2024
+        </ButtonLink>
+    </div>
+</div>
+
+<style>
+    .photos-grid {
+        margin: 64px auto;
+        display: grid;
+        width: 100%;
+        min-height: 400px;
+        height: calc(100vh - 40px);
+        max-height: 750px;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(5, 1fr);
+        grid-gap: 2px;
+    }
+
+    .grid-item {
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+        background-color: var(--secondary-background-color);
+    }
+
+    .grid-item:nth-child(1) {
+        grid-area: 1 / 1 / 3 / 4;
+    }
+
+    .grid-item:nth-child(2) {
+        grid-area: 3 / 1 / 5 / 3;
+    }
+
+    .grid-item:nth-child(3) {
+        grid-area: 3 / 3 / 3 / 3;
+    }
+
+    .grid-item:nth-child(4) {
+        grid-area: 4 / 3 / 4 / 3;
+    }
+
+    .grid-item:nth-child(5) {
+        grid-area: 5 / 1 / 5 / 1;
+    }
+
+    .grid-item:nth-child(6) {
+        display: none;
+    }
+
+    .grid-item:nth-child(7) {
+        display: none;
+    }
+
+    .grid-item:nth-child(8) {
+        display: none;
+    }
+
+    .gallery-info {
+        padding: 16px;
+        background-color: var(--default-primary-color);
+        color: var(--text-primary-color);
+        z-index: 1;
+        grid-area: 5 / 2 / 5 / 4;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    @media (min-width: 640px) {
+        .photos-grid {
+            height: calc(100vh - 64px);
+            grid-template-columns: repeat(5, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+        }
+
+        .grid-item:nth-child(1) {
+            grid-area: 1 / 1 / 1 / 3;
+        }
+
+        .grid-item:nth-child(2) {
+            grid-area: 1 / 3 / 2 / 5;
+        }
+
+        .grid-item:nth-child(3) {
+            grid-area: 1 / 5 / 3 / 5;
+        }
+
+        .grid-item:nth-child(4) {
+            grid-area: 2 / 1 / 2 / 1;
+        }
+
+        .grid-item:nth-child(5) {
+            grid-area: 2 / 2 / 2 / 2;
+        }
+
+        .grid-item:nth-child(6) {
+            grid-area: 3 / 1 / 3 / 3;
+            display: block;
+        }
+
+        .grid-item:nth-child(7) {
+            grid-area: 3 / 3 / 3 / 3;
+            display: block;
+        }
+
+        .grid-item:nth-child(8) {
+            grid-area: 3 / 4 / 3 / 6;
+            display: block;
+        }
+
+        .gallery-info {
+            padding: 24px;
+            grid-area: 2 / 3 / 2 / 5;
+        }
+    }
+</style>
