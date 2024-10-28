@@ -2,6 +2,8 @@
 // depending on the name of the icon, return the corresponding Astro component
 
 import GitHub from './GitHub.astro'
+import LinkedIn from './LinkedIn.astro'
+import Twitter from './Twitter.astro'
 
 interface Props {
     name: string
@@ -17,10 +19,11 @@ const iconName = name.toLowerCase().replace(' ', '-').trim()
         switch (iconName) {
             case 'github':
                 return <GitHub />
+            case 'x':
             case 'twitter':
-                return ' '
+                return <Twitter />
             case 'linkedin':
-                return ' '
+                return <LinkedIn />
             default:
                 return ' '
         }

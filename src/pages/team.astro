@@ -9,8 +9,9 @@ const openPlannerData: OpenPlannerType = await response.json()
 ---
 
 <LayoutWithTitle
-    title="SunnyTech Équipe"
-    description="Sunny Tech est une assocation bénévole à but non lucratif (loi 1901) créée par des membres actifs de la communauté tech de Montpellier, tous et toutes bénévoles.">
+    htmlTitle="SunnyTech Équipe"
+    title="Équipe"
+    subDescription="Sunny Tech est une assocation bénévole à but non lucratif (loi 1901) créée par des membres actifs de la communauté tech de Montpellier, tous et toutes bénévoles.">
     <div class="container">
         {
             openPlannerData.team.map((block) => (
@@ -73,12 +74,17 @@ const openPlannerData: OpenPlannerType = await response.json()
             margin: 0;
             padding: 0;
 
-            a {
-                fill: var(--secondary-text-color);
-                transition: fill var(--animation);
-            }
-            a:hover {
-                fill: var(--default-primary-color);
+            li {
+                float: left;
+                margin-inline-end: 12px;
+
+                a {
+                    fill: var(--secondary-text-color);
+                    transition: fill var(--animation);
+                }
+                a:hover {
+                    fill: var(--default-primary-color);
+                }
             }
         }
     }
