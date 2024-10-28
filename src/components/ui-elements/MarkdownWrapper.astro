@@ -1,0 +1,27 @@
+<div class="container">
+    <slot />
+</div>
+
+<style>
+    .container {
+        max-width: 80ch;
+
+        :global(h1) {
+            font-size: 2.5rem;
+            margin: 1.5rem 0 5rem;
+        }
+
+        :global(h2) {
+            font-size: 1.5rem;
+            margin: 0 0 0.5rem;
+        }
+
+        :global(p) {
+            line-height: 1.5;
+        }
+
+        :global(p + h2) {
+            margin-top: 2.5rem;
+        }
+    }
+</style>
