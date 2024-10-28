@@ -2,8 +2,6 @@
 import type { OpenPlannerType } from '../type'
 import Layout from '../layouts/Layout.astro'
 import SponsorsBlock from '../components/SponsorsBlock.astro'
-import FooterBlock from '../components/footer/FooterBlock.astro'
-import Menu from '../components/Menu.astro'
 import Hero from '../components/Hero.astro'
 import HomeContentBlock from '../components/HomeContentBlock.astro'
 import HomeAboutBlock from '../components/HomeAboutBlock.astro'
@@ -14,17 +12,18 @@ const openPlannerData: OpenPlannerType = await response.json()
 ---
 
 <Layout title="SunnyTech">
-    <Menu />
-    <main>
-        <Hero />
+    <Hero />
 
-        <HomeContentBlock />
-        <HomeAboutBlock />
+    <HomeContentBlock />
+    <HomeAboutBlock />
 
-        <SponsorsBlock sponsorCategories={openPlannerData.sponsors} />
-    </main>
-
-    <FooterBlock />
+    <SponsorsBlock sponsorCategories={openPlannerData.sponsors} />
 </Layout>
 
-<style></style>
+<style is:global>
+    :root {
+        [data-transparent='true'] {
+            --hero-text-color: white;
+        }
+    }
+</style>
