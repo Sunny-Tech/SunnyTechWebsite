@@ -16,21 +16,19 @@ const navigation = [
             <a href="/" class="toolbar-logo" title="SunnyTech"></a>
         </div>
 
-        {
-            (
-                <nav class="nav-items">
-                    {navigation.map((nav) => (
-                        <a href={nav.route} class:list={['nav-item', { active: routeName === nav.route }]}>
-                            {nav.label}
-                        </a>
-                    ))}
-                </nav>
-            )
-        }
+        <nav class="nav-items">
+            {
+                navigation.map((nav) => (
+                    <a href={nav.route} class:list={['nav-item', { active: routeName === nav.route }]}>
+                        {nav.label}
+                    </a>
+                ))
+            }
+        </nav>
 
         <input type="checkbox" id="nav-trigger" class="nav-trigger" />
         <label for="nav-trigger">
-            <svg xmlns="https://www.w3.org/2000/svg" xmlns:xlink="https://www.w3.org/1999/xlink" viewBox="0 0 24 24">
+            <svg xmlns="https://www.w3.org/2000/svg" viewBox="0 0 24 24">
                 <path fill="currentColor" d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path>
             </svg>
         </label>
