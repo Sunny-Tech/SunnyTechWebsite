@@ -1,7 +1,6 @@
 ---
 import type { OpenPlannerType } from '../type'
 import Layout from '../layouts/Layout.astro'
-import Menu from '../components/Menu.astro'
 
 const OPENPLANNER_URL = import.meta.env.OPENPLANNER_URL
 const response = await fetch(OPENPLANNER_URL)
@@ -9,8 +8,6 @@ const openPlannerData: OpenPlannerType = await response.json()
 ---
 
 <Layout title="SunnyTech Team">
-    <Menu />
-
     <div class="container">
         {
             openPlannerData.team.map((block) => (

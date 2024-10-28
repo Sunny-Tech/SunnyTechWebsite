@@ -1,4 +1,7 @@
 ---
+import FooterBlock from '../components/footer/FooterBlock.astro'
+import Menu from '../components/Menu.astro'
+
 interface Props {
     title: string
     description?: string
@@ -62,7 +65,12 @@ const organizerTwitter = '@sunnyTech_MTP'
         <title>{title}</title>
     </head>
     <body>
-        <slot />
+        <Menu />
+        <main>
+            <slot />
+        </main>
+
+        <FooterBlock />
     </body>
 </html>
 <style is:global>
