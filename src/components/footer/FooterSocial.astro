@@ -1,176 +1,71 @@
 ---
-const socialNetwork = [
-    {
-        name: 'twitter',
-        url: 'https://twitter.com/sunnytech_mtp',
-    },
-    {
-        name: 'linkedin',
-        url: 'https://www.linkedin.com/company/sunny-tech-event/',
-    },
+const socials = [
+    { name: 'twitter', url: 'https://twitter.com/sunnytech_mtp' },
+    { name: 'linkedin', url: 'https://www.linkedin.com/company/sunny-tech-event/' },
 ]
 ---
 
-<div class="footer-social">
-    <div class="social-group blog">
-        <div class="title">
-            Suit notre <a href="/blog">blog</a>
-        </div>
+<footer class="social-footer">
+    <div class="group">
+        <span>Suit notre <a href="/blog">blog</a></span>
     </div>
-
-    <div class="social-group social-networks">
-        <div class="title">Suivez nous</div>
-        <ul class="nav-inline">
+    <div class="group">
+        <span>Suivez nous</span>
+        <ul>
             {
-                socialNetwork.map((socFollow) => (
+                socials.map(({ name, url }) => (
                     <li>
-                        <a href={socFollow.url} target="_blank" rel="noopener noreferrer">
-                            {socFollow.name}
+                        <a href={url} target="_blank" rel="noopener">
+                            {name}
                         </a>
                     </li>
                 ))
             }
         </ul>
     </div>
-
-    <div class="social-group email">
-        <div class="title">
-            <a aria-label="Envoyez-nous un email" href={`mailto:contact@sunny-tech.io`}>Envoyez-nous un email</a>
-        </div>
+    <div class="group">
+        <a href="mailto:contact@sunny-tech.io">Envoyez-nous un email</a>
     </div>
-</div>
+</footer>
 
 <style>
-    .footer-social {
-        flex-wrap: wrap;
+    .social-footer {
         display: flex;
-        flex-direction: row;
+        flex-wrap: wrap;
         justify-content: space-between;
-    }
-
-    .title {
-        display: inline-block;
-        text-transform: uppercase;
-        font-weight: 500;
-        margin: 0;
+        gap: 1rem;
         color: var(--footer-text-color);
     }
 
-    .nav-inline li a {
-        padding: 0;
-        margin-inline-end: 6px;
+    .group {
+        text-transform: uppercase;
+        font-weight: 500;
     }
 
-    .nav-inline {
+    ul {
         display: inline;
-        margin: 0 55px 0 4px;
-    }
-
-    ul.nav-inline {
         padding-left: 10px;
     }
 
-    .nav-inline li {
+    li {
         display: inline-block;
-    }
-
-    .social-group.share-block {
-        margin-bottom: 17px;
-    }
-
-    .share {
-        height: 30px;
-        padding: 8px;
-        width: 35px;
-        display: inline-block;
-        margin: 0;
-    }
-
-    .share-twitter {
-        color: var(--twitter-color);
-    }
-
-    .share-facebook {
-        color: var(--facebook-color);
+        margin-right: 6px;
     }
 
     a {
-        display: inline-block;
-        margin: 0;
-        color: var(--footer-text-color);
+        color: inherit;
         text-decoration: none;
-    }
-
-    .social-group {
-        margin-right: 0;
-        margin-bottom: 10px;
-        padding-top: 0;
-    }
-
-    .email {
-        margin-bottom: 20px;
-        width: 300px;
-    }
-
-    .email .title {
-        padding-right: 0;
-        padding-top: 17px;
-    }
-
-    .email a {
-        border-bottom: 1px solid var(--footer-text-color);
-        padding-bottom: 1px;
-    }
-
-    .social-networks {
-        margin-bottom: -10px;
-    }
-
-    .social-networks,
-    .blog {
-        padding-top: 0;
-    }
-
-    .social-networks ul {
-        list-style-type: disc;
-    }
-
-    .blog .title {
-        padding-right: 55px;
-    }
-
-    .blog a {
-        border-bottom: 1px solid var(--footer-text-color);
-        padding-bottom: 1px;
-    }
-
-    @media (min-width: 768px) {
-        :host {
-            margin: 15px 0;
-        }
+        border-bottom: 1px solid currentColor;
     }
 
     @media (min-width: 439px) {
-        :host {
-            display: inline-flex;
-        }
-
-        .social-group,
-        .social-networks,
-        .email {
-            margin-bottom: 0;
-        }
-
-        .social-group {
-            margin-right: 0;
-        }
-
-        .social-networks {
+        .group {
             padding-top: 17px;
         }
-
-        .blog {
-            padding-top: 17px;
+    }
+    @media (max-width: 1280px) {
+        footer {
+            padding: 0 24px 12px;
         }
     }
 </style>
