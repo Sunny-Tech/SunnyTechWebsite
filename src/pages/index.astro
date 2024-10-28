@@ -7,7 +7,9 @@ import HomeContentBlock from '../components/home/HomeContentBlock.astro'
 import HomeAboutBlock from '../components/home/HomeAboutBlock.astro'
 import HomeGalleryBlock from '../components/home/HomeGalleryBlock.astro'
 
-const OPENPLANNER_URL = import.meta.env.OPENPLANNER_URL
+const OPENPLANNER_URL =
+    import.meta.env.OPENPLANNER_URL ||
+    'https://storage.googleapis.com/conferencecenterr.appspot.com/events/ML7vHjW9pdzqLgYqaYYf/ca94c659-8b02-4702-b576-d9279cc20b96.json'
 const response = await fetch(OPENPLANNER_URL)
 const openPlannerData: OpenPlannerType = await response.json()
 ---
