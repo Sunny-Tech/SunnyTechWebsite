@@ -13,7 +13,8 @@ export type OpenPlannerType = {
         photoUrl: string
         socials: {
             name: string
-            url: string
+            icon: string
+            link: string
         }[]
     }[]
     speakers: {
