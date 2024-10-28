@@ -1,25 +1,28 @@
 ---
 import type { OpenPlannerType } from '../type'
-import Layout from '../layouts/Layout.astro'
+import LayoutWithTitle from '../layouts/LayoutWithTitle.astro'
+import GenericIcon from '../components/icons/GenericIcon.astro'
 
 const OPENPLANNER_URL = import.meta.env.OPENPLANNER_URL
 const response = await fetch(OPENPLANNER_URL)
 const openPlannerData: OpenPlannerType = await response.json()
 ---
 
-<Layout title="SunnyTech Team">
+<LayoutWithTitle
+    title="SunnyTech Équipe"
+    description="Sunny Tech est une assocation bénévole à but non lucratif (loi 1901) créée par des membres actifs de la communauté tech de Montpellier, tous et toutes bénévoles.">
     <div class="container">
         {
             openPlannerData.team.map((block) => (
                 <div class="block">
+                    <img src={block.photoUrl} alt={block.name} />
                     <div class="content">
-                        <img src={block.photoUrl} alt={block.name} />
                         <h2>{block.name}</h2>
                         <ul>
                             {block.socials.map((social) => (
                                 <li>
-                                    <a href={social.url} target="_blank" rel="noopener noreferrer">
-                                        <span>{social.name}</span>
+                                    <a href={social.link} target="_blank" rel="noopener noreferrer">
+                                        <GenericIcon name={social.icon} />
                                     </a>
                                 </li>
                             ))}
@@ -29,34 +32,66 @@ const openPlannerData: OpenPlannerType = await response.json()
             ))
         }
     </div>
-</Layout>
+</LayoutWithTitle>
 
 <style>
     .container {
-        display: flex;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
         flex-wrap: wrap;
         gap: 2rem;
+        justify-content: space-between;
     }
 
     .block {
         display: flex;
+        min-width: 300px;
         margin-bottom: 2rem;
-    }
-
-    .image-wrapper {
-        width: 40%;
+        img {
+            border-radius: 50%;
+            object-fit: cover;
+            box-sizing: border-box;
+            width: 160px;
+            height: 160px;
+            aspect-ratio: 1;
+            border: 10px solid #f2f2f2;
+        }
     }
 
     .content {
-        width: 60%;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        gap: 8px;
+        margin-inline-start: 22px;
+
+        h2 {
+            font-weight: 500;
+        }
+        ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+
+            a {
+                fill: var(--secondary-text-color);
+                transition: fill var(--animation);
+            }
+            a:hover {
+                fill: var(--default-primary-color);
+            }
+        }
     }
 
-    @media (max-width: 768px) {
-        .image-wrapper {
-            display: none;
+    @media (max-width: 1000px) {
+        .container {
+            grid-template-columns: repeat(2, 1fr);
         }
-        .content {
-            width: 100%;
+    }
+    @media (max-width: 768px) {
+        .container {
+            grid-template-columns: repeat(1, 1fr);
+            justify-items: center;
         }
     }
 </style>

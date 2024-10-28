@@ -1,0 +1,38 @@
+---
+import Layout from './Layout.astro'
+
+interface Props {
+    title: string
+    description?: string
+}
+
+const { title, description } = Astro.props
+---
+
+<Layout title={title}>
+    <div class="container">
+        <h1>{title}</h1>
+        {description && <p>{description}</p>}
+        <slot />
+    </div>
+</Layout>
+
+<style>
+    .container {
+        max-width: var(--max-container-width);
+        margin: 0 auto;
+        padding: 64px 0;
+    }
+
+    h1 {
+        font-size: 32px;
+        font-weight: 500;
+        margin-bottom: 20px;
+    }
+
+    p {
+        font-size: 18px;
+        line-height: 1.5;
+        margin-bottom: 20px;
+    }
+</style>
