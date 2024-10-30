@@ -1,0 +1,31 @@
+---
+interface Props {
+    space?: string
+    align?: string
+    recursive?: boolean
+    reverse?: boolean
+}
+
+const { space = '1rem', recursive = false, align = 'normal', reverse = false } = Astro.props
+---
+
+<div class:list={['stack', { 'is-recursive': recursive, 'is-reverse': reverse }]} style={{ alignItems: align }}>
+    <slot />
+</div>
+
+<style define:vars={{ space }}>
+    .stack {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+
+    .stack > :global(* + *),
+    .stack.is-recursive :global(* + *) {
+        margin-block-start: var(--space, 1rem);
+    }
+
+    .stack.is-reverse {
+        flex-direction: column-reverse;
+    }
+</style>
