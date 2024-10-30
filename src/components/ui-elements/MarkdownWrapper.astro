@@ -33,6 +33,12 @@
             color: var(--default-primary-color);
             text-decoration: 2px underline var(--light-primary-color);
             text-underline-offset: 4px;
+            transition: all var(--animation);
+
+            &:hover {
+                color: var(--dark-primary-color);
+                text-decoration: 4px underline var(--dark-primary-color);
+            }
         }
 
         :global(ul + h2),
