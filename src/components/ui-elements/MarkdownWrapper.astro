@@ -16,12 +16,39 @@
             margin: 0 0 0.5rem;
         }
 
+        :global(h3) {
+            font-size: 1.15rem;
+            margin: 0 0 0.35rem;
+        }
+
         :global(p) {
             line-height: 1.5;
         }
 
+        :global(img) {
+            margin: 24px 0;
+        }
+
+        :global(a) {
+            color: var(--default-primary-color);
+            text-decoration: 2px underline var(--light-primary-color);
+            text-underline-offset: 4px;
+        }
+
+        :global(ul + h2),
         :global(p + h2) {
             margin-top: 2.5rem;
+        }
+
+        :global(p + p) {
+            margin-top: 0.5rem;
+        }
+
+        :global(p + ul),
+        :global(ul + p),
+        :global(ul + h3),
+        :global(p + h3) {
+            margin-top: 1.5rem;
         }
     }
 </style>

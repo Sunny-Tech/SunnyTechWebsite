@@ -1,0 +1,39 @@
+---
+import { Picture } from 'astro:assets'
+import plan from '../assets/plan.png'
+import plan2024 from '../assets/plan-2024.png'
+import LayoutWithTitle from '../layouts/LayoutWithTitle.astro'
+import Stack from '../components/ui-elements/Stack.astro'
+import MarkdownWrapper from '../components/ui-elements/MarkdownWrapper.astro'
+import { Content } from '../markdown/location.md'
+---
+
+<LayoutWithTitle title="Lieu" description=" Retrouver les informations sur le lieu de SunnyTech et son plan.">
+    <Stack align="center" space="40px">
+        <div style="max-width: 1000px">
+            <Picture src={plan2024} formats={['avif', 'webp']} alt="Plan détaillé du lieu SunnyTech" loading="lazy" />
+        </div>
+        <div style="max-width: 500px">
+            <Picture src={plan} formats={['avif', 'webp']} alt="Plan d’ensemble du lieu SunnyTech" loading="lazy" />
+        </div>
+
+        <MarkdownWrapper>
+            <Content />
+        </MarkdownWrapper>
+
+        <div style="width: 100%">
+            <iframe
+                width="100%"
+                height="450"
+                src="https://www.openstreetmap.org/export/embed.html?bbox=3.851019144058228%2C43.61558019361453%2C3.8599133491516118%2C43.62126574137119&layer=mapnik&marker=43.61842305593065%2C3.855471611022949"
+                style="border: 0"></iframe><br />
+            <small
+                ><a href="https://www.openstreetmap.org/?mlat=43.618423&mlon=3.855472#map=17/43.618423/3.855466"
+                    >Afficher une carte plus grande</a
+                ></small
+            >
+        </div>
+    </Stack>
+</LayoutWithTitle>
+
+<style></style>
