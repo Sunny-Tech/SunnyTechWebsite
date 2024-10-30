@@ -1,0 +1,36 @@
+---
+import { getCollection } from 'astro:content'
+import LayoutWithTitle from '../../layouts/LayoutWithTitle.astro'
+import Stack from '../../components/ui-elements/Stack.astro'
+
+const posts = await getCollection('blog')
+
+posts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+---
+
+<LayoutWithTitle title="Blog">
+    <div class="articles">
+        <Stack space="36px">
+            {
+                posts.map((post) => (
+                    <article>
+                        <h2>
+                            <a href={`/blog/${post.slug}`}>{post.data.title}</a>
+                        </h2>
+                        <time>{post.data.date.toLocaleString('fr-FR', { dateStyle: 'long' })}</time>
+                    </article>
+                ))
+            }
+        </Stack>
+    </div>
+</LayoutWithTitle>
+
+<style>
+    .articles {
+        :global(a) {
+            color: var(--default-primary-color);
+            text-decoration: 2px underline var(--light-primary-color);
+            text-underline-offset: 4px;
+        }
+    }
+</style>
