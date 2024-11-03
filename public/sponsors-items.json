@@ -1,8 +1,14 @@
 {
     "offres": {
       "Platinium": {
-        "desc" : "- Espace exposant sur le site: GRAND 5*3m, <br/>- Billets inclus : 8, <br/>- Entrée supp. soirée Networking: 4, <br/>- Goodies dans le sac participants, <br/>- Publicité sur nos supports physiques & keynote GRAND, <br/>- Logo sur diapo entre les talks GRAND, <br/>- Tirage au sort de votre jeu concours sur scène, <br/>- Logo sur les GIF de notre borne OuiSnap, <br/>- Soutien affiché sur notre site internet, <br/>- Mise en avant sur les réseaux sociaux, <br/>- Publicité personnalisée dans la newsletter participants, <br/>- Logo sur le replay (chaine SunnyTech)",
-        "prix": 6500
+        "Title" : "Platinium",
+        "Description" : "- Espace exposant sur le site: GRAND 5*3m, <br/>- Billets inclus : 8, <br/>- Entrée supp. soirée Networking: 4, <br/>- Goodies dans le sac participants, <br/>- Publicité sur nos supports physiques & keynote GRAND, <br/>- Logo sur diapo entre les talks GRAND, <br/>- Tirage au sort de votre jeu concours sur scène, <br/>- Logo sur les GIF de notre borne OuiSnap, <br/>- Soutien affiché sur notre site internet, <br/>- Mise en avant sur les réseaux sociaux, <br/>- Publicité personnalisée dans la newsletter participants, <br/>- Logo sur le replay (chaine SunnyTech)",
+        "Quantity" : 1,
+        "Unit price" : { 
+            "Value" : 6500,
+            "Currency": "EUR"
+        },
+        "VAT rate" : 0
       },
       "Gold": {
         "desc" : "- Espace exposant sur le site: Moyen 3*3m, <br/>- Billets inclus : 6, <br/>- Entrée supp. soirée Networking: 2, <br/>- Goodies dans le sac participants, <br/>- Publicité sur nos supports physiques & keynote MOYEN, <br/>- Logo sur diapo entre les talks MOYEN, <br/>- Soutien affiché sur notre site internet, <br/>- Mise en avant sur les réseaux sociaux, <br/>- Publicité personnalisée dans la newsletter participants, <br/>",
