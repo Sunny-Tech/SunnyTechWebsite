@@ -11,6 +11,7 @@ const { title, description } = Astro.props
 const url = import.meta.env.SITE
 const image = url + '/social-share4.jpg'
 const titleHtml = title || 'Sunny Tech'
+const titleBis = titleHtml || 'Sunny Tech, la conférence Tech organisée à Montpellier'
 const descriptionHtml =
     description ||
     'Sunny Tech est la 1ère conférence Tech organisée à Montpellier. Une conférence annuelle des technologies du numérique, créée par des passionnés, pour des passionnés avec l’ambition de rayonner nationalement, et même internationalement, à travers l’intervention de conférencier.e.s français de renom.'
@@ -46,7 +47,7 @@ const organizerTwitter = '@sunnyTech_MTP'
         <meta content={organizerName} name="author" />
 
         <!-- Facebook sharing meta data -->
-        <meta content={titleHtml} property="og:title" />
+        <meta content={titleBis} property="og:title" />
         <meta content={titleHtml} property="og:site_name" />
         <meta content="website" property="og:type" />
         <meta content={url} property="og:url" />
@@ -62,7 +63,7 @@ const organizerTwitter = '@sunnyTech_MTP'
         <meta content={descriptionHtml} name="twitter:description" />
         <meta content={image} name="twitter:image" />
 
-        <title>{title}</title>
+        <title>{titleBis}</title>
     </head>
     <body>
         <Menu />
