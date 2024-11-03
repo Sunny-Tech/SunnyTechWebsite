@@ -10,6 +10,7 @@
         <h2>#SeaTechAndSun ☀️️️</h2>
 
         <a href="https://2024.sunny-tech.io" target="_blank">édition 2024</a>
+        <a aria-disabled="true">CFP fin novembre !</a>
     </div>
     <div class="overlay"></div>
 </div>
@@ -83,6 +84,12 @@
 
         &:hover {
             background-color: var(--dark-primary-color);
+        }
+
+        &[aria-disabled='true'] {
+            color: #777;
+            background-color: var(--secondary-background-color);
+            pointer-events: none;
         }
     }
 </style>

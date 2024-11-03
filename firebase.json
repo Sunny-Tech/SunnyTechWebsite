@@ -5,17 +5,17 @@
         "redirects": [
             {
                 "source": "/sponsoring",
-                "destination": "https://docs.google.com/presentation/d/1AkKtxpy0y74qsyWJAHfkCL6oLu4hhIXS6A2qs2XhHfo/preview",
+                "destination": "https://docs.google.com/presentation/d/1sciaOrYSHTAZNhAUc1llxIJiHBjTlD-BCPLcEKGK0Q4/preview",
                 "type": 302
             },
             {
                 "source": "/faq",
-                "destination": "https://openplanner.fr/public/event/ML7vHjW9pdzqLgYqaYYf/faq",
+                "destination": "https://openplanner.fr/public/event/GB9qNr4UMNsQHd0F8uYu/faq/",
                 "type": 302
             },
             {
                 "source": "/gladia",
-                "destination": "https://openplanner.fr/public/event/ML7vHjW9pdzqLgYqaYYf/transcription",
+                "destination": "https://openplanner.fr/public/event/GB9qNr4UMNsQHd0F8uYu/transcription",
                 "type": 302
             }
         ],
