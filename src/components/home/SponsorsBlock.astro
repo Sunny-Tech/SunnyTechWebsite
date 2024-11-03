@@ -12,8 +12,9 @@ const sponsorsCategoriesSorted = sponsorCategories.sort((a, b) => a.order - b.or
 ---
 
 <div class="container">
-    <h2>Sponsors de l'édition 2025</h2>
+    <h2>Sponsors</h2>
 
+    {sponsorsCategoriesSorted.length === 0 && <h4>Rejoignez les sponsors de l'édition 2025</h4>}
     <ButtonLink href="https://sunny-tech.io/sponsoring" target="_blank" rel="noopener noreferrer">
         Devenez sponsor de Sunny Tech !
         <Fragment slot="icon">
