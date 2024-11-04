@@ -2,25 +2,48 @@
     "offres": {
       "Platinium": {
         "title" : "Platinium",
-        "description" : "- Espace exposant sur le site: GRAND 5*3m, \n- Billets inclus : 8, <br/>- Entrée supp. soirée Networking: 4, <br/>- Goodies dans le sac participants, <br/>- Publicité sur nos supports physiques & keynote GRAND, <br/>- Logo sur diapo entre les talks GRAND, <br/>- Tirage au sort de votre jeu concours sur scène, <br/>- Logo sur les GIF de notre borne OuiSnap, <br/>- Soutien affiché sur notre site internet, <br/>- Mise en avant sur les réseaux sociaux, <br/>- Publicité personnalisée dans la newsletter participants, <br/>- Logo sur le replay (chaine SunnyTech)",
+        "description" : "- Espace exposant sur le site: GRAND 5*3m, \n- Billets inclus : 8, \n- Entrée supp. soirée Networking: 4, \n- Goodies dans le sac participants, \n- Publicité sur nos supports physiques & keynote GRAND, \n- Logo sur diapo entre les talks GRAND, \n- Tirage au sort de votre jeu concours sur scène, \n- Logo sur les GIF de notre borne OuiSnap, \n- Soutien affiché sur notre site internet, \n- Mise en avant sur les réseaux sociaux, \n- Publicité personnalisée dans la newsletter participants, \n- Logo sur le replay (chaine SunnyTech)",
         "quantity" : 1,
         "unit_price" : { 
             "value" : 6500,
             "currency": "EUR"
         },
-        "vat_rate" : 0
+        "vat_rate" : 0,
+        "vat_exemption_reason": "S293B"
       },
       "Gold": {
-        "desc" : "- Espace exposant sur le site: Moyen 3*3m, <br/>- Billets inclus : 6, <br/>- Entrée supp. soirée Networking: 2, <br/>- Goodies dans le sac participants, <br/>- Publicité sur nos supports physiques & keynote MOYEN, <br/>- Logo sur diapo entre les talks MOYEN, <br/>- Soutien affiché sur notre site internet, <br/>- Mise en avant sur les réseaux sociaux, <br/>- Publicité personnalisée dans la newsletter participants, <br/>",
-        "prix": 4300
+        "title": "Gold",
+        "description" : "- Espace exposant sur le site: Moyen 3*3m, \n- Billets inclus : 6, \n- Entrée supp. soirée Networking: 2, \n- Goodies dans le sac participants, \n- Publicité sur nos supports physiques & keynote MOYEN, \n- Logo sur diapo entre les talks MOYEN, \n- Soutien affiché sur notre site internet, \n- Mise en avant sur les réseaux sociaux, \n- Publicité personnalisée dans la newsletter participants, \n",
+        "quantity" : 1,
+        "unit_price" : { 
+            "value" : 4300,
+            "currency": "EUR"
+        },
+        "vat_rate" : 0,
+        "vat_exemption_reason": "S293B"
       },
       "Silver": {
-        "desc" : "- Espace exposant sur le site: espace partagé, <br/>- Billets inclus : 3, <br/>- Entrée supp. soirée Networking: 1, <br/>- Publicité sur nos supports physiques & keynote PETIT, <br/>- Soutien affiché sur notre site internet, <br/>- Annonce du sponsor sur les réseaux sociaux",
-        "prix": 2200
+        "title": "Gold",
+        "description" : "- Espace exposant sur le site: espace partagé, \n- Billets inclus : 3, \n- Entrée supp. soirée Networking: 1, \n- Publicité sur nos supports physiques & keynote PETIT, \n- Soutien affiché sur notre site internet, \n- Annonce du sponsor sur les réseaux sociaux",
+        "quantity" : 1,
+        "unit_price" : { 
+            "value" : 2200,
+            "currency": "EUR"
+        },
+        "vat_rate" : 0,
+        "vat_exemption_reason": "S293B"
       },
       "Recrutement": {
-        "desc": "Mise en avant de vos offres de recrutement sur le site et sur place",
-        "prix": 500
+        "title": "Mettez en avant vos offres de recrutement"
+        "description": "Mise en avant de vos offres de recrutement sur le site et sur place",
+        "quantity" : 1,
+        "unit_price" : { 
+            "value" : 500,
+            "currency": "EUR"
+        },
+        "vat_rate" : 0,
+        "vat_exemption_reason": "S293B"
+      },
       }
 
     }
