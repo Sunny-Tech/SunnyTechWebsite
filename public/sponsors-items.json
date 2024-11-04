@@ -34,7 +34,7 @@
         "vat_exemption_reason": "S293B"
       },
       "Recrutement": {
-        "title": "Mettez en avant vos offres de recrutement"
+        "title": "Mettez en avant vos offres de recrutement",
         "description": "Mise en avant de vos offres de recrutement sur le site et sur place",
         "quantity" : 1,
         "unit_price" : { 
