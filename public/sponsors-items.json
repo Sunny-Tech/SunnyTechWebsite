@@ -33,6 +33,50 @@
         "vat_rate" : 0,
         "vat_exemption_reason": "S293B"
       },
+      "Sponsor soirée speaker": {
+        "title": "Sponsor soirée speaker",
+        "description" : "- Billets inclus : 2, \n- Publicité sur nos supports physiques & keynote, \n- Soutien affiché sur notre site internet, \n- Annonce du sponsor sur les réseaux sociaux, \n- présence physique (flyer / sticker) pendant la soirée pré-SunnyTech avec tout les speakers, 5 min de présentation pendant la soirée et deux places pour le repas",
+        "quantity" : 1,
+        "unit_price" : { 
+            "value" : 2150,
+            "currency": "EUR"
+        },
+        "vat_rate" : 0,
+        "vat_exemption_reason": "S293B"
+      },
+      "Sponsor soirée (networking)": {
+        "title": "Sponsor soirée (networking)",
+        "description" : "- Billets inclus : 2, \n- Publicité sur nos supports physiques & keynote, \n- Soutien affiché sur notre site internet, \n- Annonce du sponsor sur les réseaux sociaux, \n- Soirée networking : stickers/flyers/kakémono pendant la soirée du jeudi soir (sur place), 5 min de présentation pendant la soirée, \n- Entrée supplémentaire soirée Networking: 4",
+        "quantity" : 1,
+        "unit_price" : { 
+            "value" : 2150,
+            "currency": "EUR"
+        },
+        "vat_rate" : 0,
+        "vat_exemption_reason": "S293B"
+      },
+      "Sponsor espace détente": {
+        "title": "Sponsor espace détente",
+        "description" : "- Billets inclus : 2, \n- Publicité sur nos supports physiques & keynote, \n- Soutien affiché sur notre site internet, \n- Annonce du sponsor sur les réseaux sociaux, \n- Présence physique (kakémonos / flyers / stickers...), participer à la décoration de l’espace en nous fournissant du matériel à votre image (poufs, transats, serviettes de plage,...)",
+        "quantity" : 1,
+        "unit_price" : { 
+            "value" : 2150,
+            "currency": "EUR"
+        },
+        "vat_rate" : 0,
+        "vat_exemption_reason": "S293B"
+      },
+      "Sponsor Trop Chaud": {
+        "title": "Sponsor Trop Chaud",
+        "description" : "- Billets inclus : 1, \n- Publicité sur nos supports physiques dans l'amphi Trop Chaud & keynote, \n- Soutien affiché sur notre site internet, \n- Annonce du sponsor sur les réseaux sociaux, \n- Mise en avant de vos offres de recrutement sur le site et sur place",
+        "quantity" : 1,
+        "unit_price" : { 
+            "value" : 800,
+            "currency": "EUR"
+        },
+        "vat_rate" : 0,
+        "vat_exemption_reason": "S293B"
+      },
       "Recrutement": {
         "title": "Mettez en avant vos offres de recrutement",
         "description": "Mise en avant de vos offres de recrutement sur le site et sur place",
