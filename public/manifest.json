@@ -1,10 +1,10 @@
 {
-    "name": "{{ title }}",
-    "short_name": "{{ webapp.shortName }}",
+    "name": "Sunny Tech, la conférence Tech organisée à Montpellier",
+    "short_name": "Sunny Tech",
     "start_url": "./?utm_source=web_app_manifest",
     "display": "standalone",
-    "background_color": "{{ webapp.backgroundColor }}",
-    "theme_color": "{{ webapp.themeColor }}",
+    "background_color": "#d63f49",
+    "theme_color": "#d63f49",
     "icons": [
         {
             "src": "images/manifest/icon-48.png",
