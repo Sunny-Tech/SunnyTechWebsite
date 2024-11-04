@@ -30,7 +30,7 @@ const sponsorsCategoriesSorted = sponsorCategories.sort((a, b) => a.order - b.or
         sponsorsCategoriesSorted.map(
             (sponsorCategory: { name: string; sponsors: { website: string; name: string; logoUrl: string }[] }) => (
                 <div class="block">
-                    <h4 class="block-title">{sponsorCategory.name}</h4>
+                    <h3 class="block-title">{sponsorCategory.name}</h3>
                     <div class="logos-wrapper">
                         {sponsorCategory.sponsors.map((sponsor: { website: string; name: string; logoUrl: string }) => (
                             <a
