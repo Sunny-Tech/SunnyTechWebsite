@@ -16,13 +16,17 @@ const openPlannerData: OpenPlannerType = await response.json()
         {
             openPlannerData.team.map((block) => (
                 <div class="block">
-                    <img src={block.photoUrl} alt={block.name} />
+                    <img src={block.photoUrl} alt="" />
                     <div class="content">
                         <h2>{block.name}</h2>
                         <ul>
                             {block.socials.map((social) => (
                                 <li>
-                                    <a href={social.link} target="_blank" rel="noopener noreferrer">
+                                    <a
+                                        href={social.link}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        aria-label={social.icon}>
                                         <GenericIcon name={social.icon} />
                                     </a>
                                 </li>

@@ -10,9 +10,9 @@ const navigation = [
     { label: 'FAQ', route: FAQ_LINK },
 ]
 
-const isActiveRoute = (route: string) => {
-    const routeName = Astro.url.pathname
+const routeName = Astro.url.pathname
 
+const isActiveRoute = (route: string) => {
     if (route === '/') {
         return route === routeName
     }
@@ -24,7 +24,8 @@ const isActiveRoute = (route: string) => {
 <header id="site-header" class:list={['header-toolbar']} data-transparent="true">
     <div class="header">
         <div class="logo-container">
-            <a href="/" class="toolbar-logo" title="SunnyTech"></a>
+            {routeName === '/' && <span class="toolbar-logo" />}
+            {routeName !== '/' && <a href="/" class="toolbar-logo" aria-label="Retour à la page d'accueil" />}
         </div>
 
         <nav class="nav-items">
@@ -37,12 +38,7 @@ const isActiveRoute = (route: string) => {
             }
         </nav>
 
-        <input
-            type="checkbox"
-            id="nav-trigger"
-            class="nav-trigger"
-            aria-label="Bouton ouverture/fermeture panneau de navigation"
-        />
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" aria-label="Ouvrir/fermer le menu de navigation" />
         <label for="nav-trigger">
             <svg xmlns="https://www.w3.org/2000/svg" viewBox="0 0 24 24">
                 <path fill="currentColor" d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path>
@@ -72,6 +68,22 @@ const isActiveRoute = (route: string) => {
             header.dataset.transparent = (document.documentElement.scrollTop === 0).toString()
         }
     })
+
+    const navTrigger = document.querySelector('#nav-trigger') as HTMLInputElement | null
+
+    if (navTrigger) {
+        navTrigger.ariaLabel = 'Ouvrir le menu de navigation'
+
+        navTrigger.addEventListener('change', (event) => {
+            const target = event.target as HTMLInputElement
+
+            if (target.checked) {
+                target.ariaLabel = 'Fermer le menu de navigation'
+            } else {
+                target.ariaLabel = 'Ouvrir le menu de navigation'
+            }
+        })
+    }
 </script>
 
 <style>
@@ -118,7 +130,7 @@ const isActiveRoute = (route: string) => {
     .nav-items {
         display: none;
 
-        @media (min-width: 640px) {
+        @media (min-width: 740px) {
             display: flex;
             gap: 4px;
         }
@@ -146,7 +158,7 @@ const isActiveRoute = (route: string) => {
             font-weight: 700;
         }
 
-        @media (min-width: 640px) {
+        @media (min-width: 740px) {
             padding: 12px 14px;
             font-size: 1rem;
         }
@@ -169,7 +181,7 @@ const isActiveRoute = (route: string) => {
             box-shadow: 0 0 0 2px currentcolor;
         }
 
-        @media (min-width: 640px) {
+        @media (min-width: 740px) {
             display: none;
         }
     }
@@ -199,7 +211,7 @@ const isActiveRoute = (route: string) => {
             }
         }
 
-        @media (min-width: 640px) {
+        @media (min-width: 740px) {
             display: none;
         }
     }
