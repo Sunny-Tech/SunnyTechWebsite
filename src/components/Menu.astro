@@ -1,5 +1,4 @@
 ---
-const routeName = Astro.url.pathname
 const FAQ_LINK = 'https://www.sunny-tech.io/faq'
 
 const navigation = [
@@ -10,6 +9,16 @@ const navigation = [
     { label: 'Blog', route: '/blog' },
     { label: 'FAQ', route: FAQ_LINK },
 ]
+
+const isActiveRoute = (route: string) => {
+    const routeName = Astro.url.pathname
+
+    if (route === '/') {
+        return route === routeName
+    }
+
+    return routeName.startsWith(route)
+}
 ---
 
 <header id="site-header" class:list={['header-toolbar']} data-transparent="true">
@@ -21,7 +30,7 @@ const navigation = [
         <nav class="nav-items">
             {
                 navigation.map((nav) => (
-                    <a href={nav.route} class:list={['nav-item', { active: routeName === nav.route }]}>
+                    <a href={nav.route} class:list={['nav-item', { active: isActiveRoute(nav.route) }]}>
                         {nav.label}
                     </a>
                 ))
@@ -39,7 +48,7 @@ const navigation = [
                 (
                     <nav class="nav-items">
                         {navigation.map((nav) => (
-                            <a href={nav.route} class:list={['nav-item', { active: routeName === nav.route }]}>
+                            <a href={nav.route} class:list={['nav-item', { active: isActiveRoute(nav.route) }]}>
                                 {nav.label}
                             </a>
                         ))}
