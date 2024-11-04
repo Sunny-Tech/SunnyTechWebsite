@@ -11,9 +11,11 @@ interface Props {
 const { title, description } = Astro.props
 const url = import.meta.env.SITE
 const image = url + '/social-share4.jpg'
-const titleHtml = title || 'Sunny Tech'
-const titleBis = titleHtml || 'Sunny Tech, la conférence Tech organisée à Montpellier'
-const descriptionHtml =
+const siteName = 'Sunny Tech'
+const siteNameWithTagline = 'Sunny Tech, la conférence Tech organisée à Montpellier'
+const pageTitle = title || siteName
+const fullPageTitle = title ? `${title} | ${siteName}` : siteNameWithTagline
+const pageDescription =
     description ||
     'Sunny Tech est la 1ère conférence Tech organisée à Montpellier. Une conférence annuelle des technologies du numérique, créée par des passionnés, pour des passionnés avec l’ambition de rayonner nationalement, et même internationalement, à travers l’intervention de conférencier.e.s français de renom.'
 const keywords =
@@ -24,47 +26,51 @@ const organizerTwitter = '@sunnyTech_MTP'
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="fr">
     <head>
         <meta charset="UTF-8" />
         <meta name="description" content="Astro description" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="robots" content="index, follow" />
+
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
         <link href="manifest.json" rel="manifest" />
+
         <!-- Add to homescreen for Chrome on Android -->
         <meta content="yes" name="mobile-web-app-capable" />
         <meta name="generator" content={Astro.generator} />
 
         <!-- fallback for manifest.json -->
-        <meta content={titleHtml} name="application-name" />
+        <meta content={siteName} name="application-name" />
 
         <!-- Add to homescreen for Safari on iOS -->
         <meta content="yes" name="apple-mobile-web-app-capable" />
         <meta content="black-translucent" name="apple-mobile-web-app-status-bar-style" />
-        <meta content={titleHtml} name="apple-mobile-web-app-title" />
+        <meta content={siteName} name="apple-mobile-web-app-title" />
 
-        <meta content={descriptionHtml} name="description" />
+        <meta content={pageDescription} name="description" />
         <meta content={keywords} name="keywords" />
         <meta content={organizerName} name="author" />
 
         <!-- Facebook sharing meta data -->
-        <meta content={titleBis} property="og:title" />
-        <meta content={titleHtml} property="og:site_name" />
+        <meta content={pageTitle} property="og:title" />
+        <meta content={siteNameWithTagline} property="og:site_name" />
         <meta content="website" property="og:type" />
         <meta content={url} property="og:url" />
-        <meta content={descriptionHtml} property="og:description" />
-        <meta content="Event" property="og:type" />
+        <meta content={pageDescription} property="og:description" />
+        <meta content="fr" property="og:locale" />
         <meta content={image} property="og:image" />
         <meta content="image/jpeg" property="og:image:type" />
 
         <!-- Twitter meta data -->
         <meta content="summary_large_image" name="twitter:card" />
-        <meta content={organizerTwitter} name="twitter:creator" />
-        <meta content={titleHtml} name="twitter:title" />
-        <meta content={descriptionHtml} name="twitter:description" />
+        <meta content={organizerTwitter} name="twitter:site" />
+        <meta content={pageTitle} name="twitter:title" />
+        <meta content={pageDescription} name="twitter:description" />
         <meta content={image} name="twitter:image" />
 
-        <title>{titleBis}</title>
+        <title>{fullPageTitle}</title>
 
         <ViewTransitions />
     </head>
