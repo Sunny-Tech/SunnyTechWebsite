@@ -37,8 +37,6 @@ const gallery = [
         display: grid;
         width: 100%;
         min-height: 400px;
-        height: calc(100vh - 40px);
-        max-height: 750px;
         grid-template-columns: repeat(3, 1fr);
         grid-template-rows: repeat(5, 1fr);
         grid-gap: 2px;
@@ -96,9 +94,8 @@ const gallery = [
 
     @media (min-width: 640px) {
         .photos-grid {
-            height: calc(100vh - 64px);
             grid-template-columns: repeat(5, 1fr);
-            grid-template-rows: repeat(3, 1fr);
+            grid-template-rows: 1fr 0.5fr 1fr;
         }
 
         .grid-item:nth-child(1) {
