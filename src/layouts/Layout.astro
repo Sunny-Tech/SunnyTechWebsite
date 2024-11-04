@@ -1,4 +1,5 @@
 ---
+import { ViewTransitions } from 'astro:transitions'
 import FooterBlock from '../components/footer/FooterBlock.astro'
 import Menu from '../components/Menu.astro'
 
@@ -64,6 +65,8 @@ const organizerTwitter = '@sunnyTech_MTP'
         <meta content={image} name="twitter:image" />
 
         <title>{titleBis}</title>
+
+        <ViewTransitions />
     </head>
     <body>
         <Menu />
