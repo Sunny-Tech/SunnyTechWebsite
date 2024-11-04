@@ -25,8 +25,9 @@ const gallery = [
             href="https://photos.app.goo.gl/BjqfEkdeMh1WzeNAA"
             target="_blank"
             rel="noopener noreferrer"
-            variant="transparent">
-            Grâce à nos photographes, revivez l'édition 2024
+            variant="transparent"
+            external>
+            Voir les photos de l'édition 2024
         </ButtonLink>
     </div>
 </div>
@@ -92,6 +93,10 @@ const gallery = [
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+
+        :global(a) {
+            margin-top: 16px;
+        }
     }
 
     @media (min-width: 640px) {

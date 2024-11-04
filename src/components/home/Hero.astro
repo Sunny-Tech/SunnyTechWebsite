@@ -1,5 +1,5 @@
 ---
-
+import ButtonLink from '../ui-elements/ButtonLink.astro'
 ---
 
 <div class="container">
@@ -9,8 +9,8 @@
         <h1>26 et 27 juin 2025 à Montpellier</h1>
         <h2>#SeaTechAndSun ☀️️️</h2>
 
-        <a href="https://2024.sunny-tech.io" target="_blank">édition 2024</a>
-        <a aria-disabled="true">CFP fin novembre !</a>
+        <ButtonLink href="https://2024.sunny-tech.io" target="_blank"> Édition 2024 </ButtonLink>
+        <div class="cfp-cta">CFP fin novembre !</div>
     </div>
     <div class="overlay"></div>
 </div>
@@ -25,7 +25,7 @@
         background: url('/backgrounds/home.jpg') no-repeat center center;
         background-size: cover;
         text-align: center;
-        height: clamp(600px, calc(100vh + 1px), 900px);
+        height: clamp(760px, calc(100vh + 1px), 900px);
         position: relative;
         margin-top: -65px;
     }
@@ -72,24 +72,12 @@
         }
     }
 
-    a {
-        color: #fff;
-        text-decoration: none;
+    .cfp-cta {
+        color: #464646;
+        background-color: var(--secondary-background-color);
         border-radius: 4px;
-        background-color: var(--default-primary-color);
-        transition: background-color var(--animation);
         padding: 8px 16px;
         font-weight: 600;
         text-transform: uppercase;
-
-        &:hover {
-            background-color: var(--dark-primary-color);
-        }
-
-        &[aria-disabled='true'] {
-            color: #777;
-            background-color: var(--secondary-background-color);
-            pointer-events: none;
-        }
     }
 </style>
