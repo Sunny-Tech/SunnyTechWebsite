@@ -15,3 +15,5 @@ Un grand merci à TouraineTech, qui nous a inspiré et soutenu pour mettre en pl
 La Flamy Académie ne garantie pas une place en tant que speaker ou speakeuse.
 
 Rejoignez la Flamy Académie et laissez vos idées rayonner sous le soleil de SunnyTech ! 🌞
+
+Pour cela rien de plus simple, choisissez un des deux formats Flamy au moment de soumettre vos sujets au sein de notre CFP, et nous reviendrons vers vous !
