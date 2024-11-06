@@ -4,27 +4,25 @@ interface Props {
     target?: string
     rel?: string
     variant?: 'primary' | 'transparent'
+    external?: boolean
 }
 
-const { href, target = '', rel = '', variant = 'primary' } = Astro.props
+const { href, target = '', rel = '', variant = 'primary', external = false } = Astro.props
 ---
 
 <a class={variant} href={href} target={target} rel={rel}>
     <slot />
-    <span><slot name="icon" /></span>
+    {!external && <slot name="icon" />}
+    {
+        external && (
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M14 3v2h3.59l-9.83 9.83l1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z" />
+            </svg>
+        )
+    }
 </a>
 
 <style>
-    .primary {
-        color: var(--default-primary-color);
-        background: transparent;
-    }
-
-    .transparent {
-        color: #fff;
-        background: transparent;
-    }
-
     a {
         text-decoration: none;
         padding: 8px 16px;
@@ -32,25 +30,34 @@ const { href, target = '', rel = '', variant = 'primary' } = Astro.props
         text-transform: uppercase;
         border-radius: 4px;
         transition: all var(--animation);
-        margin-bottom: 20px;
         display: flex;
+        gap: 8px;
         align-items: center;
         width: fit-content;
+
+        :global(svg) {
+            flex: 0 0 16px;
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
     }
 
-    a:hover {
+    .primary {
+        color: white;
         background-color: var(--default-primary-color);
-        color: #fff;
-    }
-    a.transparent:hover {
-        background-color: var(--dark-primary-color);
-        color: #fff;
+
+        &:hover {
+            background-color: var(--dark-primary-color);
+        }
     }
 
-    a span {
-        margin-left: 8px;
-        width: 16px;
-        height: 16px;
-        fill: currentColor;
+    .transparent {
+        color: var(--default-primary-color);
+        background-color: white;
+
+        &:hover {
+            opacity: 0.8;
+        }
     }
 </style>

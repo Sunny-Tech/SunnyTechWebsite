@@ -14,16 +14,9 @@ const sponsorsCategoriesSorted = sponsorCategories.sort((a, b) => a.order - b.or
 <div class="container">
     <h2>Sponsors</h2>
 
-    {sponsorsCategoriesSorted.length === 0 && <h4>Rejoignez les sponsors de l'édition 2025</h4>}
-    <ButtonLink href="https://sunny-tech.io/sponsoring" target="_blank" rel="noopener noreferrer">
+    {sponsorsCategoriesSorted.length === 0 && <h3>Rejoignez les sponsors de l'édition 2025</h3>}
+    <ButtonLink href="https://sunny-tech.io/sponsoring" target="_blank" rel="noopener noreferrer" external>
         Devenez sponsor de Sunny Tech !
-        <Fragment slot="icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                ><title>arrow-right-bold-circle</title><path
-                    d="M2,12A10,10 0 0,1 12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12M17,12L12,7V10H8V14H12V17L17,12Z"
-                ></path>
-            </svg></Fragment
-        >
     </ButtonLink>
 
     {
@@ -50,16 +43,8 @@ const sponsorsCategoriesSorted = sponsorCategories.sort((a, b) => a.order - b.or
 
     {
         sponsorsCategoriesSorted.length > 0 && (
-            <ButtonLink href="https://sunny-tech.io/sponsoring" target="_blank" rel="noopener noreferrer">
+            <ButtonLink href="https://sunny-tech.io/sponsoring" target="_blank" rel="noopener noreferrer" external>
                 Devenez sponsor de Sunny Tech !
-                <Fragment slot="icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                        <>
-                            <title>arrow-right-bold-circle</title>
-                            <path d="M2,12A10,10 0 0,1 12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12M17,12L12,7V10H8V14H12V17L17,12Z" />
-                        </>
-                    </svg>
-                </Fragment>
             </ButtonLink>
         )
     }
@@ -85,6 +70,10 @@ const sponsorsCategoriesSorted = sponsorCategories.sort((a, b) => a.order - b.or
 
     .block {
         margin-bottom: 40px;
+
+        :global(a) + & {
+            margin-top: 20px;
+        }
     }
 
     .logos-wrapper {
