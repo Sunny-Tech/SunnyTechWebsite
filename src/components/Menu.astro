@@ -2,7 +2,6 @@
 const FAQ_LINK = 'https://www.sunny-tech.io/faq'
 
 const navigation = [
-    { label: 'Home', route: '/' },
     { label: 'Team', route: '/team' },
     { label: 'Code de conduite', route: '/coc' },
     { label: 'Lieu', route: '/location' },
@@ -38,8 +37,8 @@ const isActiveRoute = (route: string) => {
             }
         </nav>
 
-        <input type="checkbox" id="nav-trigger" class="nav-trigger" aria-label="Ouvrir/fermer le menu de navigation" />
-        <label for="nav-trigger">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label id="nav-trigger-label" for="nav-trigger" aria-label="Ouvrir/fermer le menu de navigation">
             <svg xmlns="https://www.w3.org/2000/svg" viewBox="0 0 24 24">
                 <path fill="currentColor" d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path>
             </svg>
@@ -69,18 +68,18 @@ const isActiveRoute = (route: string) => {
         }
     })
 
-    const navTrigger = document.querySelector('#nav-trigger') as HTMLInputElement | null
+    const navTriggerLabel = document.querySelector('#nav-trigger-label') as HTMLInputElement | null
 
-    if (navTrigger) {
-        navTrigger.ariaLabel = 'Ouvrir le menu de navigation'
+    if (navTriggerLabel) {
+        navTriggerLabel.ariaLabel = 'Ouvrir le menu de navigation'
 
-        navTrigger.addEventListener('change', (event) => {
+        document.querySelector('#nav-trigger')?.addEventListener('change', (event) => {
             const target = event.target as HTMLInputElement
 
             if (target.checked) {
-                target.ariaLabel = 'Fermer le menu de navigation'
+                navTriggerLabel.ariaLabel = 'Fermer le menu de navigation'
             } else {
-                target.ariaLabel = 'Ouvrir le menu de navigation'
+                navTriggerLabel.ariaLabel = 'Ouvrir le menu de navigation'
             }
         })
     }
