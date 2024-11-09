@@ -2,6 +2,9 @@
 import type { OpenPlannerType } from '../type'
 import LayoutWithTitle from '../layouts/LayoutWithTitle.astro'
 import GenericIcon from '../components/icons/GenericIcon.astro'
+import Grid from '../components/ui-elements/Grid.astro'
+import Cluster from '../components/ui-elements/Cluster.astro'
+import Stack from '../components/ui-elements/Stack.astro'
 
 const OPENPLANNER_URL = import.meta.env.OPENPLANNER_URL
 const response = await fetch(OPENPLANNER_URL)
@@ -12,96 +15,53 @@ const openPlannerData: OpenPlannerType = await response.json()
     htmlTitle="SunnyTech Équipe"
     title="Équipe"
     subDescription="Sunny Tech est une assocation bénévole à but non lucratif (loi 1901) créée par des membres actifs de la communauté tech de Montpellier, tous et toutes bénévoles.">
-    <div class="container">
+    <Grid space="2rem" min="20rem">
         {
             openPlannerData.team.map((block) => (
-                <div class="block">
-                    <img src={block.photoUrl} alt="" />
-                    <div class="content">
-                        <h2>{block.name}</h2>
-                        <ul>
-                            {block.socials.map((social) => (
-                                <li>
-                                    <a
-                                        href={social.link}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        aria-label={social.icon}>
-                                        <GenericIcon name={social.icon} />
-                                    </a>
-                                </li>
-                            ))}
-                        </ul>
+                <Cluster space="1.375rem" align="center" nowrap>
+                    <img class="photo" src={block.photoUrl} alt="" />
+                    <div>
+                        <Stack align="flex-start" space="0.5rem">
+                            <h2 class="fs2">{block.name}</h2>
+                            <ul class="list-inline">
+                                {block.socials.map((social) => (
+                                    <li class="list-inline-item">
+                                        <a
+                                            href={social.link}
+                                            class="social-icon"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            aria-label={social.icon}>
+                                            <GenericIcon name={social.icon} />
+                                        </a>
+                                    </li>
+                                ))}
+                            </ul>
+                        </Stack>
                     </div>
-                </div>
+                </Cluster>
             ))
         }
-    </div>
+    </Grid>
 </LayoutWithTitle>
 
 <style>
-    .container {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        flex-wrap: wrap;
-        gap: 2rem;
-        justify-content: space-between;
+    .photo {
+        border-radius: 50%;
+        object-fit: cover;
+        box-sizing: border-box;
+        width: 10rem;
+        height: 10rem;
+        aspect-ratio: 1;
+        border: 0.625rem solid var(--component);
     }
 
-    .block {
-        display: flex;
-        min-width: 300px;
-        margin-bottom: 2rem;
-        img {
-            border-radius: 50%;
-            object-fit: cover;
-            box-sizing: border-box;
-            width: 160px;
-            height: 160px;
-            aspect-ratio: 1;
-            border: 10px solid #f2f2f2;
-        }
-    }
+    .social-icon {
+        fill: var(--text-subtle);
+        transition: fill var(--animation);
 
-    .content {
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
-        gap: 8px;
-        margin-inline-start: 22px;
-
-        h2 {
-            font-weight: 500;
-        }
-        ul {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-
-            li {
-                float: left;
-                margin-inline-end: 12px;
-
-                a {
-                    fill: var(--secondary-text-color);
-                    transition: fill var(--animation);
-                }
-                a:hover {
-                    fill: var(--default-primary-color);
-                }
-            }
-        }
-    }
-
-    @media (max-width: 1000px) {
-        .container {
-            grid-template-columns: repeat(2, 1fr);
-        }
-    }
-    @media (max-width: 768px) {
-        .container {
-            grid-template-columns: repeat(1, 1fr);
-            justify-items: center;
+        &:hover {
+            fill: var(--brand-solid);
         }
     }
 </style>

@@ -1,5 +1,8 @@
 ---
 import ButtonLink from '../ui-elements/ButtonLink.astro'
+import Cluster from '../ui-elements/Cluster.astro'
+import ContentContainer from '../ui-elements/ContentContainer.astro'
+import Stack from '../ui-elements/Stack.astro'
 
 const blocks = [
     {
@@ -19,91 +22,57 @@ const blocks = [
 ]
 ---
 
-<div class="container">
-    <div class="image-container isLaptopPlus">
-        <a href="/team" class="image-link">
-            <img class="organizers-photo" src="/backgrounds/team.jpg" alt="Organizer" loading="lazy" />
-        </a>
-    </div>
+<ContentContainer spaceBlock="4rem">
+    <Cluster space="2rem">
+        <div class="image-container is-laptop-plus">
+            <a href="/team" tabindex="-1">
+                <img class="organizers-photo" src="/backgrounds/team.jpg" alt="Organizer" loading="lazy" />
+            </a>
+        </div>
 
-    <div class="description-block">
-        {
-            blocks.map((block) => (
-                <div class="block">
-                    <h3>{block.title}</h3>
-                    <div class="description">{block.description}</div>
+        <div class="description-block">
+            <Stack space="2rem">
+                {
+                    blocks.map((block) => (
+                        <div>
+                            <Stack>
+                                <h3>{block.title}</h3>
+                                <p class="text-subtle">{block.description}</p>
 
-                    {block.callToAction && (
-                        <ButtonLink href={block.callToAction.link}>{block.callToAction.label}</ButtonLink>
-                    )}
-                </div>
-            ))
-        }
-    </div>
-</div>
+                                {block.callToAction && (
+                                    <ButtonLink href={block.callToAction.link}>{block.callToAction.label}</ButtonLink>
+                                )}
+                            </Stack>
+                        </div>
+                    ))
+                }
+            </Stack>
+        </div>
+    </Cluster>
+</ContentContainer>
 
 <style>
-    .container {
-        display: flex;
-        max-width: var(--max-container-width);
-        margin: 0 auto;
-        padding: 64px 0;
-    }
-
     .image-container {
         flex: 1;
-        margin-inline-end: 32px;
-        border-radius: 4px;
+        border-radius: 0.25rem;
         overflow: hidden;
+
+        &.is-laptop-plus {
+            display: block;
+
+            @media (max-width: 720px) {
+                display: none;
+            }
+        }
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
     }
 
-    .block:not(:last-of-type) {
-        margin-bottom: 32px;
-    }
-    h3 {
-        font-weight: 500;
-        font-size: 24px;
-        margin-bottom: 20px;
-    }
-
-    .image-link {
-        width: 80%;
-        height: 80%;
-    }
-    .organizers-photo {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
     .description-block {
         flex: 1.5;
-    }
-    .description {
-        color: var(--secondary-text-color);
-
-        & + :global(a) {
-            margin-top: 16px;
-        }
-    }
-    .cta-button {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
-
-    .isLaptopPlus {
-        display: block;
-    }
-
-    @media (max-width: 720px) {
-        .isLaptopPlus {
-            display: none;
-        }
-    }
-
-    @media (max-width: 1280px) {
-        .container {
-            padding: 0 24px;
-        }
     }
 </style>

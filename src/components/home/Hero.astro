@@ -9,7 +9,7 @@ import ButtonLink from '../ui-elements/ButtonLink.astro'
         <img src="/logos-sunnytech/logo.svg" alt="SunnyTech" loading="lazy" />
 
         <h1>26 et 27 juin 2025 à Montpellier</h1>
-        <h2>#SeaTechAndSun ☀️️️</h2>
+        <h2 class="fs1 fw-regular">#SeaTechAndSun ☀️️️</h2>
 
         <ButtonLink href="https://2024.sunny-tech.io" target="_blank">Édition 2024</ButtonLink>
         <div class="cfp-cta">CFP fin novembre !</div>
@@ -26,11 +26,11 @@ import ButtonLink from '../ui-elements/ButtonLink.astro'
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        padding: 100px 16px 24px;
+        padding: 6.25rem 1rem 1.4rem;
         text-align: center;
-        height: clamp(760px, calc(100vh + 1px), 900px);
+        height: clamp(47.5rem, calc(100vh + 1px), 56.25rem);
         position: relative;
-        margin-top: -65px;
+        margin-top: -4rem;
     }
 
     .overlay {
@@ -48,8 +48,13 @@ import ButtonLink from '../ui-elements/ButtonLink.astro'
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        gap: 20px;
+        gap: 1.25rem;
         z-index: 1;
+        color: var(--brand-contrast);
+
+        img {
+            width: 25rem;
+        }
     }
 
     #backgroundHome {
@@ -62,34 +67,11 @@ import ButtonLink from '../ui-elements/ButtonLink.astro'
         z-index: -1;
     }
 
-    .content {
-        img {
-            width: 400px;
-        }
-
-        h1 {
-            font-size: 28px;
-            line-height: 1.25;
-            font-weight: 700;
-            color: #fff;
-
-            @media (min-width: 640px) {
-                font-size: 40px;
-            }
-        }
-
-        h2 {
-            font-size: 20px;
-            font-weight: 400;
-            color: #fff;
-        }
-    }
-
     .cfp-cta {
-        color: #464646;
-        background-color: var(--secondary-background-color);
-        border-radius: 4px;
-        padding: 8px 16px;
+        color: var(--text-subtle);
+        background-color: var(--component);
+        border-radius: 0.25rem;
+        padding: 0.5rem 1rem;
         font-weight: 600;
         text-transform: uppercase;
     }

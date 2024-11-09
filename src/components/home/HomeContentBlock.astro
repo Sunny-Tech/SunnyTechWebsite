@@ -1,4 +1,7 @@
 ---
+import ContentContainer from '../ui-elements/ContentContainer.astro'
+import Stack from '../ui-elements/Stack.astro'
+
 const stats = {
     attendees: {
         label: 'Participants',
@@ -19,9 +22,9 @@ const stats = {
 }
 ---
 
-<div class="container">
-    <div>
-        <h2 class="container-title">Contenu</h2>
+<ContentContainer spaceBlock="4rem">
+    <Stack space="1.5rem">
+        <h2>Contenu</h2>
         <p>
             Plusieurs conférences et ateliers en parallèle sur 2 journées, sujets transverses allant des outils,
             méthodologies de conception et développement logiciel jusqu’à la gestion de produit et notamment
@@ -31,76 +34,45 @@ const stats = {
             Les valeurs que porte Sunny Tech sont définies et partagées par ses membres, vous pourrez les retrouver le
             jour de l'évènement.
         </p>
-    </div>
+    </Stack>
 
     <div class="statistics-block">
         {
             Object.entries(stats).map(([_, stat]) => (
-                <div class="item">
+                <div>
                     <div class="numbers">{stat.number}</div>
                     <div class="label">{stat.label}</div>
                 </div>
             ))
         }
     </div>
-</div>
+</ContentContainer>
 
 <style>
-    .container {
-        padding: 64px 0;
-        display: grid;
-        grid-gap: 32px;
-        grid-template-columns: 1fr;
-        max-width: var(--max-container-width);
-        margin: 0 auto;
-    }
-
     .statistics-block {
         width: 100%;
         display: grid;
-        grid-gap: 32px 16px;
+        gap: 2rem 1rem;
         grid-template-columns: repeat(2, 1fr);
     }
 
-    h2 {
-        font-weight: 500;
-        font-size: 32px;
-        margin-bottom: 20px;
-    }
-
     .numbers {
-        font-size: 40px;
-    }
+        font-size: var(--fs4);
 
-    .numbers::after {
-        content: '';
-        display: block;
-        height: 2px;
-        width: 64px;
-        background-color: var(--default-primary-color);
+        @media (min-width: 640px) {
+            font-size: var(--fs5);
+        }
+
+        &::after {
+            content: '';
+            display: block;
+            height: max(0.125rem, 2px);
+            width: 4rem;
+            background-color: var(--brand-solid);
+        }
     }
 
     .label {
-        margin-top: 4px;
-    }
-
-    @media (min-width: 640px) {
-        .content {
-            grid-gap: 64px;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-        }
-
-        .statistics-block {
-            grid-gap: 32px;
-        }
-
-        .numbers {
-            font-size: 56px;
-        }
-    }
-    @media (max-width: 1280px) {
-        .container {
-            padding: 12px 24px 0;
-        }
+        margin-top: 0.25rem;
     }
 </style>

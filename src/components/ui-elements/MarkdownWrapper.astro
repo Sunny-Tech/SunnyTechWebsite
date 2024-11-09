@@ -7,17 +7,17 @@
         max-width: 80ch;
 
         :global(h1) {
-            font-size: 2.5rem;
+            font-size: var(--fs4);
             margin: 1.5rem 0 5rem;
         }
 
         :global(h2) {
-            font-size: 1.5rem;
+            font-size: var(--fs2);
             margin: 0 0 0.5rem;
         }
 
         :global(h3) {
-            font-size: 1.15rem;
+            font-size: var(--fs1);
             margin: 0 0 0.35rem;
         }
 
@@ -26,18 +26,18 @@
         }
 
         :global(img) {
-            margin: 24px 0;
+            margin: 1.5rem 0;
         }
 
         :global(a) {
-            color: var(--default-primary-color);
-            text-decoration: 2px underline var(--light-primary-color);
-            text-underline-offset: 4px;
+            color: var(--brand-solid);
+            text-decoration: 2px underline var(--brand-border);
+            text-underline-offset: 2px;
             transition: all var(--animation);
 
             &:hover {
-                color: var(--dark-primary-color);
-                text-decoration: 4px underline var(--dark-primary-color);
+                color: var(--brand-solid-hover);
+                text-decoration: 2px underline var(--brand-solid-hover);
             }
         }
 

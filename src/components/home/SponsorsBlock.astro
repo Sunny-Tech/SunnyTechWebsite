@@ -1,6 +1,9 @@
 ---
 import type { OpenPlannerType } from '../../type'
 import ButtonLink from '../ui-elements/ButtonLink.astro'
+import ContentContainer from '../ui-elements/ContentContainer.astro'
+import Grid from '../ui-elements/Grid.astro'
+import Stack from '../ui-elements/Stack.astro'
 
 interface Props {
     sponsorCategories: OpenPlannerType['sponsors']
@@ -11,7 +14,7 @@ const { sponsorCategories } = Astro.props
 const sponsorsCategoriesSorted = sponsorCategories.sort((a, b) => a.order - b.order)
 ---
 
-<div class="container">
+<ContentContainer>
     <h2>Sponsors</h2>
 
     {sponsorsCategoriesSorted.length === 0 && <h3>Rejoignez les sponsors de l'édition 2025</h3>}
@@ -22,20 +25,31 @@ const sponsorsCategoriesSorted = sponsorCategories.sort((a, b) => a.order - b.or
     {
         sponsorsCategoriesSorted.map(
             (sponsorCategory: { name: string; sponsors: { website: string; name: string; logoUrl: string }[] }) => (
-                <div class="block">
-                    <h3 class="block-title">{sponsorCategory.name}</h3>
-                    <div class="logos-wrapper">
-                        {sponsorCategory.sponsors.map((sponsor: { website: string; name: string; logoUrl: string }) => (
-                            <a
-                                class="logo-item"
-                                href={sponsor.website}
-                                title={sponsor.name}
-                                target="_blank"
-                                rel="noopener noreferrer">
-                                <img class="logo-img" src={sponsor.logoUrl} alt={sponsor.name} loading="lazy" />
-                            </a>
-                        ))}
-                    </div>
+                <div>
+                    <Stack space="0.375rem">
+                        <h3>{sponsorCategory.name}</h3>
+                        <div>
+                            <Grid space="1.5rem" min="12rem">
+                                {sponsorCategory.sponsors.map(
+                                    (sponsor: { website: string; name: string; logoUrl: string }) => (
+                                        <a
+                                            class="logo-item"
+                                            href={sponsor.website}
+                                            title={sponsor.name}
+                                            target="_blank"
+                                            rel="noopener noreferrer">
+                                            <img
+                                                class="logo-img"
+                                                src={sponsor.logoUrl}
+                                                alt={sponsor.name}
+                                                loading="lazy"
+                                            />
+                                        </a>
+                                    )
+                                )}
+                            </Grid>
+                        </div>
+                    </Stack>
                 </div>
             )
         )
@@ -48,60 +62,22 @@ const sponsorsCategoriesSorted = sponsorCategories.sort((a, b) => a.order - b.or
             </ButtonLink>
         )
     }
-</div>
+</ContentContainer>
 
 <style>
-    .container {
-        max-width: var(--max-container-width);
-        margin: 20px auto;
-    }
-
-    h2 {
-        font-weight: 500;
-        font-size: 32px;
-        margin-bottom: 20px;
-    }
-
-    h4 {
-        font-weight: 500;
-        font-size: 24px;
-        margin-bottom: 10px;
-    }
-
-    .block {
-        margin-bottom: 40px;
-
-        :global(a) + & {
-            margin-top: 20px;
-        }
-    }
-
-    .logos-wrapper {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-        gap: 8px;
-    }
-
     .logo-item {
-        padding: 12px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-        border-radius: 4px;
+        padding: 1rem 1.5rem;
+        box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.15);
+        border-radius: 0.25rem;
+
+        &:hover {
+            outline: 1px solid rgba(0, 0, 0, 0.25);
+        }
     }
 
     .logo-img {
         width: 100%;
-        height: 84px;
+        height: 5.25rem;
         object-fit: contain;
-    }
-
-    @media (min-width: 640px) {
-        .logos-wrapper {
-            grid-template-columns: repeat(4, 1fr);
-        }
-    }
-    @media (max-width: 1280px) {
-        .container {
-            padding: 12px 24px 0;
-        }
     }
 </style>

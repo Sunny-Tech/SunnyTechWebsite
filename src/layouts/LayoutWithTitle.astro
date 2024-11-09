@@ -1,6 +1,7 @@
 ---
 import Layout from './Layout.astro'
 import Separator from '../components/ui-elements/Separator.astro'
+import ContentContainer from '../components/ui-elements/ContentContainer.astro'
 
 interface Props {
     title: string
@@ -15,45 +16,21 @@ const titleHtml = htmlTitle || title
 ---
 
 <Layout title={titleHtml}>
-    <div class="container">
+    <ContentContainer spaceBlock="4rem">
         <h1>{title}</h1>
-        {description && <p>{description}</p>}
-    </div>
+        {description && <p class="fs1">{description}</p>}
+    </ContentContainer>
     <Separator bottomMargin={!subDescription} />
     {
         subDescription && (
-            <div class="subDescriptionContainer">
-                <div class="container">
-                    <p>{subDescription}</p>
-                </div>
+            <div style="background-color: var(--component)">
+                <ContentContainer spaceBlock="4rem">
+                    <p class="fs1">{subDescription}</p>
+                </ContentContainer>
             </div>
         )
     }
-    <div class="container">
+    <ContentContainer spaceBlock="4rem">
         <slot />
-    </div>
+    </ContentContainer>
 </Layout>
-
-<style>
-    .container {
-        max-width: var(--max-container-width);
-        margin: 0 auto;
-        padding: 64px 12px;
-    }
-
-    .subDescriptionContainer {
-        background-color: var(--secondary-background-color);
-    }
-
-    h1 {
-        font-size: 32px;
-        font-weight: 500;
-        margin-bottom: 20px;
-    }
-
-    p {
-        font-size: 18px;
-        line-height: 1.5;
-        margin-bottom: 20px;
-    }
-</style>
