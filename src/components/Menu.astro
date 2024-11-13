@@ -88,13 +88,13 @@ const isActiveRoute = (route: string) => {
 <style>
     .header-toolbar {
         z-index: 2;
-        border-bottom: 1px solid var(--divider-color);
-        background-color: var(--primary-background-color);
+        border-bottom: 1px solid var(--border);
+        background-color: var(--background);
         transition:
             background-color var(--animation),
             border-bottom-color var(--animation),
             color var(--animation);
-        color: var(--hero-text-color, var(--primary-text-color));
+        color: var(--hero-text-color, var(--text));
         position: sticky;
         top: 0;
         left: 0;
@@ -112,15 +112,15 @@ const isActiveRoute = (route: string) => {
         align-items: center;
         max-width: var(--max-container-width);
         margin: 0 auto;
-        padding: 7px 16px;
-        min-height: 64px;
+        padding: 0.4rem 1rem;
+        min-height: 4rem;
     }
 
     .toolbar-logo {
         display: block;
-        width: 150px;
-        height: 32px;
-        background-color: var(--default-primary-color);
+        width: 3rem;
+        height: 2rem;
+        background-color: var(--brand-solid);
         transition: background-color var(--animation);
         mask: url('/logos-sunnytech/logo-monochrome.svg') no-repeat;
         mask-size: contain;
@@ -131,13 +131,13 @@ const isActiveRoute = (route: string) => {
 
         @media (min-width: 740px) {
             display: flex;
-            gap: 4px;
+            gap: 0.25rem;
         }
     }
 
     .nav-item {
-        font-size: 0.85rem;
-        padding: 8px 14px;
+        font-size: 0.875rem;
+        padding: 0.5rem 1rem;
         text-transform: uppercase;
         text-decoration: none;
         color: inherit;
@@ -148,33 +148,37 @@ const isActiveRoute = (route: string) => {
         border-bottom: 2px solid transparent;
 
         &:hover {
-            border-bottom-color: var(--default-primary-color);
+            border-bottom-color: var(--brand-solid);
         }
 
         &.active {
-            color: var(--default-primary-color) !important;
-            border-bottom-color: var(--default-primary-color) !important;
+            color: var(--brand-solid) !important;
+            border-bottom-color: var(--brand-solid) !important;
             font-weight: 700;
         }
 
         @media (min-width: 740px) {
-            padding: 12px 14px;
-            font-size: 1rem;
+            padding: 0.75rem 0.875rem;
+            font-size: var(--fs0);
         }
     }
 
     .nav-trigger {
         position: absolute;
         clip: rect(0, 0, 0, 0);
+
+        @media (min-width: 740px) {
+            display: none;
+        }
     }
 
     label[for='nav-trigger'] {
-        width: 24px;
-        height: 24px;
+        width: 1.5rem;
+        height: 1.5rem;
         cursor: pointer;
         position: relative;
         z-index: 1100;
-        border-radius: 4px;
+        border-radius: 0.25rem;
 
         .nav-trigger:focus-visible + & {
             box-shadow: 0 0 0 2px currentcolor;
@@ -190,23 +194,24 @@ const isActiveRoute = (route: string) => {
         z-index: 1000;
         right: -200px;
         background-color: var(--nav-drawer-bg-color, rgba(255, 255, 255, 0.9));
+        overflow-y: auto;
         transition: right var(--slide-animation);
 
         .nav-trigger:checked ~ & {
             right: 0;
             bottom: 0;
             top: 0;
-            padding: 60px 32px;
+            padding: 3.75rem 2rem;
 
             .nav-items {
                 display: flex;
                 flex-direction: column;
                 align-items: flex-start;
-                gap: 8px;
+                gap: 0.5rem;
             }
 
             .nav-item {
-                padding: 12px 12px 12px 0;
+                padding: 0.75rem 0.75rem 0.75rem 0;
             }
         }
 
@@ -215,39 +220,15 @@ const isActiveRoute = (route: string) => {
         }
     }
 
-    .profile-image {
-        width: 32px;
-        height: 32px;
-        border-radius: 50%;
-        background-position: center;
-        background-size: cover;
-    }
-
-    .profile-details .profile-image {
-        margin-right: 16px;
-        width: 48px;
-        height: 48px;
-    }
-
-    .profile-name,
-    .profile-email {
-        font-size: 14px;
-        display: block;
-        white-space: nowrap;
-        color: var(--secondary-text-color);
-    }
-
-    .profile-action {
-        margin-top: 4px;
-        text-transform: uppercase;
-        color: var(--default-primary-color);
-        font-size: 14px;
-        cursor: pointer;
-    }
-
     .logo-container {
         display: flex;
         align-items: center;
         justify-content: center;
+
+        &:focus-within {
+            border-radius: 2px;
+            outline: 2px solid var(--brand-solid);
+            outline-offset: 2px;
+        }
     }
 </style>

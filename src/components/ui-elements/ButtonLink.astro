@@ -25,35 +25,35 @@ const { href, target = '', rel = '', variant = 'primary', external = false } = A
 <style>
     a {
         text-decoration: none;
-        padding: 8px 16px;
+        padding: 0.5rem 1rem;
         font-weight: 600;
         text-transform: uppercase;
-        border-radius: 4px;
+        border-radius: 0.25rem;
         transition: all var(--animation);
         display: flex;
-        gap: 8px;
+        gap: 0.5rem;
         align-items: center;
         width: fit-content;
 
         :global(svg) {
-            flex: 0 0 16px;
-            width: 16px;
-            height: 16px;
+            flex: 0 0 1rem;
+            width: 1rem;
+            height: 1rem;
             fill: currentColor;
         }
     }
 
     .primary {
         color: white;
-        background-color: var(--default-primary-color);
+        background-color: var(--brand-solid);
 
         &:hover {
-            background-color: var(--dark-primary-color);
+            background-color: var(--brand-solid-hover);
         }
     }
 
     .transparent {
-        color: var(--default-primary-color);
+        color: var(--brand-solid);
         background-color: white;
 
         &:hover {

@@ -2,57 +2,32 @@
 import FooterSocial from './FooterSocial.astro'
 import FooterRel from './FooterRel.astro'
 import FooterNav from './FooterNav.astro'
+import ContentContainer from '../ui-elements/ContentContainer.astro'
 ---
 
 <footer class="footer-block">
-    <div class="container">
+    <ContentContainer>
         <FooterSocial />
         <FooterRel />
         <FooterNav />
-    </div>
+    </ContentContainer>
 </footer>
 
 <style>
     .footer-block {
-        margin-top: 40px;
-        display: block;
-        position: relative;
+        margin-top: 2.5rem;
         color: var(--footer-text-color);
         background: var(--footer-background-color);
-        font-size: 14px;
-        line-height: 1.5;
-    }
+        font-size: 0.875rem;
 
-    .container {
-        margin: 0 auto;
-        padding: 20px 0;
-        position: relative;
-        max-width: var(--max-container-width);
-    }
+        :global(a) {
+            color: var(--footer-text-color);
+            text-decoration: 2px underline rgba(255, 255, 255, 0.4);
+            text-underline-offset: 2px;
 
-    .fab .back-to-top {
-        background: var(--primary-background-color);
-        color: red;
-        pointer-events: all;
-        box-shadow:
-            0 0 8px 0 rgba(0, 0, 0, 0.12),
-            0 8px 8px 0 rgba(0, 0, 0, 0.24);
-        border-radius: 50%;
-        border: none;
-        padding: 12px;
-        cursor: pointer;
-    }
-
-    .fab {
-        position: absolute;
-        right: 25px;
-        top: -25px;
-        z-index: 1;
-    }
-
-    @media (min-width: 640px) {
-        .container {
-            padding: 15px 36px;
+            &:hover {
+                text-decoration: 2px underline var(--background);
+            }
         }
     }
 </style>

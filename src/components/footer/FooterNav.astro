@@ -1,57 +1,20 @@
 ---
+import Cluster from '../ui-elements/Cluster.astro'
+
 const url = import.meta.env.SITE
 ---
 
-<div class="nav-inline">
+<div>
     <a href={url} target="_blank" rel="noopener noreferrer">
         <img class="footer-logo" src="/logos-sunnytech/logo-monochrome.svg" alt="SunnyTech" loading="lazy" />
     </a>
 </div>
 
 <style>
-    .nav-inline {
-        margin: 0 20px;
-        display: flex;
-        justify-content: center;
-    }
-
-    .copyright {
-        padding: 15px 0 0;
-        float: left;
-    }
-
     .footer-logo {
-        width: 120px;
-        height: 80px;
+        margin: 0 auto;
+        width: 7.5rem;
+        height: 5rem;
         object-fit: contain;
-    }
-
-    a {
-        color: var(--footer-text-color);
-        padding-bottom: 2px;
-        text-decoration: none;
-    }
-
-    a:hover {
-        text-decoration: underline;
-    }
-
-    @media (min-width: 768px) {
-        .nav-inline {
-            margin: 15px 0;
-        }
-    }
-
-    @media (min-width: 505px) {
-        .copyright {
-            margin: 0;
-            padding: 15px 0 0 0;
-            float: right;
-            text-align: right;
-        }
-
-        .coc {
-            display: inline-flex;
-        }
     }
 </style>

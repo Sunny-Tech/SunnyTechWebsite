@@ -1,71 +1,31 @@
 ---
+import Cluster from '../ui-elements/Cluster.astro'
+
 const socials = [
     { name: 'twitter', url: 'https://twitter.com/sunnytech_mtp' },
     { name: 'linkedin', url: 'https://www.linkedin.com/company/sunny-tech-event/' },
 ]
 ---
 
-<div class="social-footer">
-    <div class="group">
+<div class="text-uppercase fw-medium">
+    <Cluster justify="space-between">
         <span>Suit notre <a href="/blog">blog</a></span>
-    </div>
-    <div class="group">
-        <span>Suivez nous</span>
-        <ul>
-            {
-                socials.map(({ name, url }) => (
-                    <li>
-                        <a href={url} target="_blank" rel="noopener">
-                            {name}
-                        </a>
-                    </li>
-                ))
-            }
-        </ul>
-    </div>
-    <div class="group">
+
+        <Cluster space="1rem">
+            <span>Suivez nous</span>
+            <ul class="list-inline">
+                {
+                    socials.map(({ name, url }) => (
+                        <li class="list-inline-item">
+                            <a href={url} target="_blank" rel="noopener">
+                                {name}
+                            </a>
+                        </li>
+                    ))
+                }
+            </ul>
+        </Cluster>
+
         <a href="mailto:contact@sunny-tech.io">Envoyez-nous un email</a>
-    </div>
+    </Cluster>
 </div>
-
-<style>
-    .social-footer {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        gap: 1rem;
-        color: var(--footer-text-color);
-    }
-
-    .group {
-        text-transform: uppercase;
-        font-weight: 500;
-    }
-
-    ul {
-        display: inline;
-        padding-left: 10px;
-    }
-
-    li {
-        display: inline-block;
-        margin-right: 6px;
-    }
-
-    a {
-        color: inherit;
-        text-decoration: none;
-        border-bottom: 1px solid currentColor;
-    }
-
-    @media (min-width: 439px) {
-        .group {
-            padding-top: 17px;
-        }
-    }
-    @media (max-width: 1280px) {
-        footer {
-            padding: 0 24px 12px;
-        }
-    }
-</style>

@@ -75,8 +75,9 @@ const organizerTwitter = '@sunnyTech_MTP'
         <ViewTransitions />
     </head>
     <body>
+        <a href="#main-content" class="skip-link">Aller au contenu principal</a>
         <Menu />
-        <main>
+        <main id="#main-content">
             <slot />
         </main>
 
@@ -85,50 +86,61 @@ const organizerTwitter = '@sunnyTech_MTP'
 </html>
 <style is:global>
     :root {
-        --dark-primary-color: #901f26;
-        --default-primary-color: #d63f49;
-        --focused-color: #e89399;
-        --light-primary-color: #e89399;
-        --text-primary-color: #ffffff;
-        --accent-color: #ff9800;
-        --primary-background-color: #ffffff;
-        --primary-text-color: #212121;
-        --secondary-text-color: #757575;
-        --disabled-text-color: #bdbdbd;
-        --divider-color: #bdbdbd;
-        --footer-background-color: #d63f49;
-        --footer-text-color: #ffffff;
-        --twitter-color: #4099ff;
-        --facebook-color: #3b5998;
-        --border-dark-color: #bbbbbb;
-        --border-light-color: #e2e2e2;
-        --error-color: #e64a19;
-        --tertiary-background-color: rgb(247, 247, 247);
+        --white: white;
 
-        /* Custom */
-        --default-background-color: #ffffff;
-        --secondary-background-color: #f5f5f5;
-        --additional-background-color: #f7f7f7;
-        --contrast-additional-background-color: #e8e8e8;
+        --grey-1: #f5f5f5;
+        --grey-2: #e2e2e2;
+        --grey-3: #bdbdbd;
+        --grey-4: #757575;
+        --grey-5: #212121;
+
+        --pink-1: #e89399;
+        --pink-2: #d63f49;
+        --pink-3: #901f26;
+
+        --brand-border: var(--pink-1);
+        --brand-solid: var(--pink-2);
+        --brand-solid-hover: var(--pink-3);
+        --brand-contrast: var(--white);
+
+        --background: var(--white);
+        --component: var(--grey-1);
+        --line: var(--grey-2);
+        --border: var(--grey-3);
+        --text-disabled: var(--grey-3);
+        --text-subtle: var(--grey-4);
+        --text: var(--grey-5);
+
+        --footer-background-color: var(--brand-solid);
+        --footer-text-color: var(--brand-contrast);
+
         --animation: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         --slide-animation: 0.4s cubic-bezier(0, 0, 0.2, 1);
-        --border-radius: 4px;
-        --box-shadow: 0 2px 1px -1px rgb(0 0 0 / 20%), 0 1px 1px 0 rgb(0 0 0 / 14%), 0 1px 3px 0 rgb(0 0 0 / 12%);
-        --box-shadow-primary-color: 0 3px 3px -2px rgb(251, 69, 82, 0.3), 0 3px 4px 0 rgb(251, 69, 82, 0.3),
-            0 1px 8px 0 rgb(251, 69, 82, 0.3);
-        --box-shadow-primary-color-hover: 0 1px 3px -2px rgb(251, 69, 82, 0.5), 0 4px 5px 0 rgb(251, 69, 82, 0.5),
-            0 2px 9px 0 rgb(251, 69, 82, 0.5);
+        --border-radius: 0.25rem;
         --font-family: -apple-system, blinkmacsystemfont, 'Segoe UI', roboto, helvetica, arial, sans-serif,
             'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
         --max-container-width: 1280px;
-        --primary-color-transparent: rgba(183, 105, 58, 0.1);
-        --primary-color-light: rgba(183, 105, 58, 0.8);
-        --primary-color-white: #ede7f6;
 
-        /* Labels */
-        --gde: #3d5afe;
-        --wtm: #1de9b6;
-        --gdg: #00b0ff;
+        /* Spacings */
+        --s-3: clamp(0.25rem, calc(0.25rem + 0vw), 0.25rem);
+        --s-2: clamp(0.44rem, calc(0.4rem + 0.16vw), 0.5rem);
+        --s-1: clamp(0.69rem, calc(0.65rem + 0.16vw), 0.75rem);
+        --s0: clamp(0.88rem, calc(0.81rem + 0.33vw), 1rem);
+        --s1: clamp(1.31rem, calc(1.21rem + 0.49vw), 1.5rem);
+        --s2: clamp(1.75rem, calc(1.62rem + 0.65vw), 2rem);
+        --s3: clamp(2.63rem, calc(2.43rem + 0.98vw), 3rem);
+        --s4: clamp(3.5rem, calc(3.24rem + 1.31vw), 4rem);
+        --s5: clamp(5.25rem, calc(4.86rem + 1.96vw), 6rem);
+
+        /* Font sizes */
+        --fs-2: clamp(0.56rem, calc(0.52rem + 0.21vw), 0.64rem);
+        --fs-1: clamp(0.7rem, calc(0.65rem + 0.26vw), 0.8rem);
+        --fs0: clamp(0.88rem, calc(0.81rem + 0.33vw), 1rem);
+        --fs1: clamp(1.09rem, calc(1.01rem + 0.41vw), 1.25rem);
+        --fs2: clamp(1.37rem, calc(1.27rem + 0.51vw), 1.56rem);
+        --fs3: clamp(1.71rem, calc(1.58rem + 0.64vw), 1.95rem);
+        --fs4: clamp(2.14rem, calc(1.98rem + 0.8vw), 2.44rem);
+        --fs5: clamp(2.67rem, calc(2.47rem + 1vw), 3.05rem);
 
         /* Tags */
         --architecture: #f4724e;
@@ -156,6 +168,7 @@ const organizerTwitter = '@sunnyTech_MTP'
     }
     body {
         line-height: 1.5;
+        font-size: var(--fs0);
         -webkit-font-smoothing: antialiased;
     }
     img,
@@ -196,5 +209,107 @@ const organizerTwitter = '@sunnyTech_MTP'
     #root,
     #__next {
         isolation: isolate;
+    }
+
+    h1 {
+        font-size: var(--fs3);
+        font-weight: 700;
+        line-height: 1.25;
+
+        @media (min-width: 640px) {
+            font-size: var(--fs4);
+        }
+    }
+
+    h2 {
+        font-size: var(--fs3);
+        font-weight: 500;
+        line-height: 1.25;
+    }
+
+    h3 {
+        font-size: var(--fs2);
+        font-weight: 500;
+        line-height: 1.25;
+    }
+
+    .skip-link {
+        position: absolute;
+        top: -40px;
+        left: 0;
+        background: var(--brand-solid);
+        padding: 8px;
+        z-index: 100;
+        color: white;
+        text-decoration: none;
+        transition: all var(--animation);
+
+        &:focus {
+            top: 0;
+        }
+    }
+
+    /* Utility classes */
+    .list-unstyled {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .list-inline {
+        padding-left: 0;
+        list-style: none;
+    }
+
+    .list-inline-item:not(:last-child) {
+        margin-right: 0.5rem;
+    }
+
+    .list-inline-item {
+        display: inline-block;
+    }
+
+    .text-uppercase {
+        text-transform: uppercase;
+    }
+
+    .text-subtle {
+        color: var(--text-subtle);
+    }
+
+    .fw-regular {
+        font-weight: 400;
+    }
+
+    .fw-medium {
+        font-weight: 500;
+    }
+
+    .fw-bold {
+        font-weight: 700;
+    }
+
+    .fs-1 {
+        font-size: var(--fs-1);
+    }
+
+    .fs1 {
+        font-size: var(--fs1);
+    }
+
+    .fs2 {
+        font-size: var(--fs2);
+    }
+
+    .fs3 {
+        font-size: var(--fs3);
+    }
+
+    .fs4 {
+        font-size: var(--fs4);
+    }
+
+    .fs5 {
+        font-size: var(--fs5);
     }
 </style>

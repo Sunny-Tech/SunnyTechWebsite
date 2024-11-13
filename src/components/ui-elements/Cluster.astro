@@ -1,0 +1,36 @@
+---
+interface Props {
+    space?: string
+    align?: string
+    justify?: string
+    reverse?: boolean
+    nowrap?: boolean
+}
+
+const { space = '1rem', justify = 'flex-start', align = 'flex-start', reverse = false, nowrap = false } = Astro.props
+---
+
+<div
+    class:list={['cluster', { 'no-wrap': nowrap, 'is-reverse': reverse }]}
+    style={{ alignItems: align, justifyContent: justify }}>
+    <slot />
+</div>
+
+<style define:vars={{ space }}>
+    .cluster {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        align-items: flex-start;
+        gap: var(--space);
+    }
+
+    .cluster.is-reverse {
+        flex-direction: row-reverse;
+    }
+
+    .cluster.no-wrap {
+        flex-wrap: nowrap;
+    }
+</style>

@@ -1,0 +1,32 @@
+---
+interface Props {
+    space?: string
+    min?: string
+    autoLayout?: string
+}
+
+const { space = '1rem', min = '15rem', autoLayout = 'fill' } = Astro.props
+---
+
+<div class="grid" data-auto-layout={autoLayout}>
+    <slot />
+</div>
+
+<style define:vars={{ space, min }}>
+    .grid {
+        display: grid;
+        grid-gap: var(--space, 1rem);
+        align-content: start;
+        grid-template-columns: 100%;
+    }
+
+    @supports (width: min(10px, 100%)) {
+        .grid {
+            grid-template-columns: repeat(auto-fill, minmax(min(var(--min), 100%), 1fr));
+
+            &[data-auto-layout='fit'] {
+                grid-template-columns: repeat(auto-fit, minmax(min(var(--min), 100%), 1fr));
+            }
+        }
+    }
+</style>

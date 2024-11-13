@@ -34,14 +34,18 @@ const gallery = [
 
 <style>
     .photos-grid {
-        margin: 64px auto;
+        margin: 2rem auto;
         display: grid;
         width: 100%;
-        min-height: 400px;
-        max-height: 750px;
+        min-height: 25rem;
+        max-height: 46.875rem;
         grid-template-columns: repeat(3, 1fr);
         grid-template-rows: repeat(5, 1fr);
-        grid-gap: 2px;
+        grid-gap: max(0.125rem, 2px);
+
+        @media (min-width: 1280px) {
+            margin: 4rem auto;
+        }
     }
 
     .grid-item {
@@ -49,7 +53,7 @@ const gallery = [
         object-fit: cover;
         width: 100%;
         height: 100%;
-        background-color: var(--secondary-background-color);
+        background-color: var(--component);
     }
 
     .grid-item:nth-child(1) {
@@ -85,9 +89,9 @@ const gallery = [
     }
 
     .gallery-info {
-        padding: 16px;
-        background-color: var(--default-primary-color);
-        color: var(--text-primary-color);
+        padding: 1rem;
+        background-color: var(--brand-solid);
+        color: var(--brand-contrast);
         z-index: 1;
         grid-area: 5 / 2 / 5 / 4;
         display: flex;
@@ -95,7 +99,7 @@ const gallery = [
         justify-content: space-between;
 
         :global(a) {
-            margin-top: 16px;
+            margin-top: 1rem;
         }
     }
 
@@ -141,7 +145,7 @@ const gallery = [
         }
 
         .gallery-info {
-            padding: 24px;
+            padding: 1.5rem;
             grid-area: 2 / 3 / 2 / 5;
         }
     }
