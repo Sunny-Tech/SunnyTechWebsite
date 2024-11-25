@@ -40,7 +40,7 @@ et soumettez votre sujet sous l'un des formats suivants :
 *Si vous n'êtes pas sûr(e) de la catégorie et/ou du format, aucun souci, votre mentor(e) vous aidera à choisir la bonne catégorie !*
 
 Lorsque votre sujet est soumis, vous devriez recevoir un email de confirmation venant de la plateforme de CFP. Si ce n'est pas le cas,
-vérifiez que votre sujet n'est pas en brouillon. Si vous avez des difficultés, n'hésitez pas à nous contacter : [contact@sunny-tech.fr](mailto:contact@sunny-tech.fr).
+vérifiez que votre sujet n'est pas en brouillon. Si vous avez des difficultés, n'hésitez pas à nous contacter : [contact@sunny-tech.io](mailto:contact@sunny-tech.io).
 
 Dans les jours qui suivent votre soumission, vous recevrez un email de la part de l'équipe Flamy Académie décrivant plus en détail le déroulé de l'accompagnement.
 Il permettra également d'en apprendre un peu plus sur votre démarche en comprenant vos motivations et vos objectifs.
