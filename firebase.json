@@ -9,6 +9,11 @@
                 "type": 302
             },
             {
+                "source": "/sponsoring/en",
+                "destination": "https://docs.google.com/presentation/d/1CkW-yAcO7HZc-HbwUCtezigkIEVmM55XiGlHso_7IQA/preview",
+                "type": 302
+            },
+            {
                 "source": "/faq",
                 "destination": "https://openplanner.fr/public/event/GB9qNr4UMNsQHd0F8uYu/faq/",
                 "type": 302
