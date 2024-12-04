@@ -1,6 +1,7 @@
 ---
+import ButtonLink from '../ui-elements/ButtonLink.astro'
 import Stack from '../ui-elements/Stack.astro'
-import SubscribeFormFooter from './SubscribeFormFooter.astro'
+
 const footerRelBlock = [
     {
         title: 'A propos',
@@ -45,9 +46,13 @@ const footerRelBlock = [
     }
 
     <Stack space="0.675rem">
-        <div class="fw-medium fs1">Souscrire</div>
+        <div class="fw-medium fs1">
+            <a
+                href="https://1485701c.sibforms.com/serve/MUIFAMgB9ZySVOL_x0g-9wEIwg1l1jh6RrSs3xTTnw5ZInV4HRM009fe1mwczAa8HEaB4kJf-sTzkK06jO2RIaxSpuflFWayHm2y5m86PhfcDp1kLA8VYGJozdX8flk6OdewY3pf2aE7Wh54VsDoUbYGxHO_mOXmweUPXeFd3_xK6_6FLN9KTdLWRvWiJ7Ldmbx0tByLixqYWBYu"
+                target="_blank">Souscrire</a
+            >
+        </div>
         <span>Pas de spam, seulement les dernières nouvelles</span>
-        <!--<SubscribeFormFooter />-->
     </Stack>
 </div>
 
