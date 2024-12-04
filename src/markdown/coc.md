@@ -18,7 +18,8 @@ Pour toute question, merci de contacter l’équipe SunnyTech par email : contac
 
 Original source and credit: [DevFestNantes](https://devfest2015.gdgnantes.com/cod), [Devoxx](https://www.devoxx.fr/code-of-conduct), [ThingMonk Code of Conduct](http://thingmonk.com/coc.html)
 
-# Charte des sponsors 
+
+## Charte des sponsors 
 
 SunnyTech a à cœur plusieurs valeurs parmi lesquelles l’éthique, la diversité et l’écologie. C’est pour cette raison que nous demandons en premier lieu à tous nos sponsors et leurs équipes présentes lors de l’événement, de s’engager à respecter notre Code de Conduite.
 
