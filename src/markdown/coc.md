@@ -17,3 +17,11 @@ Sunny Tech est une association bénévole à but non lucratif composée de tech 
 Pour toute question, merci de contacter l’équipe SunnyTech par email : contact@sunny-tech.io
 
 Original source and credit: [DevFestNantes](https://devfest2015.gdgnantes.com/cod), [Devoxx](https://www.devoxx.fr/code-of-conduct), [ThingMonk Code of Conduct](http://thingmonk.com/coc.html)
+
+# Charte des sponsors 
+
+SunnyTech a à cœur plusieurs valeurs parmi lesquelles l’éthique, la diversité et l’écologie. C’est pour cette raison que nous demandons en premier lieu à tous nos sponsors et leurs équipes présentes lors de l’événement, de s’engager à respecter notre Code de Conduite.
+
+Pour cette raison également, et parce que le nombre de places de sponsoring est limité, nous prendrons désormais en compte le bilan social et environnemental de nos partenaires.
+
+Nous ne souhaitons pas, par exemple, collaborer avec des entreprises finançant ou travaillant dans le secteur de l’armement ou des énergies fossiles, les sociétés condamnées pour des faits de harcèlement moral, physique ou sexuel; ou des sociétés publiquement engagées avec des valeurs contraires aux nôtres.
