@@ -5,6 +5,7 @@ import ButtonLink from '../ui-elements/ButtonLink.astro'
 ---
 
 <div class="container">
+    <div class="overlay"></div>
     <div class="content">
         <img src="/logos-sunnytech/logo.svg" alt="SunnyTech" loading="lazy" />
 
@@ -14,10 +15,7 @@ import ButtonLink from '../ui-elements/ButtonLink.astro'
         <ButtonLink href="https://conference-hall.io/sunny-tech-2025" target="_blank">CFP</ButtonLink>
         <ButtonLink href="https://2024.sunny-tech.io" target="_blank">Édition 2024</ButtonLink>
     </div>
-    <div class="overlay">
-        <div class="overlay"></div>
-        <Picture src={backgroundHome} formats={['avif', 'webp']} id="backgroundHome" alt="" loading="lazy" />
-    </div>
+    <Picture src={backgroundHome} formats={['avif', 'webp']} id="backgroundHome" alt="" loading="lazy" />
 </div>
 
 <style>
@@ -65,12 +63,5 @@ import ButtonLink from '../ui-elements/ButtonLink.astro'
         left: 0;
         object-fit: cover;
         z-index: -1;
-    }
-
-    .cfp-cta {
-        color: var(--text-subtle);
-        background-color: var(--background);
-        padding: 0.5rem 1rem;
-        font-weight: 600;
     }
 </style>
