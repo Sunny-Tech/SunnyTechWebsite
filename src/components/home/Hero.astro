@@ -2,6 +2,7 @@
 import { Picture } from 'astro:assets'
 import backgroundHome from '../../assets/home.jpg'
 import ButtonLink from '../ui-elements/ButtonLink.astro'
+import Cluster from '../ui-elements/Cluster.astro'
 ---
 
 <div class="container">
@@ -12,8 +13,10 @@ import ButtonLink from '../ui-elements/ButtonLink.astro'
         <h1>26 et 27 juin 2025 à Montpellier</h1>
         <h2 class="fs1 fw-regular">#SeaTechAndSun ☀️️️</h2>
 
-        <ButtonLink href="https://conference-hall.io/sunny-tech-2025" target="_blank">CFP</ButtonLink>
-        <ButtonLink href="/#tickets">Acheter une place</ButtonLink>
+        <Cluster>
+            <ButtonLink href="/#tickets">Acheter votre billet !</ButtonLink>
+            <ButtonLink href="https://conference-hall.io/sunny-tech-2025" target="_blank">CFP</ButtonLink>
+        </Cluster>
     </div>
     <Picture src={backgroundHome} formats={['avif', 'webp']} id="backgroundHome" alt="" loading="lazy" />
 </div>
