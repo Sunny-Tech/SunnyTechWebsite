@@ -5,4 +5,7 @@ import { defineConfig } from 'astro/config'
 export default defineConfig({
     site: 'https://sunny-tech.io',
     base: '/',
+    experimental: {
+        contentLayer: true,
+    },
 })

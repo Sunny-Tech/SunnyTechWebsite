@@ -1,0 +1,96 @@
+---
+import type { CollectionEntry } from 'astro:content'
+import ButtonLink from '../ui-elements/ButtonLink.astro'
+import Stack from '../ui-elements/Stack.astro'
+
+interface Props {
+    ticket: CollectionEntry<'tickets'>
+}
+
+const { ticket } = Astro.props
+const { name, price, url, startDate, endDate, ticketsCount, available, soldOut, highlighted } = ticket.data
+---
+
+<article
+    data-highlighted={highlighted.toString()}
+    data-sold-out={soldOut.toString()}
+    data-available={available.toString()}
+    class="ticket-card">
+    <header>
+        <Stack space="1rem" align="center">
+            <h2 class="fs1">{name}</h2>
+            <p
+                class:list={[
+                    'fw-bold',
+                    { 'ticket-card-price': available },
+                    { fs5: highlighted },
+                    { fs4: !highlighted },
+                ]}>
+                {price} €
+            </p>
+        </Stack>
+    </header>
+    <Stack space="2rem" align="center">
+        <p class="text-center">
+            {!!endDate ? 'Du' : 'À partir du'}
+            {new Date(startDate).toLocaleString('fr', { month: 'long', day: 'numeric' })}
+            {!!endDate ? 'au' : ''}
+            {!!endDate && new Date(endDate).toLocaleString('fr', { month: 'long', day: 'numeric' })}<br />
+            <strong>{ticketsCount}</strong> places
+        </p>
+        <div>
+            {
+                available && !soldOut && (
+                    <ButtonLink href={url} target="_blank" external>
+                        Acheter
+                    </ButtonLink>
+                )
+            }
+            {!available && !soldOut && <span class="ticket-card-unavailable">Pas disponible</span>}
+            {soldOut && <span class="ticket-card-sold-out">Épuisé</span>}
+        </div>
+    </Stack>
+</article>
+
+<style>
+    .ticket-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        padding: 1rem;
+        border-radius: 0.5rem;
+        background-color: white;
+        box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.25);
+
+        &[data-highlighted='true'] {
+            box-shadow:
+                0 0 0 0.25rem var(--brand-solid),
+                0 0 0.75rem rgba(0, 0, 0, 0.4);
+        }
+
+        &[data-sold-out='true'] {
+            opacity: 0.5;
+        }
+    }
+
+    .ticket-card-price {
+        color: var(--brand-solid);
+    }
+
+    .ticket-card-unavailable {
+        padding: 0.5rem 1rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        border-radius: 0.25rem;
+        color: white;
+        background-color: var(--brand-solid);
+        opacity: 0.25;
+    }
+
+    .ticket-card-sold-out {
+        opacity: 0.25;
+        text-transform: uppercase;
+    }
+</style>

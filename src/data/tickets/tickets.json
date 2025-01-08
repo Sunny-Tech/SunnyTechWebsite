@@ -1,0 +1,36 @@
+[
+    {
+        "id": "student",
+        "name": "Étudiant",
+        "price": 40,
+        "url": "https://sunnytech.io/#",
+        "startDate": "2025-01-30",
+        "ticketsCount": 18,
+        "available": true,
+        "soldOut": false,
+        "highlighted": false
+    },
+    {
+        "id": "default1",
+        "name": "Standard 1",
+        "price": 100,
+        "url": "https://sunnytech.io/#",
+        "startDate": "2025-01-30",
+        "endDate": "2025-03-19",
+        "ticketsCount": 130,
+        "available": true,
+        "soldOut": false,
+        "highlighted": true
+    },
+    {
+        "id": "default2",
+        "name": "Standard 2",
+        "price": 100,
+        "url": "https://sunnytech.io/#",
+        "startDate": "2025-03-20",
+        "ticketsCount": 170,
+        "available": false,
+        "soldOut": false,
+        "highlighted": false
+    }
+]
