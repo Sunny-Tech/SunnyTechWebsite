@@ -1,0 +1,27 @@
+---
+import type { CollectionEntry } from 'astro:content'
+import ContentContainer from '../ui-elements/ContentContainer.astro'
+import Grid from '../ui-elements/Grid.astro'
+import TicketCard from './TicketCard.astro'
+
+interface Props {
+    tickets: CollectionEntry<'tickets'>[]
+}
+
+const { tickets } = Astro.props
+---
+
+<div id="tickets">
+    <ContentContainer spaceBlock="4rem">
+        <h2>Acheter votre billet</h2>
+
+        <p style="max-width: 85ch; color: var(--text-subtle)">
+            * Les billets donnent accès à toutes les conférences, aux pauses café, aux déjeuners et à la soirée. Les
+            goodies sont aussi inclus mais pas les t-shirts. L’hébergement n’est pas inclus dans le prix du billet.
+        </p>
+
+        <Grid space="4rem" autoLayout="fit">
+            {tickets.map((ticket) => <TicketCard ticket={ticket} />)}
+        </Grid>
+    </ContentContainer>
+</div>
