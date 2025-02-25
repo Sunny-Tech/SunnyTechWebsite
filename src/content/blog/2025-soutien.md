@@ -20,12 +20,12 @@ Nous avons besoin de vous pour nous aider dans la recherche de sponsors :
 - motivez votre entreprise pour sponsoriser l'événement
 - relayez l'information auprès de personnes qui pourraient être intéressées de nous sponsoriser.
 
-N'hésitez pas à contacter sponsors@sunny-tech.io si vous avez besoin d'informations.
+N'hésitez pas à contacter sponsors@sunny-tech.io si vous avez besoin d'informations.  
 Les offres de sponsoring sont accessibles ici : https://sunny-tech.io/sponsoring 
 
 Sunny Tech est une association sans but lucratif, tous les organisatrices et organisateurs sont bénévoles et s'impliquent dans leur temps libre.
 
-Si nous ne parvenons pas à atteindre notre budget initialement prévu, nous devrons couper certains postes de dépenses, comme les goûters de l'après-midi, l'apéro du jeudi soir, etc.
+Si nous ne parvenons pas à atteindre notre budget initialement prévu, nous devrons couper certains postes de dépenses, comme les goûters de l'après-midi, l'apéro du jeudi soir, etc.  
 Nous avons aussi évoqué la possibilité de faire un financement participatif, mais nous préférons ne garder cette option qu'en dernier recours.
 
 SunnyTechment votre, 
