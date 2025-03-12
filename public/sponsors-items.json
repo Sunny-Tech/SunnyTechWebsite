@@ -8,8 +8,7 @@
             "value" : 6500,
             "currency": "EUR"
         },
-        "vat_rate" : 0,
-        "vat_exemption_reason": "S293B"
+        "vat_rate" : 0.2
       },
       "Gold": {
         "title": "Gold",
@@ -19,8 +18,7 @@
             "value" : 4300,
             "currency": "EUR"
         },
-        "vat_rate" : 0,
-        "vat_exemption_reason": "S293B"
+        "vat_rate" : 0.2
       },
       "Silver": {
         "title": "Silver",
@@ -30,8 +28,7 @@
             "value" : 2200,
             "currency": "EUR"
         },
-        "vat_rate" : 0,
-        "vat_exemption_reason": "S293B"
+        "vat_rate" : 0.2
       },
       "Sponsor soirée speaker": {
         "title": "Sponsor soirée speaker",
@@ -41,8 +38,7 @@
             "value" : 2150,
             "currency": "EUR"
         },
-        "vat_rate" : 0,
-        "vat_exemption_reason": "S293B"
+        "vat_rate" : 0.2
       },
       "Sponsor soirée (networking)": {
         "title": "Sponsor soirée (networking)",
@@ -52,8 +48,7 @@
             "value" : 2150,
             "currency": "EUR"
         },
-        "vat_rate" : 0,
-        "vat_exemption_reason": "S293B"
+        "vat_rate" : 0.2
       },
       "Sponsor espace détente": {
         "title": "Sponsor espace détente",
@@ -63,8 +58,7 @@
             "value" : 2150,
             "currency": "EUR"
         },
-        "vat_rate" : 0,
-        "vat_exemption_reason": "S293B"
+        "vat_rate" : 0.2
       },
       "Sponsor Trop Chaud": {
         "title": "Sponsor Trop Chaud",
@@ -74,8 +68,7 @@
             "value" : 800,
             "currency": "EUR"
         },
-        "vat_rate" : 0,
-        "vat_exemption_reason": "S293B"
+        "vat_rate" : 0.2
       },
       "Recrutement": {
         "title": "Mettez en avant vos offres de recrutement",
@@ -85,8 +78,7 @@
             "value" : 500,
             "currency": "EUR"
         },
-        "vat_rate" : 0,
-        "vat_exemption_reason": "S293B"
+        "vat_rate" : 0.2
       }
     }
 }
