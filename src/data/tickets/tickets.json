@@ -28,7 +28,7 @@
         "url": "http://billetweb.fr/sunny-tech-2025",
         "startDate": "2025-03-20",
         "ticketsCount": 170,
-        "available": false,
+        "available": true,
         "soldOut": false,
         "highlighted": true
     }
