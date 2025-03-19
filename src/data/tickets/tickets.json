@@ -19,7 +19,7 @@
         "ticketsCount": 130,
         "available": true,
         "soldOut": true,
-        "highlighted": true
+        "highlighted": false
     },
     {
         "id": "default2",
@@ -30,6 +30,6 @@
         "ticketsCount": 170,
         "available": false,
         "soldOut": false,
-        "highlighted": false
+        "highlighted": true
     }
 ]
