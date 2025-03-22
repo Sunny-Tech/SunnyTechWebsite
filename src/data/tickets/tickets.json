@@ -4,32 +4,20 @@
         "name": "Étudiant",
         "price": 40,
         "url": "http://billetweb.fr/sunny-tech-2025",
-        "startDate": "2025-01-30",
         "ticketsCount": 18,
         "available": true,
         "soldOut": false,
         "highlighted": false
     },
     {
-        "id": "default1",
-        "name": "Standard 1",
-        "price": 100,
-        "url": "http://billetweb.fr/sunny-tech-2025",
-        "startDate": "2025-01-30",
-        "ticketsCount": 130,
-        "available": true,
-        "soldOut": true,
-        "highlighted": false
-    },
-    {
         "id": "default2",
-        "name": "Standard 2",
+        "name": "Standard",
         "price": 100,
         "url": "http://billetweb.fr/sunny-tech-2025",
-        "startDate": "2025-03-20",
         "ticketsCount": 170,
         "available": true,
-        "soldOut": false,
-        "highlighted": true
+        "soldOut": true,
+        "highlighted": false,
+        "message": "Billetterie soldout, mais il reste des offres de sponsoring à partir de 800 € pour assister à Sunny Tech 2025, voir ci-dessous."
     }
 ]

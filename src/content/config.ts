@@ -21,12 +21,13 @@ const ticketsCollection = defineCollection({
         name: z.string(),
         price: z.number(),
         url: z.string().url(),
-        startDate: z.string().date(),
+        startDate: z.string().date().optional(),
         endDate: z.string().date().optional(),
         ticketsCount: z.number(),
         available: z.boolean(),
         soldOut: z.boolean(),
         highlighted: z.boolean(),
+        message: z.string().optional(),
     }),
 })
 

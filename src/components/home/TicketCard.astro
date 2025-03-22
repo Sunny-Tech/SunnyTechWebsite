@@ -8,7 +8,7 @@ interface Props {
 }
 
 const { ticket } = Astro.props
-const { name, price, url, startDate, endDate, ticketsCount, available, soldOut, highlighted } = ticket.data
+const { name, price, url, startDate, endDate, ticketsCount, available, soldOut, highlighted, message } = ticket.data
 ---
 
 <article
@@ -32,12 +32,20 @@ const { name, price, url, startDate, endDate, ticketsCount, available, soldOut, 
     </header>
     <Stack space="2rem" align="center">
         <p class="text-center">
-            {!!endDate ? 'Du' : 'À partir du'}
-            {new Date(startDate).toLocaleString('fr', { month: 'long', day: 'numeric' })}
+            {endDate ? (!!endDate ? 'Du' : 'À partir du') : ''}
+            {startDate ? new Date(startDate).toLocaleString('fr', { month: 'long', day: 'numeric' }) : ''}
             {!!endDate ? 'au' : ''}
             {!!endDate && new Date(endDate).toLocaleString('fr', { month: 'long', day: 'numeric' })}<br />
             <strong>{ticketsCount}</strong> places
         </p>
+        {
+            !!message && (
+                <p class="text-center">
+                    <br />
+                    <span class="ticket-card-message">{message}</span>
+                </p>
+            )
+        }
         <div>
             {
                 available && !soldOut && (
