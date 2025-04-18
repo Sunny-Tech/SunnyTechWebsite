@@ -6,7 +6,7 @@
         "url": "http://billetweb.fr/sunny-tech-2025",
         "ticketsCount": 18,
         "available": true,
-        "soldOut": false,
+        "soldOut": true,
         "highlighted": false
     },
     {
