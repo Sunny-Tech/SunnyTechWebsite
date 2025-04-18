@@ -1,5 +1,5 @@
 ---
-import { ViewTransitions } from 'astro:transitions'
+import { ClientRouter } from 'astro:transitions'
 import FooterBlock from '../components/footer/FooterBlock.astro'
 import Menu from '../components/Menu.astro'
 
@@ -72,7 +72,7 @@ const organizerTwitter = '@sunnyTech_MTP'
         <title>{fullPageTitle}</title>
 
         <script defer data-domain="sunny-tech.io" src="https://plausible.gresse.io/js/script.js"></script>
-        <ViewTransitions />
+        <ClientRouter />
     </head>
     <body>
         <a href="#main-content" class="skip-link">Aller au contenu principal</a>
