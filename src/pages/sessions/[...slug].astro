@@ -1,0 +1,85 @@
+---
+import { Markdown } from '@astropub/md'
+import type { OpenPlannerType } from '../../type'
+import MarkdownWrapper from '../../components/ui-elements/MarkdownWrapper.astro'
+import Cluster from '../../components/ui-elements/Cluster.astro'
+import Stack from '../../components/ui-elements/Stack.astro'
+import Chip from '../../components/ui-elements/Chip.astro'
+import LayoutWithTitle from '../../layouts/LayoutWithTitle.astro'
+
+export async function getStaticPaths() {
+    const OPENPLANNER_URL = import.meta.env.OPENPLANNER_URL
+    const response = await fetch(OPENPLANNER_URL)
+    const openPlannerData: OpenPlannerType = await response.json()
+
+    const { speakers, sessions, event } = openPlannerData
+    const { categories, tracks } = event
+
+    return sessions.map((session) => ({
+        params: { slug: session.id },
+        props: {
+            ...session,
+            speakers: speakers.filter((speaker) => session.speakerIds.includes(speaker.id)),
+            category: categories.find((cat) => cat.id === session.categoryId),
+            track: tracks.find((track) => track.id === session.trackId),
+        },
+    }))
+}
+
+const { title, track, abstract, category, level, speakers, dateStart, durationMinutes } = Astro.props
+---
+
+<LayoutWithTitle htmlTitle={`Sunny Tech session ${title}`} title={title}>
+    <div slot="description">
+        <Stack>
+            <div class="fs1">
+                {dateStart && new Date(dateStart).toLocaleString('fr', { dateStyle: 'long', timeStyle: 'short' })} – {
+                    durationMinutes
+                } min
+            </div>
+            {track && <div class="fw-bold">Salle : {track.name}</div>}
+            <Stack>
+                {
+                    speakers.map((speaker) => (
+                        <div>
+                            <Cluster space="var(--s-3) var(--s-2)" nowrap>
+                                <img
+                                    alt=""
+                                    src={speaker.photoUrl || undefined}
+                                    width="32"
+                                    height="32"
+                                    style={{ borderRadius: '50%' }}
+                                />
+                                <div>
+                                    <div style={{ lineHeight: 1.2 }}>{speaker.name}</div>
+                                    <div style={{ lineHeight: 1.2, fontSize: '0.675em' }}>{speaker.company}</div>
+                                </div>
+                            </Cluster>
+                        </div>
+                    ))
+                }
+            </Stack>
+        </Stack>
+    </div>
+
+    {
+        category && (
+            <div>
+                <Chip color={category.color} size="lg">
+                    {category.name}
+                </Chip>
+                <Chip size="lg" inverse>
+                    {level}
+                </Chip>
+            </div>
+        )
+    }
+
+    {
+        abstract && (
+            <MarkdownWrapper>
+                <Markdown of={abstract} />
+            </MarkdownWrapper>
+        )
+    }
+</LayoutWithTitle>

@@ -1,0 +1,135 @@
+---
+import type { Track, Session } from '../../type'
+import SessionItem from './SessionItem.astro'
+
+interface Props {
+    tracks: Track[]
+    sessions: Session[]
+}
+
+const { tracks, sessions } = Astro.props
+
+const GRID_CONFIG = {
+    TIME_COLUMN_WIDTH: '60px',
+    TRACK_MIN_WIDTH: '120px',
+}
+
+// Get unique time slots
+const uniqueTimeSlots = Array.from(
+    new Set(
+        sessions.map((session) =>
+            new Date(session.dateStart!).toLocaleTimeString('fr', { hour: '2-digit', minute: '2-digit' })
+        )
+    )
+).sort()
+
+const gridTemplateColumns = `${GRID_CONFIG.TIME_COLUMN_WIDTH} repeat(${tracks.length}, minmax(${GRID_CONFIG.TRACK_MIN_WIDTH}, 1fr))`
+---
+
+<div>
+    <div class="day-schedule" style={{ gridTemplateColumns }}>
+        {/* Empty cell for top-left corner */}
+        <div style={{ gridColumn: 1, gridRow: 1 }}></div>
+
+        <div class="day-schedule-tracks" style={{ gridTemplateColumns: `repeat(${tracks.length}, 1fr)` }}>
+            {tracks.map((track, index) => <div class="day-schedule-track">{track.name}</div>)}
+        </div>
+
+        {
+            uniqueTimeSlots.map((time, index) => (
+                <div class="day-schedule-time" style={{ gridRow: index + 2 }}>
+                    <span>{time.split(':')[0]}</span>
+                    <span class="day-schedule-time-minute">{time.split(':')[1]}</span>
+                </div>
+            ))
+        }
+
+        {
+            sessions.map((session) => {
+                if (!session.dateStart || !session.trackId) return null
+
+                const sessionStart = new Date(session.dateStart)
+                const rowStart =
+                    uniqueTimeSlots.findIndex(
+                        (time) => time === sessionStart.toLocaleTimeString('fr', { hour: '2-digit', minute: '2-digit' })
+                    ) + 2
+                const trackIndex = tracks.findIndex((track) => track.id === session.trackId)
+                const width = session.extendWidth || 1
+                const height = session.extendHeight || 1
+
+                if (rowStart < 2 || trackIndex === -1) return null
+
+                return (
+                    <div
+                        style={{
+                            gridColumn: `${trackIndex + 2} / span ${width}`,
+                            gridRow: `${rowStart} / span ${height}`,
+                        }}>
+                        <SessionItem session={session} />
+                    </div>
+                )
+            })
+        }
+    </div>
+</div>
+
+<style>
+    .day-schedule {
+        display: grid;
+        grid-auto-rows: minmax(100px, auto);
+        position: relative;
+        gap: var(--s0);
+    }
+
+    .day-schedule-tracks {
+        grid-column: 2 / -1;
+        grid-row: 1;
+        display: grid;
+        position: sticky;
+        top: calc(4rem + 1px);
+        background-color: var(--background);
+        z-index: 2;
+        border-bottom: 1px solid;
+        border-color: var(--line);
+    }
+
+    .day-schedule-track {
+        position: relative;
+        text-align: center;
+        font-weight: bold;
+        padding: var(--s0);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+
+        &:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 1px;
+            height: 70%;
+            background-color: var(--line);
+        }
+    }
+
+    .day-schedule-time {
+        grid-column: 1;
+        text-align: right;
+        padding: var(--s0) var(--s0) 0 0;
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-end;
+        font-weight: 500;
+        font-size: 1.6em;
+    }
+
+    .day-schedule-time-minute {
+        font-size: 0.8em;
+        opacity: 0.7;
+        margin: 2px 0 0 var(--s-3);
+    }
+</style>
