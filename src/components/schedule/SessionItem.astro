@@ -11,7 +11,7 @@ interface Props {
 const { session } = Astro.props
 ---
 
-<a href={`/sessions/${session.id}`} class="schedule-session">
+<a href={`/sessions/${session.id}`} class="schedule-session" data-session-id={session.id}>
     <Stack style={{ height: '100%' }} space="var(--s-2)">
         <h3 class="fw-medium fs1">{session.title}</h3>
         {session.abstract && <p class="schedule-session-abstract">{session.abstract}</p>}
@@ -47,11 +47,119 @@ const { session } = Astro.props
                 </div>
             )
         }
+
+        <button class="schedule-session-save-button" type="button">
+            <svg
+                class="schedule-session-save-button-icon--save"
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                ><path fill="currentColor" d="m17 18l-5-2.18L7 18V5h10m0-2H7a2 2 0 0 0-2 2v16l7-3l7 3V5a2 2 0 0 0-2-2"
+                ></path></svg
+            >
+            <svg
+                class="schedule-session-save-button-icon--saved"
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                ><path
+                    fill="currentColor"
+                    d="M17 3a2 2 0 0 1 2 2v16l-7-3l-7 3V5a2 2 0 0 1 2-2zm-6 11l6.25-6.24l-1.41-1.42L11 11.18L8.41 8.59L7 10z"
+                ></path></svg
+            >
+        </button>
     </Stack>
 </a>
 
+<script>
+    import { Firestore, getFirestore, setDoc } from 'firebase/firestore'
+    import { doc, updateDoc, arrayUnion, arrayRemove, getDoc } from 'firebase/firestore'
+    import { getAuth, type User } from 'firebase/auth'
+    import { app } from '../../firebase/client'
+
+    const saveSession = async (sessionId: string, db: Firestore, user: User | null) => {
+        if (user) {
+            const userRef = doc(db, 'users', user.uid)
+            const docSnap = await getDoc(userRef)
+
+            if (docSnap.exists()) {
+                await updateDoc(userRef, { sessions: arrayUnion(sessionId) })
+            } else {
+                await setDoc(userRef, { sessions: [sessionId] }, { merge: true })
+            }
+        }
+    }
+
+    const removeSession = async (sessionId: string, db: Firestore, user: User | null) => {
+        if (user) {
+            const userRef = doc(db, 'users', user.uid)
+            await updateDoc(userRef, { sessions: arrayRemove(sessionId) })
+        }
+    }
+
+    const toggleSession = async (sessionId: string, db: Firestore, user: User | null) => {
+        try {
+            if (await isSessionSaved(sessionId, db, user)) {
+                await removeSession(sessionId, db, user)
+            } else {
+                await saveSession(sessionId, db, user)
+            }
+        } catch (error) {
+            console.error('Error toggling session:', error)
+        }
+    }
+
+    const isSessionSaved = async (sessionId: string, db: Firestore, user: User | null) => {
+        if (user) {
+            const userRef = doc(db, 'users', user.uid)
+            const userDoc = await getDoc(userRef)
+            const sessions = userDoc.data()?.sessions || []
+            console.log('is session saved:', sessions.includes(sessionId))
+            return sessions.includes(sessionId)
+        }
+        return false
+    }
+
+    document.addEventListener('astro:page-load', () => {
+        const db = getFirestore(app)
+        const auth = getAuth(app)
+        const user = auth.currentUser
+        const sessions = document.querySelectorAll('.schedule-session') as NodeListOf<HTMLElement>
+
+        if (sessions) {
+            sessions.forEach(async (session) => {
+                const sessionId = session.dataset.sessionId
+
+                if (sessionId) {
+                    if (await isSessionSaved(sessionId, db, user)) {
+                        session.dataset.saved = 'true'
+                    } else {
+                        session.dataset.saved = 'false'
+                    }
+
+                    session.querySelector('.schedule-session-save-button')?.addEventListener('click', async (evt) => {
+                        evt.preventDefault()
+                        evt.stopPropagation()
+
+                        await toggleSession(sessionId, db, user)
+
+                        if (await isSessionSaved(sessionId, db, user)) {
+                            session.dataset.saved = 'true'
+                        } else {
+                            session.dataset.saved = 'false'
+                        }
+                    })
+                }
+            })
+        }
+    })
+</script>
+
 <style>
     .schedule-session {
+        position: relative;
         display: block;
         text-decoration: none;
         color: var(--text);
@@ -67,6 +175,26 @@ const { session } = Astro.props
         &:hover {
             background-color: var(--component);
             border-color: var(--border);
+
+            .schedule-session-save-button {
+                opacity: 1;
+            }
+        }
+
+        &[data-saved='true'] .schedule-session-save-button {
+            opacity: 1;
+        }
+
+        .schedule-session-save-button-icon--saved {
+            display: none;
+        }
+
+        &[data-saved='true'] .schedule-session-save-button-icon--saved {
+            display: block;
+        }
+
+        &[data-saved='true'] .schedule-session-save-button-icon--save {
+            display: none;
         }
     }
 
@@ -76,5 +204,17 @@ const { session } = Astro.props
         -webkit-line-clamp: 3;
         overflow: hidden;
         margin: 0;
+    }
+
+    .schedule-session-save-button {
+        position: absolute;
+        top: var(--s-3);
+        right: var(--s-3);
+        border: 0;
+        background: transparent;
+        cursor: pointer;
+        padding: 0;
+        margin: 0;
+        opacity: 0;
     }
 </style>

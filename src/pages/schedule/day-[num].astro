@@ -1,12 +1,13 @@
 ---
+import { OPENPLANNER_URL } from 'astro:env/client'
 import type { OpenPlannerType, Session } from '../../type'
 import Cluster from '../../components/ui-elements/Cluster.astro'
 import ButtonLink from '../../components/ui-elements/ButtonLink.astro'
 import LayoutWithTitle from '../../layouts/LayoutWithTitle.astro'
 import DaySchedule from '../../components/schedule/DaySchedule.astro'
+import UserSchedule from '../../components/schedule/UserSchedule.astro'
 
 export async function getStaticPaths() {
-    const OPENPLANNER_URL = import.meta.env.OPENPLANNER_URL
     const response = await fetch(OPENPLANNER_URL)
     const openPlannerData: OpenPlannerType = await response.json()
 
@@ -39,15 +40,26 @@ export async function getStaticPaths() {
 
     const sortedDays = Array.from(sessionsByDay.keys()).sort()
 
-    return sortedDays.map((day, index) => ({
-        params: { num: index + 1 },
-        props: {
-            day,
-            sessions: sessionsByDay.get(day) || [],
-            days: sortedDays,
-            tracks,
+    return [
+        ...sortedDays.map((day, index) => ({
+            params: { num: index + 1 },
+            props: {
+                day,
+                sessions: sessionsByDay.get(day) || [],
+                days: sortedDays,
+                tracks,
+            },
+        })),
+        {
+            params: { num: 'favorite' },
+            props: {
+                day: 'favorite',
+                sessions,
+                days: sortedDays,
+                tracks,
+            },
         },
-    }))
+    ]
 }
 
 const { day, sessions, days, tracks } = Astro.props
@@ -62,7 +74,11 @@ const { day, sessions, days, tracks } = Astro.props
                 </ButtonLink>
             ))
         }
+        <ButtonLink href="/schedule/day-favorite" variant={day === 'favorite' ? 'primary' : 'transparent'}>
+            Mon programme
+        </ButtonLink>
     </Cluster>
 
-    <DaySchedule tracks={tracks} sessions={sessions} />
+    {day === 'favorite' && <UserSchedule tracks={tracks} sessions={sessions} />}
+    {day !== 'favorite' && <DaySchedule tracks={tracks} sessions={sessions} />}
 </LayoutWithTitle>

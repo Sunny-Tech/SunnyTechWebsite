@@ -1,0 +1,88 @@
+<button type="button" id="login-button" class="btn-login">Se connecter</button>
+<svg
+    id="user-icon"
+    style="display: none;"
+    xmlns="http://www.w3.org/2000/svg"
+    width="32"
+    height="32"
+    viewBox="0 0 24 24">
+    <path
+        fill="currentColor"
+        d="M12 19.2c-2.5 0-4.71-1.28-6-3.2c.03-2 4-3.1 6-3.1s5.97 1.1 6 3.1a7.23 7.23 0 0 1-6 3.2M12 5a3 3 0 0 1 3 3a3 3 0 0 1-3 3a3 3 0 0 1-3-3a3 3 0 0 1 3-3m0-3A10 10 0 0 0 2 12a10 10 0 0 0 10 10a10 10 0 0 0 10-10c0-5.53-4.5-10-10-10"
+    ></path>
+</svg>
+
+<script>
+    import { GoogleAuthProvider, getAuth, signInWithPopup, onAuthStateChanged, type User } from 'firebase/auth'
+    import { app } from '../firebase/client'
+
+    const provider = new GoogleAuthProvider()
+    provider.addScope('https://www.googleapis.com/auth/userinfo.email')
+
+    const auth = getAuth(app)
+    auth.useDeviceLanguage()
+
+    const handleSetUser = (user: User | null) => {
+        const loginButton = document.querySelector('#login-button') as HTMLButtonElement | null
+        const userIcon = document.querySelector('#user-icon') as SVGElement | null
+
+        // https://firebase.google.com/docs/reference/js/auth.user
+        if (loginButton) {
+            loginButton.style.display = user ? 'none' : 'block'
+        }
+        if (userIcon) {
+            userIcon.style.display = user ? 'block' : 'none'
+        }
+    }
+
+    onAuthStateChanged(auth, handleSetUser)
+
+    const handleLogin = () => {
+        signInWithPopup(auth, provider)
+            .then((result) => {
+                const credential = GoogleAuthProvider.credentialFromResult(result)
+
+                if (credential) {
+                    const token = credential.accessToken
+                    const user = result.user
+                    // IdP data available using getAdditionalUserInfo(result)
+                    console.log('User signed in:', user)
+                    console.log('Access token:', token)
+                }
+            })
+            .catch((error) => {
+                const errorCode = error.code
+                const errorMessage = error.message
+                const email = error.customData.email
+                const credential = GoogleAuthProvider.credentialFromError(error)
+                console.error('Error during sign-in:', errorCode, errorMessage, email, credential)
+            })
+    }
+
+    document.addEventListener('astro:page-load', () => {
+        const loginButton = document.querySelector('#login-button') as HTMLButtonElement | null
+        loginButton?.addEventListener('click', handleLogin)
+
+        handleSetUser(auth.currentUser)
+    })
+</script>
+
+<style>
+    .btn-login {
+        align-self: center;
+        background-color: var(--background);
+        color: var(--brand-solid);
+        border: 1px solid var(--brand-solid);
+        padding: var(--s-2) var(--s-1);
+        border-radius: 0.25rem;
+        cursor: pointer;
+        transition:
+            background-color 0.3s ease,
+            border-color 0.3s ease;
+
+        &:hover {
+            background-color: var(--brand-solid);
+            border-color: var(--background);
+        }
+    }
+</style>

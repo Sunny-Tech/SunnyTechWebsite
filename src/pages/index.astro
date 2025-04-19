@@ -1,5 +1,6 @@
 ---
 import { getCollection } from 'astro:content'
+import { OPENPLANNER_URL } from 'astro:env/client'
 import type { OpenPlannerType } from '../type'
 import Layout from '../layouts/Layout.astro'
 import SponsorsBlock from '../components/home/SponsorsBlock.astro'
@@ -9,9 +10,6 @@ import HomeAboutBlock from '../components/home/HomeAboutBlock.astro'
 import HomeGalleryBlock from '../components/home/HomeGalleryBlock.astro'
 import HomeTicketsBlock from '../components/home/HomeTicketsBlock.astro'
 
-const OPENPLANNER_URL =
-    import.meta.env.OPENPLANNER_URL ||
-    'https://storage.googleapis.com/conferencecenterr.appspot.com/events/ML7vHjW9pdzqLgYqaYYf/ca94c659-8b02-4702-b576-d9279cc20b96.json'
 const response = await fetch(OPENPLANNER_URL)
 const openPlannerData: OpenPlannerType = await response.json()
 const tickets = await getCollection('tickets')

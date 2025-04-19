@@ -1,4 +1,5 @@
 ---
+import { OPENPLANNER_URL } from 'astro:env/client'
 import { Markdown } from '@astropub/md'
 import type { OpenPlannerType } from '../../type'
 import MarkdownWrapper from '../../components/ui-elements/MarkdownWrapper.astro'
@@ -8,7 +9,6 @@ import Chip from '../../components/ui-elements/Chip.astro'
 import LayoutWithTitle from '../../layouts/LayoutWithTitle.astro'
 
 export async function getStaticPaths() {
-    const OPENPLANNER_URL = import.meta.env.OPENPLANNER_URL
     const response = await fetch(OPENPLANNER_URL)
     const openPlannerData: OpenPlannerType = await response.json()
 
