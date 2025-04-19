@@ -19,6 +19,8 @@ const titleHtml = htmlTitle || title
     <ContentContainer spaceBlock="4rem">
         <h1>{title}</h1>
         {description && <p class="fs1">{description}</p>}
+
+        <slot name="description" />
     </ContentContainer>
     <Separator bottomMargin={!subDescription} />
     {

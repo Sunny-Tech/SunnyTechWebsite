@@ -5,7 +5,7 @@ import { defineConfig } from 'astro/config'
 export default defineConfig({
     site: 'https://sunny-tech.io',
     base: '/',
-    experimental: {
-        contentLayer: true,
+    redirects: {
+        '/schedule': '/schedule/day-1'
     },
 })

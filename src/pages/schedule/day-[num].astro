@@ -1,0 +1,68 @@
+---
+import type { OpenPlannerType, Session } from '../../type'
+import Cluster from '../../components/ui-elements/Cluster.astro'
+import ButtonLink from '../../components/ui-elements/ButtonLink.astro'
+import LayoutWithTitle from '../../layouts/LayoutWithTitle.astro'
+import DaySchedule from '../../components/schedule/DaySchedule.astro'
+
+export async function getStaticPaths() {
+    const OPENPLANNER_URL = import.meta.env.OPENPLANNER_URL
+    const response = await fetch(OPENPLANNER_URL)
+    const openPlannerData: OpenPlannerType = await response.json()
+
+    const { event, speakers, sessions } = openPlannerData
+    const { tracks, categories } = event
+
+    const sessionsByDay = sessions.reduce((acc, session) => {
+        if (session.dateStart && session.trackId) {
+            const date = new Date(session.dateStart)
+            date.setHours(0, 0, 0, 0)
+            const timestamps = date.getTime()
+            if (!acc.has(timestamps)) {
+                acc.set(timestamps, [])
+            }
+            const sessionWithSpeakersAndCategories = {
+                ...session,
+                speakers: speakers.filter((speaker) => session.speakerIds.includes(speaker.id)),
+                category: categories.find((cat) => session.categoryId === cat.id),
+            }
+            acc.get(timestamps)?.push(sessionWithSpeakersAndCategories)
+            acc.get(timestamps)?.sort((a, b) => {
+                if (!a.dateStart || !b.dateStart) {
+                    return 0
+                }
+                return new Date(a.dateStart).getTime() - new Date(b.dateStart).getTime()
+            })
+        }
+        return acc
+    }, new Map<number, Session[]>())
+
+    const sortedDays = Array.from(sessionsByDay.keys()).sort()
+
+    return sortedDays.map((day, index) => ({
+        params: { num: index + 1 },
+        props: {
+            day,
+            sessions: sessionsByDay.get(day) || [],
+            days: sortedDays,
+            tracks,
+        },
+    }))
+}
+
+const { day, sessions, days, tracks } = Astro.props
+---
+
+<LayoutWithTitle htmlTitle="Sunny Tech programme" title="Programme">
+    <Cluster slot="description">
+        {
+            days.map((d, index) => (
+                <ButtonLink href={`/schedule/day-${index + 1}`} variant={d === day ? 'primary' : 'transparent'}>
+                    {new Date(d).toLocaleDateString('fr', { dateStyle: 'long' })}
+                </ButtonLink>
+            ))
+        }
+    </Cluster>
+
+    <DaySchedule tracks={tracks} sessions={sessions} />
+</LayoutWithTitle>
