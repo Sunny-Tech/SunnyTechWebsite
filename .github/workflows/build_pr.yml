@@ -6,6 +6,7 @@ on: pull_request
 jobs:
     build:
         runs-on: ubuntu-latest
+        environment: production
         steps:
             - uses: actions/checkout@v4
             - uses: actions/setup-node@v4
@@ -15,3 +16,11 @@ jobs:
             - run: npm ci && npm run build
               env:
                   OPENPLANNER_URL: 'https://storage.googleapis.com/conferencecenterr.appspot.com/events/GB9qNr4UMNsQHd0F8uYu/8deb73e9-7879-4e9d-965f-be8766125185.json'
+                  FIREBASE_API_KEY: '${{ secrets.FIREBASE_API_KEY }}'
+                  FIREBASE_AUTH_DOMAIN: '${{ vars.FIREBASE_AUTH_DOMAIN }}'
+                  FIREBASE_DATABASE_URL: '${{ vars.FIREBASE_DATABASE_URL }}'
+                  FIREBASE_PROJECT_ID: '${{ vars.FIREBASE_PROJECT_ID }}'
+                  FIREBASE_STORAGE_BUCKET: '${{ vars.FIREBASE_STORAGE_BUCKET }}'
+                  FIREBASE_MESSAGING_SENDER_ID: '${{ vars.FIREBASE_MESSAGING_SENDER_ID }}'
+                  FIREBASE_APP_ID: '${{ vars.FIREBASE_APP_ID }}'
+                  FIREBASE_MEASUREMENT_ID: '${{ vars.FIREBASE_MEASUREMENT_ID }}'
