@@ -7,6 +7,7 @@ import Cluster from '../../components/ui-elements/Cluster.astro'
 import Stack from '../../components/ui-elements/Stack.astro'
 import Chip from '../../components/ui-elements/Chip.astro'
 import LayoutWithTitle from '../../layouts/LayoutWithTitle.astro'
+import Speaker from '../../components/schedule/Speaker.astro'
 
 export async function getStaticPaths() {
     const response = await fetch(OPENPLANNER_URL)
@@ -29,7 +30,7 @@ export async function getStaticPaths() {
 const { title, track, abstract, category, level, speakers, dateStart, durationMinutes } = Astro.props
 ---
 
-<LayoutWithTitle htmlTitle={`Sunny Tech session ${title}`} title={title}>
+<LayoutWithTitle htmlTitle={`Session – ${title}`} title={title}>
     <div slot="description">
         <Stack>
             <div class="fs1">
@@ -41,21 +42,12 @@ const { title, track, abstract, category, level, speakers, dateStart, durationMi
             <Stack>
                 {
                     speakers.map((speaker) => (
-                        <div>
-                            <Cluster space="var(--s-3) var(--s-2)" nowrap>
-                                <img
-                                    alt=""
-                                    src={speaker.photoUrl || undefined}
-                                    width="32"
-                                    height="32"
-                                    style={{ borderRadius: '50%' }}
-                                />
-                                <div>
-                                    <div style={{ lineHeight: 1.2 }}>{speaker.name}</div>
-                                    <div style={{ lineHeight: 1.2, fontSize: '0.675em' }}>{speaker.company}</div>
-                                </div>
-                            </Cluster>
-                        </div>
+                        <Speaker
+                            id={speaker.id}
+                            photoUrl={speaker.photoUrl}
+                            name={speaker.name}
+                            company={speaker.company}
+                        />
                     ))
                 }
             </Stack>
