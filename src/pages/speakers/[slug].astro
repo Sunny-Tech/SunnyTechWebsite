@@ -1,0 +1,53 @@
+---
+import { OPENPLANNER_URL } from 'astro:env/client'
+import type { OpenPlannerType } from '../../type'
+import LayoutWithTitle from '../../layouts/LayoutWithTitle.astro'
+import GenericIcon from '../../components/icons/GenericIcon.astro'
+
+export const getStaticPaths = async () => {
+    const response = await fetch(OPENPLANNER_URL)
+    const openPlannerData: OpenPlannerType = await response.json()
+
+    const { speakers } = openPlannerData
+
+    return speakers.map((speaker) => ({
+        params: { slug: speaker.id },
+        props: speaker,
+    }))
+}
+
+const { name, company, bio, jobTitle, socials, photoUrl } = Astro.props
+---
+
+<LayoutWithTitle htmlTitle={`Sunnytech speaker – ${name}`} title={name}>
+    <div slot="description">
+        <h2>{company}</h2>
+        <h3>{jobTitle}</h3>
+    </div>
+    {
+        photoUrl && (
+            <img src={photoUrl} class="speaker-photo" style={{ width: '48px', height: '48px', borderRadius: '50%' }} />
+        )
+    }
+    <p>{bio}</p>
+    <div>
+        {
+            (
+                <ul class="list-inline">
+                    {socials.map((social: { icon: string; link: string }) => (
+                        <li class="list-inline-item">
+                            <a
+                                href={social.link}
+                                class="speaker-social-icon"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label={social.icon}>
+                                <GenericIcon name={social.icon} />
+                            </a>
+                        </li>
+                    ))}
+                </ul>
+            )
+        }
+    </div>
+</LayoutWithTitle>
