@@ -1,6 +1,6 @@
 ---
 import { OPENPLANNER_URL } from 'astro:env/client'
-import type { OpenPlannerType, Session } from '../../type'
+import type { Category, OpenPlannerType, Session, Speaker, Track } from '../../type'
 import Cluster from '../../components/ui-elements/Cluster.astro'
 import ButtonLink from '../../components/ui-elements/ButtonLink.astro'
 import LayoutWithTitle from '../../layouts/LayoutWithTitle.astro'
@@ -14,7 +14,20 @@ export async function getStaticPaths() {
     const { event, speakers, sessions } = openPlannerData
     const { tracks, categories } = event
 
-    const sessionsByDay = sessions.reduce((acc, session) => {
+    const augmentedSessions = sessions.map((session) => {
+        const sessionSpeakers = speakers.filter((speaker) => session.speakerIds.includes(speaker.id))
+        const sessionCategory = categories.find((cat) => cat.id === session.categoryId)
+        const sessionTrack = tracks.find((track) => track.id === session.trackId)
+
+        return {
+            ...session,
+            speakers: sessionSpeakers,
+            category: sessionCategory,
+            track: sessionTrack,
+        }
+    })
+
+    const sessionsByDay = augmentedSessions.reduce((acc, session) => {
         if (session.dateStart && session.trackId) {
             const date = new Date(session.dateStart)
             date.setHours(0, 0, 0, 0)
@@ -22,12 +35,7 @@ export async function getStaticPaths() {
             if (!acc.has(timestamps)) {
                 acc.set(timestamps, [])
             }
-            const sessionWithSpeakersAndCategories = {
-                ...session,
-                speakers: speakers.filter((speaker) => session.speakerIds.includes(speaker.id)),
-                category: categories.find((cat) => session.categoryId === cat.id),
-            }
-            acc.get(timestamps)?.push(sessionWithSpeakersAndCategories)
+            acc.get(timestamps)?.push(session)
             acc.get(timestamps)?.sort((a, b) => {
                 if (!a.dateStart || !b.dateStart) {
                     return 0
@@ -36,7 +44,7 @@ export async function getStaticPaths() {
             })
         }
         return acc
-    }, new Map<number, Session[]>())
+    }, new Map<number, (Session & { track: Track | undefined; speakers: Speaker[]; category: Category | undefined })[]>())
 
     const sortedDays = Array.from(sessionsByDay.keys()).sort()
 
@@ -54,7 +62,7 @@ export async function getStaticPaths() {
             params: { num: 'favorite' },
             props: {
                 day: 'favorite',
-                sessions,
+                sessions: augmentedSessions,
                 days: sortedDays,
                 tracks,
             },
@@ -63,9 +71,12 @@ export async function getStaticPaths() {
 }
 
 const { day, sessions, days, tracks } = Astro.props
+
+const pageTitle =
+    day === 'favorite' ? 'Mon programme' : `Programme ${new Date(day).toLocaleDateString('fr', { dateStyle: 'long' })}`
 ---
 
-<LayoutWithTitle htmlTitle="Sunny Tech programme" title="Programme">
+<LayoutWithTitle title={pageTitle}>
     <Cluster slot="description">
         {
             days.map((d, index) => (

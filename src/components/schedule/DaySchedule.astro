@@ -1,10 +1,10 @@
 ---
-import type { Track, Session } from '../../type'
+import type { Track, Session, Speaker, Category } from '../../type'
 import SessionItem from './SessionItem.astro'
 
 interface Props {
     tracks: Track[]
-    sessions: Session[]
+    sessions: (Session & { track: Track | undefined; speakers: Speaker[]; category: Category | undefined })[]
 }
 
 const { tracks, sessions } = Astro.props
@@ -28,7 +28,7 @@ const gridTemplateColumns = `${GRID_CONFIG.TIME_COLUMN_WIDTH} repeat(${tracks.le
 <div>
     <div class="day-schedule" style={{ gridTemplateColumns }}>
         {/* Empty cell for top-left corner */}
-        <div style={{ gridColumn: 1, gridRow: 1 }}></div>
+        <div class="day-schedule-tracks-zero"></div>
 
         <div class="day-schedule-tracks" style={{ gridTemplateColumns: `repeat(${tracks.length}, 1fr)` }}>
             {tracks.map((track, index) => <div class="day-schedule-track">{track.name}</div>)}
@@ -64,7 +64,15 @@ const gridTemplateColumns = `${GRID_CONFIG.TIME_COLUMN_WIDTH} repeat(${tracks.le
                             gridColumn: `${trackIndex + 2} / span ${width}`,
                             gridRow: `${rowStart} / span ${height}`,
                         }}>
-                        <SessionItem session={session} />
+                        <SessionItem
+                            id={session.id}
+                            title={session.title}
+                            dateStart={session.dateStart}
+                            durationMinutes={session.durationMinutes}
+                            track={session.track}
+                            category={session.category}
+                            speakers={session.speakers}
+                        />
                     </div>
                 )
             })
@@ -74,22 +82,46 @@ const gridTemplateColumns = `${GRID_CONFIG.TIME_COLUMN_WIDTH} repeat(${tracks.le
 
 <style>
     .day-schedule {
-        display: grid;
-        grid-auto-rows: minmax(100px, auto);
         position: relative;
-        gap: var(--s0);
+
+        > * + * {
+            margin-top: var(--s0);
+        }
+
+        @media (min-width: 912px) {
+            display: grid;
+            gap: var(--s0);
+            grid-auto-rows: minmax(100px, auto);
+
+            > * + * {
+                margin-top: 0;
+            }
+        }
+    }
+
+    .day-schedule-tracks-zero {
+        display: none;
+
+        @media (min-width: 912px) {
+            grid-column: 0;
+            grid-row: 0;
+        }
     }
 
     .day-schedule-tracks {
-        grid-column: 2 / -1;
-        grid-row: 1;
-        display: grid;
-        position: sticky;
-        top: calc(4rem + 1px);
-        background-color: var(--background);
-        z-index: 2;
-        border-bottom: 1px solid;
-        border-color: var(--line);
+        display: none;
+
+        @media (min-width: 912px) {
+            grid-column: 2 / -1;
+            grid-row: 1;
+            display: grid;
+            position: sticky;
+            top: calc(4rem + 1px);
+            background-color: var(--background);
+            z-index: 2;
+            overflow: hidden;
+            border-bottom: 1px solid var(--line);
+        }
     }
 
     .day-schedule-track {
@@ -111,19 +143,24 @@ const gridTemplateColumns = `${GRID_CONFIG.TIME_COLUMN_WIDTH} repeat(${tracks.le
             transform: translateY(-50%);
             width: 1px;
             height: 70%;
+            max-height: 100%;
             background-color: var(--line);
         }
     }
 
     .day-schedule-time {
-        grid-column: 1;
-        text-align: right;
-        padding: var(--s0) var(--s0) 0 0;
-        display: flex;
-        align-items: flex-start;
-        justify-content: flex-end;
-        font-weight: 500;
-        font-size: 1.6em;
+        display: none;
+
+        @media (min-width: 912px) {
+            grid-column: 1;
+            text-align: right;
+            padding: var(--s0) var(--s0) 0 0;
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-end;
+            font-weight: 500;
+            font-size: 1.6em;
+        }
     }
 
     .day-schedule-time-minute {

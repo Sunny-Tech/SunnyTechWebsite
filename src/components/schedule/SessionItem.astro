@@ -1,47 +1,60 @@
 ---
-import type { Category, Session, Speaker } from '../../type'
+import type { Category, Speaker, Track } from '../../type'
 import Chip from '../ui-elements/Chip.astro'
 import Cluster from '../ui-elements/Cluster.astro'
 import Stack from '../ui-elements/Stack.astro'
+import SpeakerComponent from './Speaker.astro'
 
 interface Props {
-    session: Session & { speakers?: Speaker[]; category?: Category }
+    id: string
+    title: string
+    dateStart?: string
+    durationMinutes?: number
+    track?: Track
+    category?: Category
+    speakers: Speaker[]
 }
 
-const { session } = Astro.props
+const { id, title, dateStart, durationMinutes, track, category, speakers } = Astro.props
 ---
 
-<a href={`/sessions/${session.id}`} class="schedule-session" data-session-id={session.id}>
+<div class="schedule-session" data-session-id={id}>
     <Stack style={{ height: '100%' }} space="var(--s-2)">
-        <h3 class="fw-medium fs1">{session.title}</h3>
-        {session.abstract && <p class="schedule-session-abstract">{session.abstract}</p>}
+        <h3 class="fw-medium fs1"><a href={`/sessions/${id}`}>{title}</a></h3>
+        <div class="schedule-session-extra-info">
+            <div class="schedule-session-date">
+                {
+                    dateStart && (
+                        <strong>
+                            {new Date(dateStart).toLocaleString('fr', { dateStyle: 'long', timeStyle: 'short' })}
+                        </strong>
+                    )
+                } –{' '}
+                {durationMinutes} min
+            </div>
+            {track && <div class="schedule-session-track">Salle : {track.name}</div>}
+        </div>
         {
-            session.category && (
+            category && (
                 <div>
-                    <Chip color={session.category.color} size="sm">
-                        {session.category.name}
+                    <Chip color={category.color} size="sm">
+                        {category.name}
                     </Chip>
                 </div>
             )
         }
         {
-            session.speakers && session.speakers.length > 0 && (
+            speakers && speakers.length > 0 && (
                 <div style={{ marginTop: 'auto', paddingTop: 'var(--s0)' }}>
                     <Cluster>
-                        {session.speakers.map((speaker) => (
-                            <Cluster space="var(--s-3) var(--s-2)" nowrap>
-                                <img
-                                    alt=""
-                                    src={speaker.photoUrl || undefined}
-                                    width="20"
-                                    height="20"
-                                    style={{ borderRadius: '50%' }}
-                                />
-                                <div>
-                                    <div style={{ lineHeight: 1.2 }}>{speaker.name}</div>
-                                    <div style={{ lineHeight: 1.2, fontSize: '0.675em' }}>{speaker.company}</div>
-                                </div>
-                            </Cluster>
+                        {speakers.map((speaker) => (
+                            <SpeakerComponent
+                                size="sm"
+                                id={speaker.id}
+                                photoUrl={speaker.photoUrl}
+                                name={speaker.name}
+                                company={speaker.company}
+                            />
                         ))}
                     </Cluster>
                 </div>
@@ -71,7 +84,7 @@ const { session } = Astro.props
             >
         </button>
     </Stack>
-</a>
+</div>
 
 <script>
     import { Firestore, getFirestore, setDoc } from 'firebase/firestore'
@@ -143,13 +156,13 @@ const { session } = Astro.props
                         evt.preventDefault()
                         evt.stopPropagation()
 
-                        await toggleSession(sessionId, db, user)
-
-                        if (await isSessionSaved(sessionId, db, user)) {
-                            session.dataset.saved = 'true'
-                        } else {
+                        if (session.dataset.saved === 'true') {
                             session.dataset.saved = 'false'
+                        } else {
+                            session.dataset.saved = 'true'
                         }
+
+                        await toggleSession(sessionId, db, user)
                     })
                 }
             })
@@ -161,8 +174,7 @@ const { session } = Astro.props
     .schedule-session {
         position: relative;
         display: block;
-        text-decoration: none;
-        color: var(--text);
+
         background-color: var(--background);
         border-radius: var(--s-3);
         border: 1px solid var(--line);
@@ -172,10 +184,16 @@ const { session } = Astro.props
         height: 100%;
         transition: all var(--animation);
 
-        &:hover {
-            background-color: var(--component);
-            border-color: var(--border);
+        h3 a {
+            text-decoration: none;
+            color: var(--text);
 
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+
+        &:hover {
             .schedule-session-save-button {
                 opacity: 1;
             }
@@ -198,12 +216,12 @@ const { session } = Astro.props
         }
     }
 
-    .schedule-session-abstract {
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: 3;
-        overflow: hidden;
-        margin: 0;
+    .schedule-session-extra-info {
+        display: block;
+
+        @media (min-width: 912px) {
+            display: none;
+        }
     }
 
     .schedule-session-save-button {
