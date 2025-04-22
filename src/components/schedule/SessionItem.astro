@@ -46,7 +46,7 @@ const { id, title, dateStart, durationMinutes, track, category, speakers } = Ast
         {
             speakers && speakers.length > 0 && (
                 <div style={{ marginTop: 'auto', paddingTop: 'var(--s0)' }}>
-                    <Cluster>
+                    <Cluster space="var(--s-2)">
                         {speakers.map((speaker) => (
                             <SpeakerComponent
                                 size="sm"
@@ -129,7 +129,6 @@ const { id, title, dateStart, durationMinutes, track, category, speakers } = Ast
             const userRef = doc(db, 'users', user.uid)
             const userDoc = await getDoc(userRef)
             const sessions = userDoc.data()?.sessions || []
-            console.log('is session saved:', sessions.includes(sessionId))
             return sessions.includes(sessionId)
         }
         return false
@@ -186,9 +185,11 @@ const { id, title, dateStart, durationMinutes, track, category, speakers } = Ast
 
         h3 a {
             text-decoration: none;
-            color: var(--text);
+            color: var(--brand-solid);
+            transition: color var(--animation);
 
             &:hover {
+                color: var(--brand-solid-hover);
                 text-decoration: underline;
             }
         }
@@ -233,6 +234,9 @@ const { id, title, dateStart, durationMinutes, track, category, speakers } = Ast
         cursor: pointer;
         padding: 0;
         margin: 0;
-        opacity: 0;
+
+        @media (min-width: 912px) {
+            opacity: 0;
+        }
     }
 </style>

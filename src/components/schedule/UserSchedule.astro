@@ -82,9 +82,21 @@ const jsonSessions = JSON.stringify(sessions)
 </script>
 
 <style>
-    .user-schedule {
-        :global(.user-schedule-session a) {
-            color: var(--text);
+    user-schedule {
+        :global(.user-schedule-session) {
+            border: 1px solid var(--line);
+            border-radius: var(--s-3);
+            padding: var(--s0);
+        }
+
+        :global(a) {
+            text-decoration: none;
+            color: var(--brand-solid);
+        }
+
+        :global(a:hover) {
+            color: var(--brand-solid-hover);
+            text-decoration: underline;
         }
     }
 </style>

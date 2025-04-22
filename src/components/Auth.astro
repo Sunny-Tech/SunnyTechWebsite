@@ -1,88 +1,156 @@
-<button type="button" id="login-button" class="btn-login">Se connecter</button>
-<svg
-    id="user-icon"
-    style="display: none;"
-    xmlns="http://www.w3.org/2000/svg"
-    width="32"
-    height="32"
-    viewBox="0 0 24 24">
-    <path
-        fill="currentColor"
-        d="M12 19.2c-2.5 0-4.71-1.28-6-3.2c.03-2 4-3.1 6-3.1s5.97 1.1 6 3.1a7.23 7.23 0 0 1-6 3.2M12 5a3 3 0 0 1 3 3a3 3 0 0 1-3 3a3 3 0 0 1-3-3a3 3 0 0 1 3-3m0-3A10 10 0 0 0 2 12a10 10 0 0 0 10 10a10 10 0 0 0 10-10c0-5.53-4.5-10-10-10"
-    ></path>
-</svg>
+---
+import Stack from './ui-elements/Stack.astro'
+---
+
+<auth-component style="display: flex; align-items: center;">
+    <div class="auth-wrapper">
+        <button type="button" id="login-button" data-when-connected="false" class="btn-login">Se connecter</button>
+        <svg data-when-connected="true" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
+            <path
+                fill="currentColor"
+                d="M12 19.2c-2.5 0-4.71-1.28-6-3.2c.03-2 4-3.1 6-3.1s5.97 1.1 6 3.1a7.23 7.23 0 0 1-6 3.2M12 5a3 3 0 0 1 3 3a3 3 0 0 1-3 3a3 3 0 0 1-3-3a3 3 0 0 1 3-3m0-3A10 10 0 0 0 2 12a10 10 0 0 0 10 10a10 10 0 0 0 10-10c0-5.53-4.5-10-10-10"
+            ></path>
+        </svg>
+        <div class="auth-menu">
+            <Stack space="var(--s-2)">
+                <div id="auth-user-name"></div>
+                <button type="button" id="logout-button" class="auth-button">Se déconnecter</button>
+            </Stack>
+        </div>
+    </div>
+</auth-component>
 
 <script>
-    import { GoogleAuthProvider, getAuth, signInWithPopup, onAuthStateChanged, type User } from 'firebase/auth'
+    import {
+        GoogleAuthProvider,
+        getAuth,
+        signInWithPopup,
+        onAuthStateChanged,
+        type User,
+        type Auth,
+        signOut,
+        useDeviceLanguage,
+    } from 'firebase/auth'
     import { app } from '../firebase/client'
 
-    const provider = new GoogleAuthProvider()
-    provider.addScope('https://www.googleapis.com/auth/userinfo.email')
+    class AuthComponent extends HTMLElement {
+        provider: GoogleAuthProvider
+        auth: Auth
 
-    const auth = getAuth(app)
-    auth.useDeviceLanguage()
+        constructor() {
+            super()
 
-    const handleSetUser = (user: User | null) => {
-        const loginButton = document.querySelector('#login-button') as HTMLButtonElement | null
-        const userIcon = document.querySelector('#user-icon') as SVGElement | null
+            this.provider = new GoogleAuthProvider()
+            this.provider.addScope('https://www.googleapis.com/auth/userinfo.email')
 
-        // https://firebase.google.com/docs/reference/js/auth.user
-        if (loginButton) {
-            loginButton.style.display = user ? 'none' : 'block'
+            this.auth = getAuth(app)
+            useDeviceLanguage(this.auth)
         }
-        if (userIcon) {
-            userIcon.style.display = user ? 'block' : 'none'
+
+        connectedCallback() {
+            onAuthStateChanged(this.auth, this.handleSetUser.bind(this))
+
+            const loginButton = this.querySelector('#login-button') as HTMLButtonElement | null
+            loginButton?.addEventListener('click', this.handleLogin.bind(this))
+            const logoutButton = this.querySelector('#logout-button') as HTMLButtonElement | null
+            logoutButton?.addEventListener('click', this.handleLogout.bind(this))
+        }
+
+        handleSetUser(user: User | null) {
+            this.dataset.connected = user ? 'true' : 'false'
+
+            const anonymousElements = this.querySelectorAll('[data-when-connected="false"]') as NodeListOf<HTMLElement>
+            const connectedElements = this.querySelectorAll('[data-when-connected="true"]') as NodeListOf<HTMLElement>
+
+            anonymousElements.forEach((element) => {
+                element.style.display = user ? 'none' : 'block'
+            })
+            connectedElements.forEach((element) => {
+                element.style.display = user ? 'block' : 'none'
+            })
+
+            if (user) {
+                this.querySelector('#auth-user-name')!.textContent = user.displayName || ''
+            }
+        }
+
+        handleLogin() {
+            signInWithPopup(this.auth, this.provider)
+                .then((result) => {
+                    const credential = GoogleAuthProvider.credentialFromResult(result)
+
+                    if (credential) {
+                        const token = credential.accessToken
+                        const user = result.user
+                        // IdP data available using getAdditionalUserInfo(result)
+                        console.log('User signed in:', user)
+                        console.log('Access token:', token)
+                    }
+                })
+                .catch((error) => {
+                    const errorCode = error.code
+                    const errorMessage = error.message
+                    const email = error.customData.email
+                    const credential = GoogleAuthProvider.credentialFromError(error)
+                    console.error('Error during sign-in:', errorCode, errorMessage, email, credential)
+                })
+        }
+
+        handleLogout() {
+            signOut(this.auth)
+                .then(() => {
+                    console.log('User signed out')
+                })
+                .catch((error) => {
+                    console.error('Error during sign-out:', error)
+                })
         }
     }
 
-    onAuthStateChanged(auth, handleSetUser)
-
-    const handleLogin = () => {
-        signInWithPopup(auth, provider)
-            .then((result) => {
-                const credential = GoogleAuthProvider.credentialFromResult(result)
-
-                if (credential) {
-                    const token = credential.accessToken
-                    const user = result.user
-                    // IdP data available using getAdditionalUserInfo(result)
-                    console.log('User signed in:', user)
-                    console.log('Access token:', token)
-                }
-            })
-            .catch((error) => {
-                const errorCode = error.code
-                const errorMessage = error.message
-                const email = error.customData.email
-                const credential = GoogleAuthProvider.credentialFromError(error)
-                console.error('Error during sign-in:', errorCode, errorMessage, email, credential)
-            })
-    }
-
-    document.addEventListener('astro:page-load', () => {
-        const loginButton = document.querySelector('#login-button') as HTMLButtonElement | null
-        loginButton?.addEventListener('click', handleLogin)
-
-        handleSetUser(auth.currentUser)
-    })
+    customElements.define('auth-component', AuthComponent)
 </script>
 
 <style>
-    .btn-login {
-        align-self: center;
-        background-color: var(--background);
-        color: var(--brand-solid);
-        border: 1px solid var(--brand-solid);
-        padding: var(--s-2) var(--s-1);
-        border-radius: 0.25rem;
-        cursor: pointer;
-        transition:
-            background-color 0.3s ease,
-            border-color 0.3s ease;
+    .auth-wrapper {
+        position: relative;
 
-        &:hover {
-            background-color: var(--brand-solid);
-            border-color: var(--background);
+        > * {
+            display: none;
+        }
+
+        button {
+            align-self: center;
+            white-space: nowrap;
+            background-color: var(--background);
+            color: var(--brand-solid);
+            border: 1px solid var(--brand-solid);
+            padding: var(--s-2) var(--s-1);
+            border-radius: 0.25rem;
+            cursor: pointer;
+            transition:
+                background-color 0.3s ease,
+                color 0.3s ease;
+
+            &:hover {
+                background-color: var(--brand-solid);
+                color: var(--background);
+            }
+        }
+    }
+
+    .auth-menu {
+        text-align: right;
+        background-color: var(--background);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+        padding: var(--s-1);
+        display: none;
+        border-radius: 0.25rem;
+        position: absolute;
+        top: 100%;
+        right: 0;
+
+        auth-component[data-connected='true'] .auth-wrapper:hover & {
+            display: block;
         }
     }
 </style>
