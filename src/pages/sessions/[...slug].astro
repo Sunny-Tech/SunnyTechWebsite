@@ -16,21 +16,52 @@ export async function getStaticPaths() {
     const { speakers, sessions, event } = openPlannerData
     const { categories, tracks } = event
 
-    return sessions.map((session) => ({
-        params: { slug: session.id },
-        props: {
-            ...session,
-            speakers: speakers.filter((speaker) => session.speakerIds.includes(speaker.id)),
-            category: categories.find((cat) => cat.id === session.categoryId),
-            track: tracks.find((track) => track.id === session.trackId),
-        },
-    }))
+    const uniqueDays = sessions.reduce((acc, session) => {
+        if (session.dateStart && session.trackId) {
+            const date = new Date(session.dateStart)
+            date.setHours(0, 0, 0, 0)
+            const timestamp = date.getTime()
+            if (!acc.has(timestamp)) {
+                acc.add(timestamp)
+            }
+        }
+        return acc
+    }, new Set<number>())
+    const sortedDays = Array.from(uniqueDays.values()).sort()
+
+    return sessions.map((session) => {
+        const date = session.dateStart ? new Date(session.dateStart) : new Date()
+        date.setHours(0, 0, 0, 0)
+        const timestamp = date.getTime()
+
+        return {
+            params: { slug: session.id },
+            props: {
+                ...session,
+                parentUrl: `/schedule/day-${sortedDays.indexOf(timestamp) + 1}`,
+                speakers: speakers.filter((speaker) => session.speakerIds.includes(speaker.id)),
+                category: categories.find((cat) => cat.id === session.categoryId),
+                track: tracks.find((track) => track.id === session.trackId),
+            },
+        }
+    })
 }
 
-const { title, track, abstract, category, level, speakers, dateStart, durationMinutes } = Astro.props
+const { title, track, abstract, category, level, speakers, dateStart, durationMinutes, parentUrl } = Astro.props
 ---
 
 <LayoutWithTitle htmlTitle={`Session – ${title}`} title={title}>
+    <div slot="pre-title">
+        <a href={parentUrl} style={{ textDecoration: 'none', color: 'var(--brand-solid)' }}>
+            <Cluster space="var(--s-2)" align="center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
+                    ><path fill="currentColor" d="M20 11v2H8l5.5 5.5l-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5L8 11z"
+                    ></path></svg
+                >
+                <span>Programme</span>
+            </Cluster>
+        </a>
+    </div>
     <div slot="description">
         <Stack>
             <div class="fs1">
