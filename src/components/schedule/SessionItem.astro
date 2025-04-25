@@ -34,32 +34,36 @@ const { id, title, dateStart, durationMinutes, track, category, speakers } = Ast
             </div>
             {track && <div class="schedule-session-track">Salle : {track.name}</div>}
         </div>
-        {
-            category && (
-                <div>
-                    <Chip color={category.color} size="sm">
-                        {category.name}
-                    </Chip>
-                </div>
-            )
-        }
-        {
-            speakers && speakers.length > 0 && (
-                <div style={{ marginTop: 'auto', paddingTop: 'var(--s0)' }}>
-                    <Cluster space="var(--s-2)">
-                        {speakers.map((speaker) => (
-                            <SpeakerComponent
-                                size="sm"
-                                id={speaker.id}
-                                photoUrl={speaker.photoUrl}
-                                name={speaker.name}
-                                company={speaker.company}
-                            />
-                        ))}
-                    </Cluster>
-                </div>
-            )
-        }
+        <div style={{ marginTop: 'auto', paddingTop: 'var(--s0)' }}>
+            <Stack space="var(--s-2)">
+                {
+                    speakers && speakers.length > 0 && (
+                        <div>
+                            <Cluster space="var(--s-2)">
+                                {speakers.map((speaker) => (
+                                    <SpeakerComponent
+                                        size="sm"
+                                        id={speaker.id}
+                                        photoUrl={speaker.photoUrl}
+                                        name={speaker.name}
+                                        company={speaker.company}
+                                    />
+                                ))}
+                            </Cluster>
+                        </div>
+                    )
+                }
+                {
+                    category && (
+                        <div>
+                            <Chip color={category.color} size="sm">
+                                {category.name}
+                            </Chip>
+                        </div>
+                    )
+                }
+            </Stack>
+        </div>
 
         <session-item-bookmark data-session-id={id}>
             <button class="schedule-session-save-button" type="button">
