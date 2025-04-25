@@ -14,16 +14,17 @@ const jsonSessions = JSON.stringify(sessions)
 
 <user-schedule data-sessions={jsonSessions}>
     <div class="user-schedule">
+        <button type="button" class="btn" style="margin-bottom: var(--s0)"></button>
         <Stack />
     </div>
 </user-schedule>
 
 <script>
-    import { getFirestore } from 'firebase/firestore'
-    import { doc, getDoc } from 'firebase/firestore'
     import { getAuth, onAuthStateChanged } from 'firebase/auth'
+    import { getFirestore, doc, getDoc } from 'firebase/firestore/lite'
     import type { Session } from '../../type'
     import { app } from '../../firebase/client'
+    import { logout, signIn } from '../../firebase/auth'
 
     class UserSchedule extends HTMLElement {
         connectedCallback() {
@@ -31,6 +32,18 @@ const jsonSessions = JSON.stringify(sessions)
 
             onAuthStateChanged(auth, async (user) => {
                 if (user) {
+                    if (import.meta.env.DEV) {
+                        const button = this.querySelector('button')
+                        if (button) {
+                            button.innerText = 'Se déconnecter'
+                            button?.addEventListener('click', (evt) => {
+                                evt.stopPropagation()
+                                logout()
+                                this.querySelector('.stack')?.replaceChildren()
+                            })
+                        }
+                    }
+
                     const db = getFirestore(app)
                     const userRef = doc(db, 'users', user.uid)
                     const docSnap = await getDoc(userRef)
@@ -52,6 +65,16 @@ const jsonSessions = JSON.stringify(sessions)
 
                             this.renderSessions(userSessions)
                         }
+                    }
+                } else {
+                    const button = this.querySelector('button')
+                    if (button) {
+                        setTimeout(() => {
+                            button.innerText = 'Se connecter'
+                            button?.addEventListener('click', () => {
+                                signIn()
+                            })
+                        }, 10)
                     }
                 }
             })

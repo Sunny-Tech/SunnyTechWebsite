@@ -61,112 +61,152 @@ const { id, title, dateStart, durationMinutes, track, category, speakers } = Ast
             )
         }
 
-        <button class="schedule-session-save-button" type="button">
-            <svg
-                class="schedule-session-save-button-icon--save"
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                ><path fill="currentColor" d="m17 18l-5-2.18L7 18V5h10m0-2H7a2 2 0 0 0-2 2v16l7-3l7 3V5a2 2 0 0 0-2-2"
-                ></path></svg
-            >
-            <svg
-                class="schedule-session-save-button-icon--saved"
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                ><path
-                    fill="currentColor"
-                    d="M17 3a2 2 0 0 1 2 2v16l-7-3l-7 3V5a2 2 0 0 1 2-2zm-6 11l6.25-6.24l-1.41-1.42L11 11.18L8.41 8.59L7 10z"
-                ></path></svg
-            >
-        </button>
+        <session-item-bookmark data-session-id={id}>
+            <button class="schedule-session-save-button" type="button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                    ><path
+                        fill="currentColor"
+                        d="m17 18l-5-2.18L7 18V5h10m0-2H7a2 2 0 0 0-2 2v16l7-3l7 3V5a2 2 0 0 0-2-2"></path></svg
+                >
+            </button>
+        </session-item-bookmark>
     </Stack>
 </div>
 
 <script>
-    import { Firestore, getFirestore, setDoc } from 'firebase/firestore'
-    import { doc, updateDoc, arrayUnion, arrayRemove, getDoc } from 'firebase/firestore'
-    import { getAuth, type User } from 'firebase/auth'
+    import {
+        Firestore,
+        getFirestore,
+        setDoc,
+        doc,
+        updateDoc,
+        arrayUnion,
+        arrayRemove,
+        getDoc,
+    } from 'firebase/firestore/lite'
+    import { getAuth, onAuthStateChanged, type Auth, type User } from 'firebase/auth'
     import { app } from '../../firebase/client'
+    import { signIn } from '../../firebase/auth'
 
-    const saveSession = async (sessionId: string, db: Firestore, user: User | null) => {
-        if (user) {
-            const userRef = doc(db, 'users', user.uid)
-            const docSnap = await getDoc(userRef)
+    class SessionItemBookmark extends HTMLElement {
+        db: Firestore
+        auth: Auth
+        user: User | null
 
-            if (docSnap.exists()) {
-                await updateDoc(userRef, { sessions: arrayUnion(sessionId) })
-            } else {
-                await setDoc(userRef, { sessions: [sessionId] }, { merge: true })
-            }
+        notSavedIconPath: string
+        savedIconPath: string
+
+        constructor() {
+            super()
+
+            this.db = getFirestore(app)
+            this.auth = getAuth(app)
+            this.user = this.auth.currentUser
+
+            this.notSavedIconPath = 'm17 18l-5-2.18L7 18V5h10m0-2H7a2 2 0 0 0-2 2v16l7-3l7 3V5a2 2 0 0 0-2-2'
+            this.savedIconPath =
+                'M17 3a2 2 0 0 1 2 2v16l-7-3l-7 3V5a2 2 0 0 1 2-2zm-6 11l6.25-6.24l-1.41-1.42L11 11.18L8.41 8.59L7 10z'
         }
-    }
 
-    const removeSession = async (sessionId: string, db: Firestore, user: User | null) => {
-        if (user) {
-            const userRef = doc(db, 'users', user.uid)
-            await updateDoc(userRef, { sessions: arrayRemove(sessionId) })
-        }
-    }
+        connectedCallback() {
+            this.setInitialState()
+            this.querySelector('button')?.addEventListener('click', this.handleToggleBookmark.bind(this))
 
-    const toggleSession = async (sessionId: string, db: Firestore, user: User | null) => {
-        try {
-            if (await isSessionSaved(sessionId, db, user)) {
-                await removeSession(sessionId, db, user)
-            } else {
-                await saveSession(sessionId, db, user)
-            }
-        } catch (error) {
-            console.error('Error toggling session:', error)
-        }
-    }
-
-    const isSessionSaved = async (sessionId: string, db: Firestore, user: User | null) => {
-        if (user) {
-            const userRef = doc(db, 'users', user.uid)
-            const userDoc = await getDoc(userRef)
-            const sessions = userDoc.data()?.sessions || []
-            return sessions.includes(sessionId)
-        }
-        return false
-    }
-
-    document.addEventListener('astro:page-load', () => {
-        const db = getFirestore(app)
-        const auth = getAuth(app)
-        const user = auth.currentUser
-        const sessions = document.querySelectorAll('.schedule-session') as NodeListOf<HTMLElement>
-
-        if (sessions) {
-            sessions.forEach(async (session) => {
-                const sessionId = session.dataset.sessionId
-
-                if (sessionId) {
-                    if (await isSessionSaved(sessionId, db, user)) {
-                        session.dataset.saved = 'true'
-                    } else {
-                        session.dataset.saved = 'false'
-                    }
-
-                    session.querySelector('.schedule-session-save-button')?.addEventListener('click', async (evt) => {
-                        evt.preventDefault()
-                        evt.stopPropagation()
-
-                        if (session.dataset.saved === 'true') {
-                            session.dataset.saved = 'false'
-                        } else {
-                            session.dataset.saved = 'true'
-                        }
-
-                        await toggleSession(sessionId, db, user)
-                    })
-                }
+            onAuthStateChanged(this.auth, (user) => {
+                this.user = user
+                this.setInitialState()
             })
         }
-    })
+
+        async setInitialState() {
+            if (await this.isSessionSaved()) {
+                this.dataset.saved = 'true'
+                this.setIcon(true)
+            } else {
+                this.dataset.saved = 'false'
+                this.setIcon(false)
+            }
+        }
+
+        setIcon(isSaved: boolean) {
+            this.querySelector('svg path')?.setAttribute('d', isSaved ? this.savedIconPath : this.notSavedIconPath)
+        }
+
+        async handleToggleBookmark(evt: MouseEvent) {
+            evt.preventDefault()
+            evt.stopPropagation()
+
+            if (!this.user) {
+                console.warn('User is not authenticated, try to sign in')
+
+                const user = await signIn()
+
+                if (user) {
+                    this.user = user
+                } else {
+                    console.error('User is not authenticated')
+                    return
+                }
+            }
+
+            // Optimistic update of the saved state
+            if (this.dataset.saved === 'true') {
+                this.dataset.saved = 'false'
+                this.setIcon(false)
+            } else {
+                this.dataset.saved = 'true'
+                this.setIcon(true)
+            }
+
+            if (this.dataset.sessionId) {
+                this.toggleSession()
+            }
+        }
+
+        async saveSession() {
+            if (this.user) {
+                const userRef = doc(this.db, 'users', this.user.uid)
+                const docSnap = await getDoc(userRef)
+
+                if (docSnap.exists()) {
+                    await updateDoc(userRef, { sessions: arrayUnion(this.dataset.sessionId) })
+                } else {
+                    await setDoc(userRef, { sessions: [this.dataset.sessionId] }, { merge: true })
+                }
+            }
+        }
+
+        async removeSession() {
+            if (this.user) {
+                const userRef = doc(this.db, 'users', this.user.uid)
+                await updateDoc(userRef, { sessions: arrayRemove(this.dataset.sessionId) })
+            }
+        }
+
+        async toggleSession() {
+            try {
+                if (await this.isSessionSaved()) {
+                    await this.removeSession()
+                } else {
+                    await this.saveSession()
+                }
+            } catch (error) {
+                console.error('Error toggling session:', error)
+            }
+        }
+
+        async isSessionSaved() {
+            if (this.user) {
+                const userRef = doc(this.db, 'users', this.user.uid)
+                const userDoc = await getDoc(userRef)
+                const sessions = userDoc.data()?.sessions || []
+                return sessions.includes(this.dataset.sessionId)
+            }
+            return false
+        }
+    }
+
+    customElements.define('session-item-bookmark', SessionItemBookmark)
 </script>
 
 <style>
@@ -193,28 +233,6 @@ const { id, title, dateStart, durationMinutes, track, category, speakers } = Ast
                 text-decoration: underline;
             }
         }
-
-        &:hover {
-            .schedule-session-save-button {
-                opacity: 1;
-            }
-        }
-
-        &[data-saved='true'] .schedule-session-save-button {
-            opacity: 1;
-        }
-
-        .schedule-session-save-button-icon--saved {
-            display: none;
-        }
-
-        &[data-saved='true'] .schedule-session-save-button-icon--saved {
-            display: block;
-        }
-
-        &[data-saved='true'] .schedule-session-save-button-icon--save {
-            display: none;
-        }
     }
 
     .schedule-session-extra-info {
@@ -222,6 +240,17 @@ const { id, title, dateStart, durationMinutes, track, category, speakers } = Ast
 
         @media (min-width: 912px) {
             display: none;
+        }
+    }
+
+    session-item-bookmark {
+        @media (min-width: 912px) {
+            opacity: 0;
+        }
+
+        &[data-saved='true'],
+        .schedule-session:hover & {
+            opacity: 1;
         }
     }
 
@@ -234,9 +263,5 @@ const { id, title, dateStart, durationMinutes, track, category, speakers } = Ast
         cursor: pointer;
         padding: 0;
         margin: 0;
-
-        @media (min-width: 912px) {
-            opacity: 0;
-        }
     }
 </style>

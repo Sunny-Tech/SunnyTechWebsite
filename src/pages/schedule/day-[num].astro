@@ -86,10 +86,40 @@ const pageTitle =
             ))
         }
         <ButtonLink href="/schedule/day-favorite" variant={day === 'favorite' ? 'primary' : 'transparent'}>
-            Mon programme
+            <user-avatar></user-avatar> Mon programme
         </ButtonLink>
     </Cluster>
 
     {day === 'favorite' && <UserSchedule tracks={tracks} sessions={sessions} />}
     {day !== 'favorite' && <DaySchedule tracks={tracks} sessions={sessions} />}
 </LayoutWithTitle>
+
+<script>
+    import { getAuth, onAuthStateChanged } from 'firebase/auth'
+    import { app } from '../../firebase/client'
+
+    class UserAvatar extends HTMLElement {
+        connectedCallback() {
+            const auth = getAuth(app)
+
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    const userAvatar = document.createElement('img')
+
+                    if (user.photoURL) {
+                        userAvatar.src = user.photoURL
+                        userAvatar.alt = ''
+                        userAvatar.style.width = '24px'
+                        userAvatar.style.height = '24px'
+                        userAvatar.style.borderRadius = '50%'
+                        this.appendChild(userAvatar)
+                    }
+                } else {
+                    this.querySelector('img')?.remove()
+                }
+            })
+        }
+    }
+
+    customElements.define('user-avatar', UserAvatar)
+</script>
