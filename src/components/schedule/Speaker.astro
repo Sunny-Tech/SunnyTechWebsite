@@ -62,6 +62,8 @@ const { id, photoUrl, name, company, size, socials } = Astro.props
         border-radius: 50%;
         height: var(--photo-size);
         width: var(--photo-size);
+        max-width: var(--photo-size);
+        flex: 0 0 auto;
     }
 
     .speaker-photo-fallback {
