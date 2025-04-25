@@ -18,6 +18,7 @@ const titleHtml = htmlTitle || title
 
 <Layout title={titleHtml}>
     <ContentContainer spaceBlock="4rem">
+        <slot name="subtitle" />
         <Cluster space="var(--s-2)" align="center">
             <slot name="pre-title" />
             <h1>{title}</h1>
