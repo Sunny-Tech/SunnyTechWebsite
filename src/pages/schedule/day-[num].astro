@@ -81,7 +81,7 @@ const pageTitle =
         {
             days.map((d, index) => (
                 <ButtonLink href={`/schedule/day-${index + 1}`} variant={d === day ? 'primary' : 'transparent'}>
-                    {new Date(d).toLocaleDateString('fr', { dateStyle: 'long' })}
+                    {new Date(d).toLocaleDateString('fr', { weekday: 'long', day: 'numeric' })}
                 </ButtonLink>
             ))
         }
