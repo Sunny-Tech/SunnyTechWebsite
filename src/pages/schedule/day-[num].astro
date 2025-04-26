@@ -1,0 +1,125 @@
+---
+import { OPENPLANNER_URL } from 'astro:env/client'
+import type { Category, OpenPlannerType, Session, Speaker, Track } from '../../type'
+import Cluster from '../../components/ui-elements/Cluster.astro'
+import ButtonLink from '../../components/ui-elements/ButtonLink.astro'
+import LayoutWithTitle from '../../layouts/LayoutWithTitle.astro'
+import DaySchedule from '../../components/schedule/DaySchedule.astro'
+import UserSchedule from '../../components/schedule/UserSchedule.astro'
+
+export async function getStaticPaths() {
+    const response = await fetch(OPENPLANNER_URL)
+    const openPlannerData: OpenPlannerType = await response.json()
+
+    const { event, speakers, sessions } = openPlannerData
+    const { tracks, categories } = event
+
+    const augmentedSessions = sessions.map((session) => {
+        const sessionSpeakers = speakers.filter((speaker) => session.speakerIds.includes(speaker.id))
+        const sessionCategory = categories.find((cat) => cat.id === session.categoryId)
+        const sessionTrack = tracks.find((track) => track.id === session.trackId)
+
+        return {
+            ...session,
+            speakers: sessionSpeakers,
+            category: sessionCategory,
+            track: sessionTrack,
+        }
+    })
+
+    const sessionsByDay = augmentedSessions.reduce((acc, session) => {
+        if (session.dateStart && session.trackId) {
+            const date = new Date(session.dateStart)
+            date.setHours(0, 0, 0, 0)
+            const timestamps = date.getTime()
+            if (!acc.has(timestamps)) {
+                acc.set(timestamps, [])
+            }
+            acc.get(timestamps)?.push(session)
+            acc.get(timestamps)?.sort((a, b) => {
+                if (!a.dateStart || !b.dateStart) {
+                    return 0
+                }
+                return new Date(a.dateStart).getTime() - new Date(b.dateStart).getTime()
+            })
+        }
+        return acc
+    }, new Map<number, (Session & { track: Track | undefined; speakers: Speaker[]; category: Category | undefined })[]>())
+
+    const sortedDays = Array.from(sessionsByDay.keys()).sort()
+
+    return [
+        ...sortedDays.map((day, index) => ({
+            params: { num: index + 1 },
+            props: {
+                day,
+                sessions: sessionsByDay.get(day) || [],
+                days: sortedDays,
+                tracks,
+            },
+        })),
+        {
+            params: { num: 'favorite' },
+            props: {
+                day: 'favorite',
+                sessions: augmentedSessions,
+                days: sortedDays,
+                tracks,
+            },
+        },
+    ]
+}
+
+const { day, sessions, days, tracks } = Astro.props
+
+const pageTitle =
+    day === 'favorite' ? 'Mon programme' : `Programme ${new Date(day).toLocaleDateString('fr', { dateStyle: 'long' })}`
+---
+
+<LayoutWithTitle title={pageTitle}>
+    <Cluster slot="description">
+        {
+            days.map((d, index) => (
+                <ButtonLink href={`/schedule/day-${index + 1}`} variant={d === day ? 'primary' : 'transparent'}>
+                    {new Date(d).toLocaleDateString('fr', { dateStyle: 'long' })}
+                </ButtonLink>
+            ))
+        }
+        <ButtonLink href="/schedule/day-favorite" variant={day === 'favorite' ? 'primary' : 'transparent'}>
+            <user-avatar></user-avatar> Mon programme
+        </ButtonLink>
+    </Cluster>
+
+    {day === 'favorite' && <UserSchedule tracks={tracks} sessions={sessions} />}
+    {day !== 'favorite' && <DaySchedule tracks={tracks} sessions={sessions} />}
+</LayoutWithTitle>
+
+<script>
+    import { getAuth, onAuthStateChanged } from 'firebase/auth'
+    import { app } from '../../firebase/client'
+
+    class UserAvatar extends HTMLElement {
+        connectedCallback() {
+            const auth = getAuth(app)
+
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    const userAvatar = document.createElement('img')
+
+                    if (user.photoURL) {
+                        userAvatar.src = user.photoURL
+                        userAvatar.alt = ''
+                        userAvatar.style.width = '24px'
+                        userAvatar.style.height = '24px'
+                        userAvatar.style.borderRadius = '50%'
+                        this.appendChild(userAvatar)
+                    }
+                } else {
+                    this.querySelector('img')?.remove()
+                }
+            })
+        }
+    }
+
+    customElements.define('user-avatar', UserAvatar)
+</script>

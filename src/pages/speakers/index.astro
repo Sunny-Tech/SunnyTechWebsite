@@ -1,0 +1,28 @@
+---
+import { OPENPLANNER_URL } from 'astro:env/client'
+import type { OpenPlannerType } from '../../type'
+import LayoutWithTitle from '../../layouts/LayoutWithTitle.astro'
+import Grid from '../../components/ui-elements/Grid.astro'
+import Speaker from '../../components/schedule/Speaker.astro'
+
+const response = await fetch(OPENPLANNER_URL)
+const openPlannerData: OpenPlannerType = await response.json()
+
+const { speakers } = openPlannerData
+---
+
+<LayoutWithTitle htmlTitle="SunnyTech speakers" title="Speakers">
+    <Grid space="2rem" min="20rem">
+        {
+            speakers.map((speaker) => (
+                <Speaker
+                    id={speaker.id}
+                    photoUrl={speaker.photoUrl}
+                    name={speaker.name}
+                    company={speaker.company}
+                    socials={speaker.socials}
+                />
+            ))
+        }
+    </Grid>
+</LayoutWithTitle>

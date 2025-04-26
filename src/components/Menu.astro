@@ -2,6 +2,7 @@
 const FAQ_LINK = 'https://www.sunny-tech.io/faq'
 
 const navigation = [
+    // { label: 'Programme', route: '/schedule' },
     { label: 'Équipe', route: '/team' },
     { label: 'Billetterie', route: '/#tickets' },
     { label: 'Code de conduite', route: '/coc' },
@@ -69,21 +70,23 @@ const isActiveRoute = (route: string) => {
         }
     })
 
-    const navTriggerLabel = document.querySelector('#nav-trigger-label') as HTMLInputElement | null
+    document.addEventListener('astro:page-load', () => {
+        const navTriggerLabel = document.querySelector('#nav-trigger-label') as HTMLInputElement | null
 
-    if (navTriggerLabel) {
-        navTriggerLabel.ariaLabel = 'Ouvrir le menu de navigation'
+        if (navTriggerLabel) {
+            navTriggerLabel.ariaLabel = 'Ouvrir le menu de navigation'
 
-        document.querySelector('#nav-trigger')?.addEventListener('change', (event) => {
-            const target = event.target as HTMLInputElement
+            document.querySelector('#nav-trigger')?.addEventListener('change', (event) => {
+                const target = event.target as HTMLInputElement
 
-            if (target.checked) {
-                navTriggerLabel.ariaLabel = 'Fermer le menu de navigation'
-            } else {
-                navTriggerLabel.ariaLabel = 'Ouvrir le menu de navigation'
-            }
-        })
-    }
+                if (target.checked) {
+                    navTriggerLabel.ariaLabel = 'Fermer le menu de navigation'
+                } else {
+                    navTriggerLabel.ariaLabel = 'Ouvrir le menu de navigation'
+                }
+            })
+        }
+    })
 </script>
 
 <style>

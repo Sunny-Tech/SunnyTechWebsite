@@ -12,7 +12,9 @@
     },
     "dependencies": {
         "@astrojs/check": "^0.9.4",
-        "astro": "^4.16.7",
+        "@astropub/md": "^1.0.0",
+        "astro": "^5.7.4",
+        "firebase": "^11.6.0",
         "prettier-plugin-astro": "^0.14.1",
         "typescript": "^5.6.3"
     },

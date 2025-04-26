@@ -1,0 +1,125 @@
+---
+import type { Session, Track } from '../../type'
+import Stack from '../ui-elements/Stack.astro'
+
+interface Props {
+    tracks: Track[]
+    sessions: Session[]
+}
+
+const { sessions } = Astro.props
+
+const jsonSessions = JSON.stringify(sessions)
+---
+
+<user-schedule data-sessions={jsonSessions}>
+    <div class="user-schedule">
+        <button type="button" class="btn" style="margin-bottom: var(--s0)"></button>
+        <Stack />
+    </div>
+</user-schedule>
+
+<script>
+    import { getAuth, onAuthStateChanged } from 'firebase/auth'
+    import { getFirestore, doc, getDoc } from 'firebase/firestore/lite'
+    import type { Session } from '../../type'
+    import { app } from '../../firebase/client'
+    import { logout, signIn } from '../../firebase/auth'
+
+    class UserSchedule extends HTMLElement {
+        connectedCallback() {
+            const auth = getAuth(app)
+
+            onAuthStateChanged(auth, async (user) => {
+                if (user) {
+                    if (import.meta.env.DEV) {
+                        const button = this.querySelector('button')
+                        if (button) {
+                            button.innerText = 'Se déconnecter'
+                            button?.addEventListener('click', (evt) => {
+                                evt.stopPropagation()
+                                logout()
+                                this.querySelector('.stack')?.replaceChildren()
+                            })
+                        }
+                    }
+
+                    const db = getFirestore(app)
+                    const userRef = doc(db, 'users', user.uid)
+                    const docSnap = await getDoc(userRef)
+
+                    if (docSnap.exists()) {
+                        const sessionsIds = docSnap.data().sessions || []
+                        const datasetSessions = this.dataset.sessions
+
+                        if (datasetSessions) {
+                            const sessions: Session[] = JSON.parse(datasetSessions)
+                            const userSessions: Session[] = sessions
+                                .filter((session) => sessionsIds.includes(session.id))
+                                .sort((a, b) => {
+                                    if (!a.dateStart || !b.dateStart) {
+                                        return 0
+                                    }
+                                    return new Date(a.dateStart).getTime() - new Date(b.dateStart).getTime()
+                                })
+
+                            this.renderSessions(userSessions)
+                        }
+                    }
+                } else {
+                    const button = this.querySelector('button')
+                    if (button) {
+                        setTimeout(() => {
+                            button.innerText = 'Se connecter'
+                            button?.addEventListener('click', () => {
+                                signIn()
+                            })
+                        }, 10)
+                    }
+                }
+            })
+        }
+
+        renderSessions(userSessions: Session[]) {
+            const scheduleDiv = this.querySelector('.stack')
+            if (scheduleDiv) {
+                scheduleDiv.innerHTML = userSessions
+                    .map(
+                        (session) => `
+                    <div class="user-schedule-session">
+                        <h3>
+                          <a href="/sessions/${session.id}">
+                            ${session.title}
+                          </a>
+                        </h3>
+                        <p>${session.dateStart && new Date(session.dateStart).toLocaleString('fr', { dateStyle: 'long', timeStyle: 'short' })} – ${session.durationMinutes} min</p>
+                    </div>
+                `
+                    )
+                    .join('')
+            }
+        }
+    }
+
+    customElements.define('user-schedule', UserSchedule)
+</script>
+
+<style>
+    user-schedule {
+        :global(.user-schedule-session) {
+            border: 1px solid var(--line);
+            border-radius: var(--s-3);
+            padding: var(--s0);
+        }
+
+        :global(a) {
+            text-decoration: none;
+            color: var(--brand-solid);
+        }
+
+        :global(a:hover) {
+            color: var(--brand-solid-hover);
+            text-decoration: underline;
+        }
+    }
+</style>

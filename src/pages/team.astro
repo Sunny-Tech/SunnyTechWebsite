@@ -1,4 +1,5 @@
 ---
+import { OPENPLANNER_URL } from 'astro:env/client'
 import type { OpenPlannerType } from '../type'
 import LayoutWithTitle from '../layouts/LayoutWithTitle.astro'
 import GenericIcon from '../components/icons/GenericIcon.astro'
@@ -6,7 +7,6 @@ import Grid from '../components/ui-elements/Grid.astro'
 import Cluster from '../components/ui-elements/Cluster.astro'
 import Stack from '../components/ui-elements/Stack.astro'
 
-const OPENPLANNER_URL = import.meta.env.OPENPLANNER_URL
 const response = await fetch(OPENPLANNER_URL)
 const openPlannerData: OpenPlannerType = await response.json()
 ---

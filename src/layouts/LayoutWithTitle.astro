@@ -2,6 +2,7 @@
 import Layout from './Layout.astro'
 import Separator from '../components/ui-elements/Separator.astro'
 import ContentContainer from '../components/ui-elements/ContentContainer.astro'
+import Cluster from '../components/ui-elements/Cluster.astro'
 
 interface Props {
     title: string
@@ -17,8 +18,14 @@ const titleHtml = htmlTitle || title
 
 <Layout title={titleHtml}>
     <ContentContainer spaceBlock="4rem">
-        <h1>{title}</h1>
+        <slot name="subtitle" />
+        <Cluster space="var(--s-2)" align="center">
+            <slot name="pre-title" />
+            <h1>{title}</h1>
+        </Cluster>
         {description && <p class="fs1">{description}</p>}
+
+        <slot name="description" />
     </ContentContainer>
     <Separator bottomMargin={!subDescription} />
     {
