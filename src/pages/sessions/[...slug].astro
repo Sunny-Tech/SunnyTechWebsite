@@ -60,20 +60,14 @@ const {
     parentUrl,
     teaserImageUrl,
 } = Astro.props
+
+console.log('teaserImageUrl', teaserImageUrl)
 ---
 
 <LayoutWithTitle htmlTitle={`Session – ${title}`} title={title}>
-    <Fragment slot="head">
-        {
-            teaserImageUrl && (
-                <>
-                    <meta property="og:image" content={teaserImageUrl} />
-                    <meta property="og:image:type" content="image/jpeg" />
-                    <meta name="twitter:image" content={teaserImageUrl} />
-                </>
-            )
-        }
-    </Fragment>
+    <meta property="og:image" content={teaserImageUrl} slot="head" />
+    <meta property="og:image:type" content="image/jpeg" slot="head" />
+    <meta name="twitter:image" content={teaserImageUrl} slot="head" />
     <div slot="subtitle">
         <a href={parentUrl} style={{ textDecoration: 'none', color: 'var(--brand-solid)' }}>
             <Cluster space="var(--s-2)" align="center">

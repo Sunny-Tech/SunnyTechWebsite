@@ -20,7 +20,7 @@ export const getStaticPaths = async () => {
 const { name, company, bio, jobTitle, socials, photoUrl } = Astro.props
 ---
 
-<LayoutWithTitle htmlTitle={`Sunnytech speaker – ${name}`} title={name}>
+<LayoutWithTitle htmlTitle={`SunnyTech speaker – ${name}`} title={name}>
     {
         photoUrl && (
             <img
