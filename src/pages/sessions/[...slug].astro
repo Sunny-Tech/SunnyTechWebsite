@@ -47,11 +47,33 @@ export async function getStaticPaths() {
     })
 }
 
-const { title, track, abstract, category, level, speakers, dateStart, dateEnd, durationMinutes, parentUrl } =
-    Astro.props
+const {
+    title,
+    track,
+    abstract,
+    category,
+    level,
+    speakers,
+    dateStart,
+    dateEnd,
+    durationMinutes,
+    parentUrl,
+    teaserImageUrl,
+} = Astro.props
 ---
 
 <LayoutWithTitle htmlTitle={`Session – ${title}`} title={title}>
+    <Fragment slot="head">
+        {
+            teaserImageUrl && (
+                <>
+                    <meta property="og:image" content={teaserImageUrl} />
+                    <meta property="og:image:type" content="image/jpeg" />
+                    <meta name="twitter:image" content={teaserImageUrl} />
+                </>
+            )
+        }
+    </Fragment>
     <div slot="subtitle">
         <a href={parentUrl} style={{ textDecoration: 'none', color: 'var(--brand-solid)' }}>
             <Cluster space="var(--s-2)" align="center">
