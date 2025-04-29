@@ -1,6 +1,7 @@
 ---
 import { OPENPLANNER_URL } from 'astro:env/client'
 import { Markdown } from '@astropub/md'
+import { markdownToTxt } from 'markdown-to-txt'
 import type { OpenPlannerType } from '../../type'
 import MarkdownWrapper from '../../components/ui-elements/MarkdownWrapper.astro'
 import Cluster from '../../components/ui-elements/Cluster.astro'
@@ -60,9 +61,16 @@ const {
     parentUrl,
     teaserImageUrl,
 } = Astro.props
+
+const rawAbstract = abstract ? markdownToTxt(abstract) : undefined
+const metaDescription = rawAbstract ? rawAbstract?.split('\n')?.[0] : undefined
 ---
 
-<LayoutWithTitle htmlTitle={`Session – ${title}`} title={title} metaImage={teaserImageUrl}>
+<LayoutWithTitle
+    htmlTitle={`${title} – ${speakers.map((speaker) => speaker.name).join(', ')}`}
+    title={title}
+    metaImage={teaserImageUrl}
+    metaDescription={metaDescription}>
     <div slot="subtitle">
         <a href={parentUrl} style={{ textDecoration: 'none', color: 'var(--brand-solid)' }}>
             <Cluster space="var(--s-2)" align="center">
