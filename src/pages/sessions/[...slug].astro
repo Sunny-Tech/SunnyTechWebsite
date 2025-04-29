@@ -47,11 +47,22 @@ export async function getStaticPaths() {
     })
 }
 
-const { title, track, abstract, category, level, speakers, dateStart, dateEnd, durationMinutes, parentUrl } =
-    Astro.props
+const {
+    title,
+    track,
+    abstract,
+    category,
+    level,
+    speakers,
+    dateStart,
+    dateEnd,
+    durationMinutes,
+    parentUrl,
+    teaserImageUrl,
+} = Astro.props
 ---
 
-<LayoutWithTitle htmlTitle={`Session – ${title}`} title={title}>
+<LayoutWithTitle htmlTitle={`Session – ${title}`} title={title} metaImage={teaserImageUrl}>
     <div slot="subtitle">
         <a href={parentUrl} style={{ textDecoration: 'none', color: 'var(--brand-solid)' }}>
             <Cluster space="var(--s-2)" align="center">

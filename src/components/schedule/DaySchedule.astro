@@ -31,7 +31,7 @@ const gridTemplateColumns = `${GRID_CONFIG.TIME_COLUMN_WIDTH} repeat(${tracks.le
         <div class="day-schedule-tracks-zero"></div>
 
         <div class="day-schedule-tracks" style={{ gridTemplateColumns: `repeat(${tracks.length}, 1fr)` }}>
-            {tracks.map((track, index) => <div class="day-schedule-track">{track.name}</div>)}
+            {tracks.map((track) => <div class="day-schedule-track">{track.name}</div>)}
         </div>
 
         {

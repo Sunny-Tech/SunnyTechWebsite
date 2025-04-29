@@ -6,11 +6,12 @@ import Menu from '../components/Menu.astro'
 interface Props {
     title: string
     description?: string
+    metaImage?: string | null
 }
 
-const { title, description } = Astro.props
+const { title, description, metaImage } = Astro.props
 const url = import.meta.env.SITE
-const image = url + '/social-share4.jpg'
+const image = metaImage || url + '/social-share4.jpg'
 const siteName = 'Sunny Tech'
 const siteNameWithTagline = 'Sunny Tech, la conférence Tech organisée à Montpellier'
 const pageTitle = title || siteName
@@ -70,6 +71,8 @@ const organizerTwitter = '@sunnyTech_MTP'
         <meta content={image} name="twitter:image" />
 
         <title>{fullPageTitle}</title>
+
+        <slot name="head" />
 
         <script defer data-domain="sunny-tech.io" src="https://plausible.gresse.io/js/script.js"></script>
         <ClientRouter />

@@ -10,6 +10,7 @@ export type OpenPlannerType = {
             website: string
             name: string
             logoUrl: string
+            jobPosts?: JobPost[]
         }[]
     }[]
     sessions: Session[]
@@ -76,4 +77,16 @@ export interface Speaker {
         icon: string
         link: string
     }[]
+}
+
+export interface JobPost {
+    id: string
+    title: string
+    description: string
+    location: string
+    externalLink: string
+    salary: string | null
+    contactEmail: string | null
+    category: string
+    createdAt: string
 }

@@ -9,14 +9,15 @@ interface Props {
     htmlTitle?: string
     description?: string
     subDescription?: string
+    metaImage?: string | null
 }
 
-const { title, htmlTitle, description, subDescription } = Astro.props
+const { title, htmlTitle, description, subDescription, metaImage } = Astro.props
 
 const titleHtml = htmlTitle || title
 ---
 
-<Layout title={titleHtml}>
+<Layout title={titleHtml} metaImage={metaImage}>
     <ContentContainer spaceBlock="4rem">
         <slot name="subtitle" />
         <Cluster space="var(--s-2)" align="center">
