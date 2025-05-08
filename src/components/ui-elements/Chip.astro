@@ -23,12 +23,12 @@ const { color, size, inverse } = Astro.props
 
         &[data-size='sm'] {
             font-size: 0.8em;
-            padding: 1px var(--s-1) 3px;
+            padding: max(1px, 0.075em) var(--s-1) max(3px, 0.175em);
         }
 
         &[data-size='lg'] {
             font-size: 1.2em;
-            padding: 2px var(--s0) 4px;
+            padding: max(1px, 0.15em) var(--s0) max(4px, 0.2em);
         }
     }
 </style>
