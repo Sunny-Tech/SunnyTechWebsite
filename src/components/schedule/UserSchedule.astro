@@ -7,12 +7,13 @@ interface Props {
     sessions: Session[]
 }
 
-const { sessions } = Astro.props
+const { sessions, tracks } = Astro.props
 
 const jsonSessions = JSON.stringify(sessions)
+const jsonTracks = JSON.stringify(tracks)
 ---
 
-<user-schedule data-sessions={jsonSessions}>
+<user-schedule data-sessions={jsonSessions} data-tracks={jsonTracks}>
     <div class="user-schedule">
         <button type="button" class="btn" style="margin-bottom: var(--s0)"></button>
         <Stack />
@@ -22,7 +23,7 @@ const jsonSessions = JSON.stringify(sessions)
 <script>
     import { getAuth, onAuthStateChanged } from 'firebase/auth'
     import { getFirestore, doc, getDoc } from 'firebase/firestore/lite'
-    import type { Session } from '../../type'
+    import type { Session, Track } from '../../type'
     import { app } from '../../firebase/client'
     import { logout, signIn } from '../../firebase/auth'
 
@@ -51,11 +52,20 @@ const jsonSessions = JSON.stringify(sessions)
                     if (docSnap.exists()) {
                         const sessionsIds = docSnap.data().sessions || []
                         const datasetSessions = this.dataset.sessions
+                        const datasetTracks = this.dataset.tracks
 
-                        if (datasetSessions) {
+                        if (datasetSessions && datasetTracks) {
+                            const tracks: Track[] = JSON.parse(datasetTracks)
                             const sessions: Session[] = JSON.parse(datasetSessions)
-                            const userSessions: Session[] = sessions
+                            const userSessions: (Session & { track: Track })[] = sessions
                                 .filter((session) => sessionsIds.includes(session.id))
+                                .map((session) => {
+                                    const track = tracks.find((track) => track.id === session.trackId)
+                                    return {
+                                        ...session,
+                                        track: track || { id: '', name: '' },
+                                    }
+                                })
                                 .sort((a, b) => {
                                     if (!a.dateStart || !b.dateStart) {
                                         return 0
@@ -80,7 +90,7 @@ const jsonSessions = JSON.stringify(sessions)
             })
         }
 
-        renderSessions(userSessions: Session[]) {
+        renderSessions(userSessions: (Session & { track: Track })[]) {
             const scheduleDiv = this.querySelector('.stack')
             if (scheduleDiv) {
                 scheduleDiv.innerHTML = userSessions
@@ -93,6 +103,7 @@ const jsonSessions = JSON.stringify(sessions)
                           </a>
                         </h3>
                         <p>${session.dateStart && new Date(session.dateStart).toLocaleString('fr', { dateStyle: 'long', timeStyle: 'short' })} – ${session.durationMinutes} min</p>
+                        <p>Salle : ${session.track.name}</p>
                     </div>
                 `
                     )

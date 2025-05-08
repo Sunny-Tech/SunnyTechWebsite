@@ -248,6 +248,10 @@ const { id, title, dateStart, durationMinutes, track, category, speakers } = Ast
     }
 
     session-item-bookmark {
+        position: absolute;
+        top: var(--s-3);
+        right: var(--s-3);
+
         @media (min-width: 912px) {
             opacity: 0;
         }
@@ -259,9 +263,6 @@ const { id, title, dateStart, durationMinutes, track, category, speakers } = Ast
     }
 
     .schedule-session-save-button {
-        position: absolute;
-        top: var(--s-3);
-        right: var(--s-3);
         border: 0;
         background: transparent;
         cursor: pointer;
