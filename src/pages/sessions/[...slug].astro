@@ -60,6 +60,7 @@ const {
     durationMinutes,
     parentUrl,
     teaserImageUrl,
+    hideTrackTitle,
 } = Astro.props
 
 const rawAbstract = abstract ? markdownToTxt(abstract) : undefined
@@ -91,7 +92,7 @@ const metaDescription = rawAbstract ? rawAbstract?.split('\n')?.[0] : undefined
                 à {dateEnd && new Date(dateEnd).toLocaleString('fr', { timeStyle: 'short' })}
                 ({durationMinutes} min)
             </div>
-            {track && <div class="fw-bold">Salle : {track.name}</div>}
+            {track && !hideTrackTitle && <div class="fw-bold">Salle : {track.name}</div>}
             <Stack>
                 {
                     speakers.map((speaker) => (

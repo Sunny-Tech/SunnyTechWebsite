@@ -1,0 +1,68 @@
+<canvas id="artCanvas"></canvas>
+
+<script>
+    import { flamySimple } from './flamySimple.js'
+
+    const canvas = document.getElementById('artCanvas') as HTMLCanvasElement
+    const ctx = canvas.getContext('2d')
+
+    if (ctx) {
+        // Define the logical size of the canvas
+        const logicalWidth = 600 // Approximate width based on drawing commands
+        const logicalHeight = 400 // Approximate height based on drawing commands
+
+        // Get the device pixel ratio, falling back to 1
+        const dpr = window.devicePixelRatio || 1
+
+        // Set the display size of the canvas (CSS pixels)
+        canvas.style.width = logicalWidth + 'px'
+        canvas.style.height = logicalHeight + 'px'
+
+        // Set the actual size of the drawing buffer
+        canvas.width = logicalWidth * dpr
+        canvas.height = logicalHeight * dpr
+
+        // Function to generate a random number within a range
+        const getRandom = (min: number, max: number): number => Math.random() * (max - min) + min
+
+        const numFlamingos = 4 // Let's draw 5 flamingos
+        const flamingos = []
+
+        // Define maximum extents of the flamingo from its center (offsetX, offsetY)
+        // These are estimates based on max possible dimensions of flamingo parts
+        const MAX_FLAMINGO_EXTENT_X = 180 // Max horizontal extent from body center (e.g., splayed leg tip)
+        const MAX_FLAMINGO_EXTENT_Y_DOWN = 300 // Max extent downwards from body center (e.g., leg tip + body radius part)
+
+        // Calculate safe ranges for offsetX and offsetY
+        const minOffsetX = 100
+        const maxOffsetX = logicalWidth - MAX_FLAMINGO_EXTENT_X
+        const minOffsetY = 0
+        const maxOffsetY = logicalHeight - MAX_FLAMINGO_EXTENT_Y_DOWN
+
+        for (let i = 0; i < numFlamingos; i++) {
+            const color = `#${Math.floor(Math.random() * 200 + 0xd63f49)
+                .toString(16)
+                .padStart(6, '0')}`
+
+            const leftLegAngle = getRandom(-0.5, 0.5)
+            const rightLegAngle = getRandom(leftLegAngle, leftLegAngle + 0.5)
+            flamingos.push({
+                offsetX: getRandom(minOffsetX, maxOffsetX),
+                offsetY: getRandom(minOffsetY, maxOffsetY),
+                headRadius: getRandom(15, 25),
+                beakSize: getRandom(8, 12),
+                neckLength: getRandom(50, 80),
+                neckAngle: 1,
+                bodyRadius: getRandom(20, 60),
+                legLength: getRandom(100, 140),
+                leftLegAngle: leftLegAngle,
+                rightLegAngle: rightLegAngle,
+                color: color,
+            })
+        }
+
+        flamingos.forEach((flamingoProps) => {
+            flamySimple(ctx, flamingoProps)
+        })
+    }
+</script>
