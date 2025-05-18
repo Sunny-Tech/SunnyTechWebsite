@@ -1,0 +1,189 @@
+---
+import { OPENPLANNER_URL } from 'astro:env/client'
+import type { OpenPlannerType } from '../type'
+import LayoutWithTitle from '../layouts/LayoutWithTitle.astro'
+import Grid from '../components/ui-elements/Grid.astro'
+import Stack from '../components/ui-elements/Stack.astro'
+import ButtonLink from '../components/ui-elements/ButtonLink.astro'
+import { Markdown } from '@astropub/md'
+import MarkdownWrapper from '../components/ui-elements/MarkdownWrapper.astro'
+
+const response = await fetch(OPENPLANNER_URL)
+const openPlannerData: OpenPlannerType = await response.json()
+
+const sponsorList = openPlannerData.sponsors.flatMap((sponsor) => sponsor.sponsors)
+const descriptionLength = 1000
+---
+
+<LayoutWithTitle htmlTitle="Offre d'emploi de nos sponsors - SunnyTech" title="Offre d'emploi">
+    <Grid space="2rem" min="35rem">
+        {
+            sponsorList.map((sponsor) => {
+                return sponsor.jobPosts?.map((job) => (
+                    <article class="job-card">
+                        <Stack space="1rem">
+                            <header>
+                                <a href={sponsor.website} target="_blank" rel="noopener noreferrer">
+                                    <img src={sponsor.logoUrl} alt={sponsor.name} class="job-logo" />
+                                </a>
+                                <h2 class="job-title fs2">{job.title}</h2>
+                                <div class="job-details">
+                                    <p class="job-location">
+                                        <strong>Entreprise:</strong> {sponsor.name}
+                                    </p>
+                                    {job.location && (
+                                        <p class="job-location">
+                                            <strong>Lieu:</strong> {job.location}
+                                        </p>
+                                    )}
+                                    {job.category && (
+                                        <p class="job-category">
+                                            <strong>Catégorie:</strong> {job.category}
+                                        </p>
+                                    )}
+                                    {job.salary && (
+                                        <p class="job-salary">
+                                            <strong>Salaire:</strong> {job.salary}
+                                        </p>
+                                    )}
+                                    {job.contactEmail && (
+                                        <p class="job-contact">
+                                            <strong>Contact:</strong>{' '}
+                                            <a href={`mailto:${job.contactEmail}`}>{job.contactEmail}</a>
+                                        </p>
+                                    )}
+                                </div>
+                            </header>
+                            <div class="job-description-preview">
+                                <MarkdownWrapper>
+                                    <Markdown of={job.description.substring(0, descriptionLength) + '...'} />
+                                </MarkdownWrapper>
+                            </div>
+                            {job.description.length > descriptionLength && (
+                                <details class="job-description-details">
+                                    <summary class="job-description-summary">Lire la suite</summary>
+                                    <div class="job-description-content">
+                                        <MarkdownWrapper>
+                                            <Markdown of={job.description.substring(descriptionLength)} />
+                                        </MarkdownWrapper>
+                                    </div>
+                                </details>
+                            )}
+                            <div class="job-footer">
+                                <ButtonLink href={job.externalLink} target="_blank" rel="noopener noreferrer">
+                                    Voir l'offre
+                                </ButtonLink>
+                            </div>
+                        </Stack>
+                    </article>
+                ))
+            })
+        }
+    </Grid>
+</LayoutWithTitle>
+
+<style>
+    .job-card {
+        background-color: var(--theme-surface-1);
+        border: 1px solid var(--theme-border-subtle);
+        border-radius: 0.5rem;
+        padding: 1.5rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        transition:
+            box-shadow 0.3s ease,
+            transform 0.3s ease;
+    }
+
+    .job-card:hover {
+        box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .job-title {
+        margin-bottom: 0.25rem;
+        color: var(--theme-text-1);
+    }
+
+    .job-location {
+        font-size: 0.9rem;
+        color: var(--theme-text-2);
+    }
+
+    .job-description-preview {
+        color: var(--theme-text-2);
+        line-height: 1.6;
+        margin-bottom: 0.5rem;
+    }
+
+    .job-description-preview .ellipsis {
+        display: inline;
+    }
+
+    .job-description-details {
+        margin-top: 0.5rem;
+    }
+
+    .job-description-summary {
+        cursor: pointer;
+        font-weight: bold;
+        color: var(--theme-link);
+        margin-bottom: 0.5rem;
+    }
+
+    .job-description-summary:hover {
+        text-decoration: underline;
+    }
+
+    .job-description-content {
+        color: var(--theme-text-2);
+        line-height: 1.6;
+        padding-top: 0.5rem;
+    }
+
+    .job-description-details summary::-webkit-details-marker {
+        display: none;
+    }
+
+    .job-description-details summary {
+        list-style: none;
+    }
+
+    .job-details {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        font-size: 0.9rem;
+        color: var(--theme-text-2);
+    }
+
+    .job-details p {
+        margin-bottom: 0.35rem;
+    }
+
+    .job-details strong {
+        color: var(--theme-text-1);
+    }
+
+    .job-details a {
+        color: var(--theme-link);
+        text-decoration: none;
+    }
+
+    .job-details a:hover {
+        text-decoration: underline;
+    }
+
+    .job-footer {
+        margin-top: auto;
+        padding-top: 1rem;
+    }
+
+    .job-logo {
+        width: 150px;
+        object-fit: contain;
+    }
+
+    .job-card > :global(div[data-stack]) {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+</style>

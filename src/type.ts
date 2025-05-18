@@ -6,12 +6,7 @@ export type OpenPlannerType = {
     sponsors: {
         name: string
         order: number
-        sponsors: {
-            website: string
-            name: string
-            logoUrl: string
-            jobPosts?: JobPost[]
-        }[]
+        sponsors: Sponsor[]
     }[]
     sessions: Session[]
     team: {
@@ -24,6 +19,13 @@ export type OpenPlannerType = {
         }[]
     }[]
     speakers: Speaker[]
+}
+
+export interface Sponsor {
+    website: string
+    name: string
+    logoUrl: string
+    jobPosts?: JobPost[]
 }
 
 export interface Track {
@@ -89,4 +91,13 @@ export interface JobPost {
     contactEmail: string | null
     category: string
     createdAt: string
+}
+
+export interface JobPostWithCompany {
+    jobPost: JobPost
+    company: {
+        name: string
+        logoUrl: string
+        website: string
+    }
 }
