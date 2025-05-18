@@ -1,8 +1,12 @@
 ---
 import LayoutWithTitle from '../layouts/LayoutWithTitle.astro'
+import FourOFourArt from '../components/flamy/404Art.astro'
 ---
 
-<LayoutWithTitle htmlTitle="Page introuvable" title="Page introuvable">
-    <p class="fs2">La page que vous recherchez n'existe pas.</p>
-    <p class="text-muted">Vérifiez l’URL ou retournez à la <a href="/">page d’accueil</a>.</p>
+<LayoutWithTitle htmlTitle="404 – Page Not Found" title="404 – Page Not Found">
+    <p class="fs2">Même notre flamant rose ne la trouve pas dans le repo.</p>
+    <p class="text-muted">
+        Cette route n’existe pas. Essayez de faire un git checkout vers la <a href="/">branche principale</a>.
+    </p>
+    <FourOFourArt />
 </LayoutWithTitle>
