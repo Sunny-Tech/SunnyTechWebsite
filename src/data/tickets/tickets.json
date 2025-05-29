@@ -16,8 +16,8 @@
         "url": "http://billetweb.fr/sunny-tech-2025",
         "ticketsCount": 300,
         "available": true,
-        "soldOut": true,
+        "soldOut": false,
         "highlighted": false,
-        "message": "Billetterie soldout, mais il reste des offres de sponsoring à partir de 800 € pour assister à Sunny Tech 2025, voir ci-dessous."
+        "message": "Billetterie soldout, mais inscrivez-vous à la liste d'attente, on sait jamais :)"
     }
 ]
