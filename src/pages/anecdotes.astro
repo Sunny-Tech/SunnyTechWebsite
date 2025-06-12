@@ -1,0 +1,11 @@
+---
+import LayoutWithTitle from '../layouts/LayoutWithTitle.astro'
+import MarkdownWrapper from '../components/ui-elements/MarkdownWrapper.astro'
+import { Content } from '../markdown/anecdotes.md'
+---
+
+<LayoutWithTitle title="Anecdotes des Sponsors">
+    <MarkdownWrapper>
+        <Content />
+    </MarkdownWrapper>
+</LayoutWithTitle>
