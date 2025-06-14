@@ -13,15 +13,27 @@ interface Props {
     track?: Track
     category?: Category
     speakers: Speaker[]
+    alwaysShowExtraInfo?: boolean
+    hideBookmark?: boolean
 }
 
-const { id, title, dateStart, durationMinutes, track, category, speakers } = Astro.props
+const {
+    id,
+    title,
+    dateStart,
+    durationMinutes,
+    track,
+    category,
+    speakers,
+    alwaysShowExtraInfo = false,
+    hideBookmark = false,
+} = Astro.props
 ---
 
 <div class="schedule-session" data-session-id={id}>
     <Stack style={{ height: '100%' }} space="var(--s-2)">
         <h3 class="fw-medium fs1"><a href={`/sessions/${id}`}>{title}</a></h3>
-        <div class="schedule-session-extra-info">
+        <div class="schedule-session-extra-info" class:list={[{ 'always-show': alwaysShowExtraInfo }]}>
             <div class="schedule-session-date">
                 {
                     dateStart && (
@@ -65,15 +77,20 @@ const { id, title, dateStart, durationMinutes, track, category, speakers } = Ast
             </Stack>
         </div>
 
-        <session-item-bookmark data-session-id={id}>
-            <button class="schedule-session-save-button" type="button">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                    ><path
-                        fill="currentColor"
-                        d="m17 18l-5-2.18L7 18V5h10m0-2H7a2 2 0 0 0-2 2v16l7-3l7 3V5a2 2 0 0 0-2-2"></path></svg
-                >
-            </button>
-        </session-item-bookmark>
+        {
+            !hideBookmark && (
+                <session-item-bookmark data-session-id={id}>
+                    <button class="schedule-session-save-button" type="button">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                            <path
+                                fill="currentColor"
+                                d="m17 18l-5-2.18L7 18V5h10m0-2H7a2 2 0 0 0-2 2v16l7-3l7 3V5a2 2 0 0 0-2-2"
+                            />
+                        </svg>
+                    </button>
+                </session-item-bookmark>
+            )
+        }
     </Stack>
 </div>
 
@@ -244,6 +261,10 @@ const { id, title, dateStart, durationMinutes, track, category, speakers } = Ast
 
         @media (min-width: 912px) {
             display: none;
+
+            &.always-show {
+                display: block;
+            }
         }
     }
 

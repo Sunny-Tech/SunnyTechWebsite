@@ -5,13 +5,21 @@ interface Props {
     recursive?: boolean
     reverse?: boolean
     style?: object
+    additionalClasses?: string[]
 }
 
-const { space = '1rem', recursive = false, align = 'normal', reverse = false, style } = Astro.props
+const {
+    space = '1rem',
+    recursive = false,
+    align = 'normal',
+    reverse = false,
+    style,
+    additionalClasses = [],
+} = Astro.props
 ---
 
 <div
-    class:list={['stack', { 'is-recursive': recursive, 'is-reverse': reverse }]}
+    class:list={['stack', { 'is-recursive': recursive, 'is-reverse': reverse }, ...additionalClasses]}
     style={{ alignItems: align, ...style }}>
     <slot />
 </div>

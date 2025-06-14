@@ -1,0 +1,15 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "dev",
+            "command": "npm",
+            "args": ["run", "dev"],
+            "options": {
+                "statusbar": {
+                    "label": "$(play) dev"
+                }
+            }
+        }
+    ]
+}
