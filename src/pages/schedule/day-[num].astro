@@ -88,6 +88,11 @@ const pageTitle =
         <ButtonLink href="/schedule/day-favorite" variant={day === 'favorite' ? 'primary' : 'transparent'}>
             <user-avatar></user-avatar> Mon programme
         </ButtonLink>
+        <ButtonLink
+            href="https://conferencecenterr.appspot.com.storage.googleapis.com/events/GB9qNr4UMNsQHd0F8uYu/schedule.pdf"
+            target="_blank"
+            variant={'transparent'}>PDF</ButtonLink
+        >
     </Cluster>
 
     {day === 'favorite' && <UserSchedule tracks={tracks} sessions={sessions} />}
