@@ -5,19 +5,34 @@ import type { OpenPlannerType } from '../../type'
 import LayoutWithTitle from '../../layouts/LayoutWithTitle.astro'
 import GenericIcon from '../../components/icons/GenericIcon.astro'
 import MarkdownWrapper from '../../components/ui-elements/MarkdownWrapper.astro'
+import SessionItem from '../../components/schedule/SessionItem.astro'
 
 export const getStaticPaths = async () => {
     const response = await fetch(OPENPLANNER_URL)
     const openPlannerData: OpenPlannerType = await response.json()
 
-    const { speakers } = openPlannerData
+    const { speakers, sessions, event } = openPlannerData
+    const { categories, tracks } = event
 
-    return speakers.map((speaker) => ({
-        params: { slug: speaker.id },
-        props: speaker,
-    }))
+    return speakers.map((speaker) => {
+        const speakerSessions = sessions
+            .filter((session) => session.speakerIds.includes(speaker.id))
+            .map((session) => ({
+                ...session,
+                category: categories.find((cat) => cat.id === session.categoryId),
+                track: tracks.find((track) => track.id === session.trackId),
+            }))
+
+        return {
+            params: { slug: speaker.id },
+            props: {
+                ...speaker,
+                sessions: speakerSessions,
+            },
+        }
+    })
 }
-const { name, company, bio, jobTitle, socials, photoUrl } = Astro.props
+const { name, company, bio, jobTitle, socials, photoUrl, sessions } = Astro.props
 ---
 
 <LayoutWithTitle htmlTitle={`SunnyTech speaker – ${name}`} title={name}>
@@ -62,4 +77,48 @@ const { name, company, bio, jobTitle, socials, photoUrl } = Astro.props
             </MarkdownWrapper>
         )
     }
+
+    {
+        sessions && sessions.length > 0 && (
+            <div class="speaker-sessions">
+                <h2>Sessions</h2>
+                <div class="sessions-grid">
+                    {sessions.map((session) => (
+                        <SessionItem
+                            id={session.id}
+                            title={session.title}
+                            dateStart={session.dateStart || undefined}
+                            durationMinutes={session.durationMinutes}
+                            track={session.track}
+                            category={session.category}
+                            speakers={[Astro.props]}
+                            alwaysShowExtraInfo
+                            hideBookmark
+                        />
+                    ))}
+                </div>
+            </div>
+        )
+    }
 </LayoutWithTitle>
+
+<style>
+    .speaker-sessions {
+        margin-top: var(--s2);
+        h2 {
+            margin-bottom: var(--s-2);
+        }
+    }
+
+    .sessions-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--s1);
+    }
+
+    @media (max-width: 768px) {
+        .sessions-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
