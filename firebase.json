@@ -22,6 +22,11 @@
                 "source": "/gladia",
                 "destination": "https://openplanner.fr/public/event/GB9qNr4UMNsQHd0F8uYu/transcription",
                 "type": 302
+            },
+            {
+                "source": "/tshirt",
+                "destination": "https://www.billetweb.fr/sunny-tech-2025&quick=6392964",
+                "type": 302
             }
         ],
         "headers": [
