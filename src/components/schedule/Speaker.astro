@@ -6,34 +6,34 @@ const { id, photoUrl, name, company, size, socials } = Astro.props
 ---
 
 <div class="speaker" data-size={size}>
-    <Cluster space="var(--s-3) var(--s-2)" align="center" nowrap>
+    <Cluster space="var(--s-3) var(--s-2)" align="flex-start" nowrap>
         {photoUrl && <img alt="" class="speaker-photo" src={photoUrl} />}
         {!photoUrl && <span class="speaker-photo-fallback">{name.charAt(0).toUpperCase()}</span>}
-        <a href={`/speakers/${id}`} style="line-height: 1.2;">{name}</a>
+
+        <div class="speaker-info">
+            <a href={`/speakers/${id}`} style="line-height: 1.2;">{name}</a>
+            <div class="speaker-info-company">{company}</div>
+
+            {
+                socials && (
+                    <ul class="list-inline">
+                        {socials.map((social: { icon: string; link: string }) => (
+                            <li class="list-inline-item">
+                                <a
+                                    href={social.link}
+                                    class="speaker-social-icon"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    aria-label={social.icon}>
+                                    <GenericIcon name={social.icon} />
+                                </a>
+                            </li>
+                        ))}
+                    </ul>
+                )
+            }
+        </div>
     </Cluster>
-
-    <div class="speaker-info">
-        <div class="speaker-info-company">{company}</div>
-
-        {
-            socials && (
-                <ul class="list-inline">
-                    {socials.map((social: { icon: string; link: string }) => (
-                        <li class="list-inline-item">
-                            <a
-                                href={social.link}
-                                class="speaker-social-icon"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                aria-label={social.icon}>
-                                <GenericIcon name={social.icon} />
-                            </a>
-                        </li>
-                    ))}
-                </ul>
-            )
-        }
-    </div>
 </div>
 
 <style>
@@ -84,12 +84,15 @@ const { id, photoUrl, name, company, size, socials } = Astro.props
 
     .speaker-info {
         line-height: 1.2;
-        padding-top: var(--s-3);
-        padding-left: calc(var(--photo-size) + var(--s-2));
     }
 
     .speaker-info-company {
         font-size: 0.675em;
+        margin-top: calc(var(--s-3));
+    }
+
+    .speaker-info .list-inline {
+        margin-top: var(--s-2);
     }
 
     .speaker-social-icon {
