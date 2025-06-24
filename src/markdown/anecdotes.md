@@ -4,7 +4,6 @@ _Voici les anecdotes qui ont été partagées par les sponsors, à toi de trouve
 
 Dernière mise à jour : 24/06/25 15:37
 
-
 * L'un de nos collègues mange la raclette avec ... de l'ananas ! Et pourtant, on l'accepte quand même dans l'équipe !
 
 * Chaque newcomer a son propre memoji et une photo pro retravaillée créés par l'équipe marketing à son arrivée
@@ -34,4 +33,3 @@ Dernière mise à jour : 24/06/25 15:37
 * Tous les vendredis, on célèbre la fin de le semaine autour d 'un VendrediDrink… un rituel qui donne un vrai goût de collectif à la fin de semaine.  -  Ce rituel ancré valorise la convivialité, l’équilibre pro/perso et l’esprit d’équipe + événements extra-pro réguliers
 
 * Le tigre pour nous, c'est plus qu’un animal, c’est notre coupe du monde 
-

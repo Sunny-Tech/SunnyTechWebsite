@@ -19,7 +19,7 @@ const titleHtml = htmlTitle || title
 ---
 
 <Layout title={titleHtml} metaImage={metaImage} description={metaDescription}>
-    <ContentContainer spaceBlock="4rem">
+    <ContentContainer spaceBlock="3rem">
         <slot name="subtitle" />
         <Cluster space="var(--s-2)" align="center">
             <slot name="pre-title" />
@@ -33,13 +33,13 @@ const titleHtml = htmlTitle || title
     {
         subDescription && (
             <div style="background-color: var(--component)">
-                <ContentContainer spaceBlock="4rem">
+                <ContentContainer spaceBlock="3rem">
                     <p class="fs1">{subDescription}</p>
                 </ContentContainer>
             </div>
         )
     }
-    <ContentContainer spaceBlock="4rem">
+    <ContentContainer spaceBlock="3rem">
         <slot />
     </ContentContainer>
 </Layout>

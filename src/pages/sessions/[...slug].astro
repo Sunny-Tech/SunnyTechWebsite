@@ -49,6 +49,7 @@ export async function getStaticPaths() {
 }
 
 const {
+    id,
     title,
     track,
     abstract,
@@ -61,10 +62,15 @@ const {
     parentUrl,
     teaserImageUrl,
     hideTrackTitle,
+    showInFeedback,
 } = Astro.props
 
 const rawAbstract = abstract ? markdownToTxt(abstract) : undefined
 const metaDescription = rawAbstract ? rawAbstract?.split('\n')?.[0] : undefined
+
+const openFeedbackLink = showInFeedback
+    ? `https://openfeedback.io/sunnytech2025/${dateStart?.split('T')[0]}/${id}?hideHeader=true&forceColorScheme=light`
+    : undefined
 ---
 
 <LayoutWithTitle
@@ -128,4 +134,19 @@ const metaDescription = rawAbstract ? rawAbstract?.split('\n')?.[0] : undefined
             </MarkdownWrapper>
         )
     }
+    {
+        openFeedbackLink && (
+            <div>
+                <h6>Donner votre avis 🙏 !</h6>
+                <iframe src={openFeedbackLink} width="100%" height="1000" style="border: none;" />
+            </div>
+        )
+    }
 </LayoutWithTitle>
+
+<style>
+    h6 {
+        margin-top: var(--s-2);
+        font-size: var(--fs-10);
+    }
+</style>

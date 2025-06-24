@@ -9,16 +9,24 @@ export type OpenPlannerType = {
         sponsors: Sponsor[]
     }[]
     sessions: Session[]
-    team: {
-        name: string
-        photoUrl: string
-        socials: {
-            name: string
-            icon: string
-            link: string
-        }[]
+    team: Member[]
+    teams: {
+        id: string
+        order: number
+        members: Member[]
     }[]
     speakers: Speaker[]
+}
+
+export interface Member {
+    name: string
+    photoUrl: string
+    order: number
+    socials: {
+        name: string
+        icon: string
+        link: string
+    }[]
 }
 
 export interface Sponsor {
