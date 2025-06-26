@@ -4,6 +4,7 @@ import Chip from '../ui-elements/Chip.astro'
 import Cluster from '../ui-elements/Cluster.astro'
 import Stack from '../ui-elements/Stack.astro'
 import SpeakerComponent from './Speaker.astro'
+import FlagUK from '../icons/FlagUK.astro'
 
 interface Props {
     id: string
@@ -15,6 +16,7 @@ interface Props {
     speakers: Speaker[]
     alwaysShowExtraInfo?: boolean
     hideBookmark?: boolean
+    language?: string
 }
 
 const {
@@ -25,6 +27,7 @@ const {
     track,
     category,
     speakers,
+    language,
     alwaysShowExtraInfo = false,
     hideBookmark = false,
 } = Astro.props
@@ -33,6 +36,13 @@ const {
 <div class="schedule-session" data-session-id={id}>
     <Stack style={{ height: '100%' }} space="var(--s-2)">
         <h3 class="fw-medium fs1"><a href={`/sessions/${id}`}>{title}</a></h3>
+        {
+            language && language !== 'fr' && (
+                <div class="fw-bold" style="display: flex; align-items: center; gap: 0.5em;">
+                    ⚠️ Langue : anglais <FlagUK />
+                </div>
+            )
+        }
         <div class="schedule-session-extra-info" class:list={[{ 'always-show': alwaysShowExtraInfo }]}>
             <div class="schedule-session-date">
                 {
