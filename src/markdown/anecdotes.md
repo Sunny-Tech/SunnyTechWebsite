@@ -27,6 +27,7 @@ Dernière mise à jour : 26/06/25 15:33
   <li>Chaque newcomer a son propre memoji et une photo pro retravaillée créés par l'équipe marketing à son arrivée</li>
   <li>Nous avons créé un Serious Game pour « refactorer » en jouant</li>
   <li>Notre président est un ancien stagiaire</li>
+  <li>On a réussi à oublier de préparer des anecdotes jusqu'au jour de la conférence</li>
   <li>On a commencé en vendant un module hardware.</li>
   <li>A la base, le produit n'avait (presque) rien à voir avec ce que l'on fait aujourd'hui, heureusement qu'on a vite pivoté !</li>
   <li>Plusieurs de nos employés sont hautement classés sur League of Legends (Master, diamond, platine)</li>
