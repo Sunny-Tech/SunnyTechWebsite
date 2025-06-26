@@ -43,7 +43,7 @@ export const getStaticPaths = async () => {
         }
     })
 }
-const { name, company, bio, jobTitle, socials, photoUrl, sessions, ogSlug } = Astro.props
+const { name, company, bio, jobTitle, socials, photoUrl, sessions, ogSlug, id } = Astro.props
 const ogImage = `${import.meta.env.SITE}/og/speakers/${ogSlug}.png`
 ---
 
@@ -55,6 +55,8 @@ const ogImage = `${import.meta.env.SITE}/og/speakers/${ogSlug}.png`
                 class="speaker-photo"
                 style={{ width: '48px', height: '48px', borderRadius: '50%', display: 'inline-block' }}
                 slot="pre-title"
+                transition:name={`session-${(sessions || []).length === 1 ? sessions[0].id : ''}-speaker-photo-${id}`}
+                transition:animate="slide"
             />
         )
     }
@@ -106,6 +108,7 @@ const ogImage = `${import.meta.env.SITE}/og/speakers/${ogSlug}.png`
                             speakers={[Astro.props]}
                             alwaysShowExtraInfo
                             hideBookmark
+                            viewTransitionPrefix={`sessionItemIgnored`}
                         />
                     ))}
                 </div>

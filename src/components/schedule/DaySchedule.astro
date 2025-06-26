@@ -73,6 +73,7 @@ const gridTemplateColumns = `${GRID_CONFIG.TIME_COLUMN_WIDTH} repeat(${tracks.le
                             category={session.category}
                             speakers={session.speakers}
                             language={session.language || 'fr'}
+                            viewTransitionPrefix={`session-${session.id}`}
                         />
                     </div>
                 )
