@@ -17,11 +17,12 @@ h3 + .anecdote-list {
 
 _Voici les anecdotes qui ont été partagées par les sponsors, à toi de trouver à qui elles correspondent&nbsp;!_ 🕵
 
-Dernière mise à jour : 26/06/25 10:48
+Dernière mise à jour : 26/06/25 11:40
 
 ### Liste des anecdotes
 
 <ul class="anecdote-list">
+  <li>Notre boss est parti en vacances l'été dernier et à son retour personne le reconnaissait</li>
   <li>L'un de nos collègues mange la raclette avec ... de l'ananas ! Et pourtant, on l'accepte quand même dans l'équipe !</li>
   <li>Chaque newcomer a son propre memoji et une photo pro retravaillée créés par l'équipe marketing à son arrivée</li>
   <li>Nous avons créé un Serious Game pour « refactorer » en jouant</li>
@@ -30,6 +31,7 @@ Dernière mise à jour : 26/06/25 10:48
   <li>Plusieurs de nos employés sont hautement classés sur League of Legends (Master, diamond, platine)</li>
   <li>Véronique SANSOM et Julien CLERC sont salariés chez nous</li>
   <li>Nous sommes connus à SunnyTech pour nos canards et d'avoir tenté l'aventure Jumanji. Jamais 2 sans 3, cette année, qu'avons nous prévus ?</li>
+  <li>Des fois on nous demande si on est une boite de textile</li>
   <li>Indice plus difficile... Seulement 4 lettres : PV-IA</li>
   <li>Un sanglier est entré dans nos locaux.</li>
   <li>Nos chers devs qui travaillent dans la pub ont pour la plupart des ad blockers sur leurs ordis</li>
