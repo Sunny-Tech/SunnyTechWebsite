@@ -6,7 +6,7 @@ export default defineConfig({
     site: 'https://sunny-tech.io',
     base: '/',
     redirects: {
-        '/schedule': '/schedule/day-1'
+        '/schedule': '/schedule/day-2'
     },
     env: {
         schema: {
