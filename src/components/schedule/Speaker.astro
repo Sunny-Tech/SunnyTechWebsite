@@ -2,7 +2,7 @@
 import GenericIcon from '../icons/GenericIcon.astro'
 import Cluster from '../ui-elements/Cluster.astro'
 
-const { id, photoUrl, name, company, size, socials } = Astro.props
+const { id, photoUrl, name, company, size, socials, viewTransitionPrefix } = Astro.props
 ---
 
 <div class="speaker" data-size={size}>
@@ -13,7 +13,7 @@ const { id, photoUrl, name, company, size, socials } = Astro.props
                     alt=""
                     class="speaker-photo"
                     src={photoUrl}
-                    transition:name={`speaker-photo-${id}`}
+                    transition:name={`${viewTransitionPrefix}-speaker-photo-${id}`}
                     transition:animate="slide"
                 />
             )
