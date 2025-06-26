@@ -15,6 +15,7 @@ h3 + .anecdote-list {
 }
 </style>
 
+
 _Voici les anecdotes qui ont été partagées par les sponsors, à toi de trouver à qui elles correspondent&nbsp;!_ 🕵
 
 Dernière mise à jour : 26/06/25 15:03
