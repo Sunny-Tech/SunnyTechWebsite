@@ -1,4 +1,4 @@
-<style>
+Y <style>
 h3 + .anecdote-list {
   margin-top: 1em;
 }
@@ -15,6 +15,7 @@ h3 + .anecdote-list {
 }
 </style>
 
+
 _Voici les anecdotes qui ont été partagées par les sponsors, à toi de trouver à qui elles correspondent&nbsp;!_ 🕵
 
 Dernière mise à jour : 26/06/25 15:03
@@ -25,7 +26,11 @@ Dernière mise à jour : 26/06/25 15:03
   <li>Notre boss est parti en vacances l'été dernier et à son retour personne le reconnaissait</li>
   <li>L'un de nos collègues mange la raclette avec ... de l'ananas ! Et pourtant, on l'accepte quand même dans l'équipe !</li>
   <li>Chaque newcomer a son propre memoji et une photo pro retravaillée créés par l'équipe marketing à son arrivée</li>
+<<<<<<< update-anecdotes
   <li>Nous avons créé un Serious Game pour « refactorer » en jouant</li>
+=======
+  <li>Nous avons créé un Serious Game pour « refactorer » en jouant</li>
+>>>>>>> main
   <li>Notre président est un ancien stagiaire</li>
  <li>On a commencé en vendant un module hardware.</li>
   <li>A la base, le produit n'avait (presque) rien à voir avec ce que l'on fait aujourd'hui, heureusement qu'on a vite pivoté !</li>
