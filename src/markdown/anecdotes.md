@@ -17,7 +17,7 @@ h3 + .anecdote-list {
 
 _Voici les anecdotes qui ont été partagées par les sponsors, à toi de trouver à qui elles correspondent&nbsp;!_ 🕵
 
-Dernière mise à jour : 26/06/25 11:40
+Dernière mise à jour : 26/06/25 14:42
 
 ### Liste des anecdotes
 
@@ -43,4 +43,6 @@ Dernière mise à jour : 26/06/25 11:40
   <li>Notre directeur d'agence fait des paquitos à chaque soirées</li>
   <li>Notre podcast "IA pas que la Data" a failli s'appeler "Je danse avec l'IA" ("Je danse avec le mia".. pour la référence !)</li>
   <li>Le tigre pour nous, c'est plus qu’un animal, c’est notre coupe du monde </li>
+  <li>Notre entreprise est née en 1989.</li>
+ <li>Ya pas plus "chouette" que notre entreprise.</li>
 </ul>
