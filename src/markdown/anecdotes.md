@@ -17,7 +17,7 @@ h3 + .anecdote-list {
 
 _Voici les anecdotes qui ont été partagées par les sponsors, à toi de trouver à qui elles correspondent&nbsp;!_ 🕵
 
-Dernière mise à jour : 26/06/25 17:18
+Dernière mise à jour : 27/06/25 09:26
 
 ### Liste des anecdotes
 
@@ -30,7 +30,7 @@ Dernière mise à jour : 26/06/25 17:18
   <li>On a réussi à oublier de préparer des anecdotes jusqu'au jour de la conférence</li>
   <li>On a commencé en vendant un module hardware.</li>
   <li>A la base, le produit n'avait (presque) rien à voir avec ce que l'on fait aujourd'hui, heureusement qu'on a vite pivoté !</li>
-  <li>Plusieurs de nos employés sont hautement classés sur League of Legends (Master, diamond, platine)</li>
+  <li>On joue à Mario Kart tous les midis au bureau</li></li>
   <li>Véronique SANSOM et Julien CLERC sont salariés chez nous</li>
   <li>Nous sommes connus à SunnyTech pour nos canards et d'avoir tenté l'aventure Jumanji. Jamais 2 sans 3, cette année, qu'avons nous prévus ?</li>
   <li>Des fois on nous demande si on est une boite de textile</li>
