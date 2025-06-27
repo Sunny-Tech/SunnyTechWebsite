@@ -17,6 +17,7 @@ interface Props {
     alwaysShowExtraInfo?: boolean
     hideBookmark?: boolean
     language?: string
+    viewTransitionPrefix?: string
 }
 
 const {
@@ -30,6 +31,7 @@ const {
     language,
     alwaysShowExtraInfo = false,
     hideBookmark = false,
+    viewTransitionPrefix = '',
 } = Astro.props
 ---
 
@@ -69,6 +71,7 @@ const {
                                         photoUrl={speaker.photoUrl}
                                         name={speaker.name}
                                         company={speaker.company}
+                                        viewTransitionPrefix={viewTransitionPrefix}
                                     />
                                 ))}
                             </Cluster>

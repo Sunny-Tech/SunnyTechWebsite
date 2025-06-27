@@ -32,7 +32,7 @@ export const getStaticPaths = async () => {
         }
     })
 }
-const { name, company, bio, jobTitle, socials, photoUrl, sessions } = Astro.props
+const { name, company, bio, jobTitle, socials, photoUrl, sessions, id } = Astro.props
 ---
 
 <LayoutWithTitle htmlTitle={`SunnyTech speaker – ${name}`} title={name}>
@@ -43,6 +43,8 @@ const { name, company, bio, jobTitle, socials, photoUrl, sessions } = Astro.prop
                 class="speaker-photo"
                 style={{ width: '48px', height: '48px', borderRadius: '50%', display: 'inline-block' }}
                 slot="pre-title"
+                transition:name={`session-${(sessions || []).length === 1 ? sessions[0].id : ''}-speaker-photo-${id}`}
+                transition:animate="slide"
             />
         )
     }
@@ -94,6 +96,7 @@ const { name, company, bio, jobTitle, socials, photoUrl, sessions } = Astro.prop
                             speakers={[Astro.props]}
                             alwaysShowExtraInfo
                             hideBookmark
+                            viewTransitionPrefix={`sessionItemIgnored`}
                         />
                     ))}
                 </div>
