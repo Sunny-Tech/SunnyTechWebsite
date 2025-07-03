@@ -6,7 +6,7 @@ export default defineConfig({
     site: 'https://sunny-tech.io',
     base: '/',
     redirects: {
-        '/schedule': '/schedule/day-2'
+        '/schedule': '/schedule/day-1',
     },
     env: {
         schema: {
@@ -19,6 +19,6 @@ export default defineConfig({
             FIREBASE_MESSAGING_SENDER_ID: envField.string({ context: 'client', access: 'public', optional: false }),
             FIREBASE_APP_ID: envField.string({ context: 'client', access: 'public', optional: false }),
             FIREBASE_MEASUREMENT_ID: envField.string({ context: 'client', access: 'public', optional: true }),
-        }
-    }
+        },
+    },
 })
