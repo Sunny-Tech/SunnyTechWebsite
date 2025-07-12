@@ -67,6 +67,7 @@ const {
     language,
     showInFeedback,
     videoLink,
+    presentationLink,
 } = Astro.props
 
 const rawAbstract = abstract ? markdownToTxt(abstract) : undefined
@@ -114,6 +115,12 @@ const openFeedbackLink = showInFeedback
                 videoLink && (
                     <ButtonLink href={videoLink} target="_blank" external>
                         Voir le replay
+                    </ButtonLink>
+                )
+            }{
+                presentationLink && (
+                    <ButtonLink href={presentationLink} target="_blank" external>
+                        Voir les slides
                     </ButtonLink>
                 )
             }
