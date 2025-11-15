@@ -10,7 +10,7 @@ jobs:
         steps:
             - uses: szenius/set-timezone@v2.0
               with:
-                timezoneLinux: 'Europe/Paris'
+                  timezoneLinux: 'Europe/Paris'
             - uses: actions/checkout@v4
             - uses: actions/setup-node@v4
               with:
@@ -18,7 +18,6 @@ jobs:
                   cache: 'npm'
             - run: npm ci && npm run build
               env:
-                  OPENPLANNER_URL: 'https://storage.googleapis.com/conferencecenterr.appspot.com/events/GB9qNr4UMNsQHd0F8uYu/8deb73e9-7879-4e9d-965f-be8766125185.json'
                   FIREBASE_API_KEY: '${{ secrets.FIREBASE_API_KEY }}'
                   FIREBASE_AUTH_DOMAIN: '${{ vars.FIREBASE_AUTH_DOMAIN }}'
                   FIREBASE_DATABASE_URL: '${{ vars.FIREBASE_DATABASE_URL }}'
@@ -27,3 +26,4 @@ jobs:
                   FIREBASE_MESSAGING_SENDER_ID: '${{ vars.FIREBASE_MESSAGING_SENDER_ID }}'
                   FIREBASE_APP_ID: '${{ vars.FIREBASE_APP_ID }}'
                   FIREBASE_MEASUREMENT_ID: '${{ vars.FIREBASE_MEASUREMENT_ID }}'
+                  OPENPLANNER_URL: 'https://storage.googleapis.com/conferencecenterr.appspot.com/events/YFlN9koUK0qPuYkvbqQg/1f8cd1c0-b0ed-4f24-811d-d8b64718ea29.json'
