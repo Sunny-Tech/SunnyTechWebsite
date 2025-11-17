@@ -1,15 +1,16 @@
 ## Nom du lieu
 
 **Faculté des Sciences de Montpellier**
+
 30 Faculté des Sciences de Montpellier, Place E. Bataillon, 34095 Montpellier
 
 ## Horaires
 
-Les portes ouvrent de 8h30 à 19h les deux jours.
+Les portes ouvrent à 8h30 et ferment à 19h les deux jours
 
 ## Comment venir ?
 
-L'Université des Sciences et Technologies de Montpellier est desservie directement par le tram, l'arrêt est "Université des Sciences et Lettres" (Tram 1 bleu).
+La Faculté des Sciences et Technologies de Montpellier est desservie directement par le tram, l'arrêt est "Université des Sciences et Lettres" (Tram 1 bleu).
 
 ### Le moins de changement : en tram + à pied (25 min)
 
@@ -22,7 +23,7 @@ Une fois à la Gare Montpellier Saint-Roch :
 
 ### En voiture
 
-Il n'y a pas de parking disponible dédié à l'événement. Il reste toujours possible de stationner dans les rues environnantes mais nous suggérons le tram et les parking [P+Tram](https://www.tam-voyages.com/presentation/?rub_code=1&thm_id=26&gpl_id=&part_id=) pour se rendre à l'événement.
+Il n'y a pas de parking disponible dédié à l'événement. Il est toujours possible de se garer dans les rues avoisinantes, mais nous recommandons d’utiliser le tram et les parkings [P+Tram](https://www.tam-voyages.com/presentation/?rub_code=1&thm_id=26&gpl_id=&part_id=) pour vous rendre à l’événement
 
 ### En vélo
 
