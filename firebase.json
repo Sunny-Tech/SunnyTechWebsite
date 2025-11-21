@@ -4,12 +4,17 @@
         "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
         "redirects": [
             {
-                "source": "/sponsoring",
+                "source": "/cfp",
+                "destination": "https://conference-hall.io/team/sunny-tech-members/sunny-tech-2026/overview",
+                "type": 302
+            }
+            {
+                "source": "/sponsoring-old",
                 "destination": "https://docs.google.com/presentation/d/1sciaOrYSHTAZNhAUc1llxIJiHBjTlD-BCPLcEKGK0Q4/preview",
                 "type": 302
             },
             {
-                "source": "/sponsoring/en",
+                "source": "/sponsoring-old/en",
                 "destination": "https://docs.google.com/presentation/d/1CkW-yAcO7HZc-HbwUCtezigkIEVmM55XiGlHso_7IQA/preview",
                 "type": 302
             },
@@ -24,7 +29,7 @@
                 "type": 302
             },
             {
-                "source": "/tshirt",
+                "source": "/tshirt-old",
                 "destination": "https://www.billetweb.fr/sunny-tech-2025&quick=6392964",
                 "type": 302
             }
