@@ -5,7 +5,7 @@
         "redirects": [
             {
                 "source": "/cfp",
-                "destination": "https://conference-hall.io/team/sunny-tech-members/sunny-tech-2026/overview",
+                "destination": "https://conference-hall.io/sunny-tech-2026",
                 "type": 302
             },
             {
