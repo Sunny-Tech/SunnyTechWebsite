@@ -9,8 +9,18 @@
                 "type": 302
             },
             {
-                "source": "/sponsoring-old",
-                "destination": "https://docs.google.com/presentation/d/1sciaOrYSHTAZNhAUc1llxIJiHBjTlD-BCPLcEKGK0Q4/preview",
+                "source": "/sponsoring",
+                "destination": "https://docs.google.com/presentation/d/1jsxls3OaH1bfKDQp9KZSsGyMEhLgG_kWkrIB0Sw2byA/preview",
+                "type": 302
+            },
+            {
+                "source": "/sponsoring",
+                "destination": "https://docs.google.com/presentation/d/1jsxls3OaH1bfKDQp9KZSsGyMEhLgG_kWkrIB0Sw2byA/preview",
+                "type": 302
+            },
+            {
+                "source": "/sponsors-form",
+                "destination": "https://sunnytech.fillout.com/sponsors-2026",
                 "type": 302
             },
             {
