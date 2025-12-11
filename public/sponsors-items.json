@@ -2,20 +2,20 @@
     "offres": {
       "Platinium": {
         "title" : "Platinium",
-        "description" : "- Espace exposant sur le site: GRAND 5*3m, \n- Billets inclus : 8, \n- Entrée supp. soirée Networking: 4, \n- Goodies dans le sac participants, \n- Publicité sur nos supports physiques & keynote GRAND, \n- Logo sur diapo entre les talks GRAND, \n- Tirage au sort de votre jeu concours sur scène, \n- Logo sur les GIF de notre borne OuiSnap, \n- Soutien affiché sur notre site internet, \n- Mise en avant sur les réseaux sociaux, \n- Publicité personnalisée dans la newsletter participants, \n- Logo sur le replay (chaine SunnyTech)",
+        "description" : "- Espace exposant sur le site: GRAND 5*3m, \n- Billets inclus : 8, \n- Entrée supp. soirée Networking: 4, \n- Goodies dans le sac participants, \n- Publicité sur nos supports physiques & keynote GRAND, \n- Logo sur diapo entre les talks GRAND, \n- Tirage au sort de votre jeu concours sur scène, \n- Logo sur les GIF de notre borne OuiSnap, \n- Soutien affiché sur notre site internet, \n- Mise en avant sur les réseaux sociaux, \n- Logo sur le replay (chaine SunnyTech)",
         "quantity" : 1,
         "unit_price" : { 
-            "value" : 6500,
+            "value" : 6750,
             "currency": "EUR"
         },
         "vat_rate" : 0.2
       },
       "Gold": {
         "title": "Gold",
-        "description" : "- Espace exposant sur le site: Moyen 3*3m, \n- Billets inclus : 6, \n- Entrée supp. soirée Networking: 2, \n- Goodies dans le sac participants, \n- Publicité sur nos supports physiques & keynote MOYEN, \n- Logo sur diapo entre les talks MOYEN, \n- Soutien affiché sur notre site internet, \n- Mise en avant sur les réseaux sociaux, \n- Publicité personnalisée dans la newsletter participants, \n",
+        "description" : "- Espace exposant sur le site: Moyen 3*3m, \n- Billets inclus : 6, \n- Entrée supp. soirée Networking: 2, \n- Goodies dans le sac participants, \n- Publicité sur nos supports physiques & keynote MOYEN, \n- Logo sur diapo entre les talks MOYEN, \n- Soutien affiché sur notre site internet, \n- Mise en avant sur les réseaux sociaux, \n",
         "quantity" : 1,
         "unit_price" : { 
-            "value" : 4300,
+            "value" : 4700,
             "currency": "EUR"
         },
         "vat_rate" : 0.2
@@ -25,7 +25,7 @@
         "description" : "- Espace exposant sur le site: espace partagé, \n- Billets inclus : 3, \n- Entrée supp. soirée Networking: 1, \n- Publicité sur nos supports physiques & keynote PETIT, \n- Soutien affiché sur notre site internet, \n- Annonce du sponsor sur les réseaux sociaux",
         "quantity" : 1,
         "unit_price" : { 
-            "value" : 2200,
+            "value" : 2450,
             "currency": "EUR"
         },
         "vat_rate" : 0.2
@@ -35,37 +35,37 @@
         "description" : "- Billets inclus : 2, \n- Publicité sur nos supports physiques & keynote, \n- Soutien affiché sur notre site internet, \n- Annonce du sponsor sur les réseaux sociaux, \n- présence physique (flyer / sticker) pendant la soirée pré-SunnyTech avec tout les speakers, 5 min de présentation pendant la soirée et deux places pour le repas",
         "quantity" : 1,
         "unit_price" : { 
-            "value" : 2150,
+            "value" : 2200,
             "currency": "EUR"
         },
         "vat_rate" : 0.2
       },
       "Sponsor soirée (networking)": {
         "title": "Sponsor soirée (networking)",
-        "description" : "- Billets inclus : 2, \n- Publicité sur nos supports physiques & keynote, \n- Soutien affiché sur notre site internet, \n- Annonce du sponsor sur les réseaux sociaux, \n- Soirée networking : stickers/flyers/kakémono pendant la soirée du jeudi soir (sur place), 5 min de présentation pendant la soirée, \n- Entrée supplémentaire soirée Networking: 4",
+        "description" : "- Entrée soirée Networking : 4, \n- Publicité sur nos supports physiques & keynote, \n- Soutien affiché sur notre site internet, \n- Annonce du sponsor sur les réseaux sociaux, \n- Soirée networking : stickers/flyers/kakémono pendant la soirée du jeudi soir (sur place), 5 min de présentation pendant la soirée, \n- Entrée supplémentaire soirée Networking: 4",
         "quantity" : 1,
         "unit_price" : { 
-            "value" : 2150,
+            "value" : 3000,
             "currency": "EUR"
         },
         "vat_rate" : 0.2
       },
       "Sponsor espace détente": {
         "title": "Sponsor espace détente",
-        "description" : "- Billets inclus : 2, \n- Publicité sur nos supports physiques & keynote, \n- Soutien affiché sur notre site internet, \n- Annonce du sponsor sur les réseaux sociaux, \n- Présence physique (kakémonos / flyers / stickers...), participer à la décoration de l’espace en nous fournissant du matériel à votre image (poufs, transats, serviettes de plage,...)",
+        "description" : "- Publicité sur nos supports physiques & keynote, \n- Soutien affiché sur notre site internet, \n- Annonce du sponsor sur les réseaux sociaux, \n- Présence physique (kakémonos / flyers / stickers...), participer à la décoration de l’espace en nous fournissant du matériel à votre image (poufs, transats, serviettes de plage,...)",
         "quantity" : 1,
         "unit_price" : { 
-            "value" : 2150,
+            "value" : 2000,
             "currency": "EUR"
         },
         "vat_rate" : 0.2
       },
       "Sponsor Trop Chaud": {
-        "title": "Sponsor Trop Chaud",
-        "description" : "- Billets inclus : 1, \n- Publicité sur nos supports physiques dans l'amphi Trop Chaud & keynote, \n- Soutien affiché sur notre site internet, \n- Annonce du sponsor sur les réseaux sociaux, \n- Mise en avant de vos offres de recrutement sur le site et sur place",
+        "title": "Sponsor Soutien",
+        "description" : "- Billets inclus : 1, \n- Tee-shirt spécial, \n- Soutien affiché sur notre site internet, \n- Annonce du sponsor sur les réseaux sociaux, \n- Mise en avant de vos offres de recrutement sur le site et sur place",
         "quantity" : 1,
         "unit_price" : { 
-            "value" : 800,
+            "value" : 1000,
             "currency": "EUR"
         },
         "vat_rate" : 0.2
@@ -73,6 +73,16 @@
       "Recrutement": {
         "title": "Mettez en avant vos offres de recrutement",
         "description": "Mise en avant de vos offres de recrutement sur le site et sur place",
+        "quantity" : 1,
+        "unit_price" : { 
+            "value" : 500,
+            "currency": "EUR"
+        },
+        "vat_rate" : 0.2
+      },
+      "Communication": {
+        "title": "Boostez votre communication",
+        "description": "Mettez en avant votre société tout au long l'année grace à nos réseaux de communication",
         "quantity" : 1,
         "unit_price" : { 
             "value" : 500,
