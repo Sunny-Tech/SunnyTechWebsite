@@ -42,7 +42,11 @@ const { name, price, url, startDate, endDate, ticketsCount, available, soldOut, 
             !!message && (
                 <p class="text-center">
                     <br />
-                    <span class="ticket-card-message">{message}</span>
+                    <span class="ticket-card-message">
+                        {message.split('\n').map((line) => (
+                            <span style="display: block;">{line}</span>
+                        ))}
+                    </span>
                 </p>
             )
         }
