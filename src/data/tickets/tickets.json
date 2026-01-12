@@ -18,7 +18,7 @@
         "ticketsCount": 280,
         "available": false,
         "soldOut": false,
-        "highlighted": false,
+        "highlighted": true,
         "message": "100 places disponibles pour la Vague 1 le mardi 27 janvier à 10h\n100 places disponibles pour la Vague 2 le mercredi 15 avril à 20h30\n80 places disponibles pour la Vague 3 le samedi 25 avril à 14h",
         "displayNewsletterRegistration": true
     }
