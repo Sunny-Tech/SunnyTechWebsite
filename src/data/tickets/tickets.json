@@ -1,23 +1,25 @@
 [
     {
         "id": "student",
-        "name": "Étudiant",
-        "price": 40,
-        "url": "http://billetweb.fr/sunny-tech-2025",
+        "name": "Étudiant et demandeur d'emploi",
+        "price": 44,
+        "url": "https://www.billetweb.fr/sunny-tech-2026",
         "ticketsCount": 18,
-        "available": true,
-        "soldOut": true,
-        "highlighted": false
+        "available": false,
+        "soldOut": false,
+        "highlighted": false,
+        "message": "La billetterie ouvrira bientôt, inscrivez-vous à la newsletter pour en être les premiers informés !"
     },
     {
         "id": "default2",
         "name": "Standard",
-        "price": 100,
-        "url": "http://billetweb.fr/sunny-tech-2025",
-        "ticketsCount": 300,
-        "available": true,
+        "price": 110,
+        "url": "https://www.billetweb.fr/sunny-tech-2026",
+        "ticketsCount": 280,
+        "available": false,
         "soldOut": false,
         "highlighted": false,
-        "message": "Billetterie soldout, mais inscrivez-vous à la liste d'attente, on sait jamais :)"
+        "message": "La billetterie ouvrira bientôt, inscrivez-vous à la newsletter pour en être les premiers informés !\n100 places disponibles pour la Vague 1 le mardi 27 janvier à 10h\n100 places disponibles pour la Vague 2 le mercredi 15 avril à 20h30\n80 places disponibles pour la Vague 3 le samedi 25 avril à 14h",
+        "displayNewsletterRegistration": true
     }
 ]

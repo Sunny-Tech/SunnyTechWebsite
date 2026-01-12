@@ -28,6 +28,7 @@ const ticketsCollection = defineCollection({
         soldOut: z.boolean(),
         highlighted: z.boolean(),
         message: z.string().optional(),
+        displayNewsletterRegistration: z.boolean().optional(),
     }),
 })
 

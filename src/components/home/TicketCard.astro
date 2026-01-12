@@ -8,7 +8,19 @@ interface Props {
 }
 
 const { ticket } = Astro.props
-const { name, price, url, startDate, endDate, ticketsCount, available, soldOut, highlighted, message } = ticket.data
+const {
+    name,
+    price,
+    url,
+    startDate,
+    endDate,
+    ticketsCount,
+    available,
+    soldOut,
+    highlighted,
+    message,
+    displayNewsletterRegistration,
+} = ticket.data
 ---
 
 <article
@@ -42,7 +54,11 @@ const { name, price, url, startDate, endDate, ticketsCount, available, soldOut, 
             !!message && (
                 <p class="text-center">
                     <br />
-                    <span class="ticket-card-message">{message}</span>
+                    <span class="ticket-card-message">
+                        {message.split('\n').map((line) => (
+                            <span style="display: block;">{line}</span>
+                        ))}
+                    </span>
                 </p>
             )
         }
@@ -54,8 +70,24 @@ const { name, price, url, startDate, endDate, ticketsCount, available, soldOut, 
                     </ButtonLink>
                 )
             }
-            {!available && !soldOut && <span class="ticket-card-unavailable">Pas disponible</span>}
+            {
+                !available && !soldOut && !displayNewsletterRegistration && (
+                    <span class="ticket-card-unavailable">Pas disponible</span>
+                )
+            }
             {soldOut && <span class="ticket-card-sold-out">Épuisé</span>}
+            {
+                displayNewsletterRegistration && (
+                    <p class="text-center">
+                        <ButtonLink
+                            href="https://1485701c.sibforms.com/serve/MUIFAMgB9ZySVOL_x0g-9wEIwg1l1jh6RrSs3xTTnw5ZInV4HRM009fe1mwczAa8HEaB4kJf-sTzkK06jO2RIaxSpuflFWayHm2y5m86PhfcDp1kLA8VYGJozdX8flk6OdewY3pf2aE7Wh54VsDoUbYGxHO_mOXmweUPXeFd3_xK6_6FLN9KTdLWRvWiJ7Ldmbx0tByLixqYWBYu"
+                            target="_blank"
+                            external>
+                            S'inscrire à la newsletter
+                        </ButtonLink>
+                    </p>
+                )
+            }
         </div>
     </Stack>
 </article>
