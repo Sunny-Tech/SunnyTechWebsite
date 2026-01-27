@@ -4,13 +4,13 @@
         "name": "Étudiant et demandeur d'emploi",
         "price": 44,
         "url": "https://www.billetweb.fr/sunny-tech-2026",
-        "ticketsCount": 18,
+        "ticketsCount": 5,
         "available": true,
         "soldOut": false,
         "highlighted": false,
         "displayNewsletterRegistration": false,
         "startDate": "2026-01-27", 
-        "message": "Ouverture le mardi 27 janvier à 10h00"
+        "message": "Ouverture le mardi 27 janvier à 10h00, 50 places étudiantes sont prises par la fac de sciences (le lieu)."
     },
     {
         "id": "default2",
