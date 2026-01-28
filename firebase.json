@@ -19,6 +19,11 @@
                 "type": 302
             },
             {
+                "source": "/sponsoring-en",
+                "destination": "https://docs.google.com/presentation/d/1qA2EeIbIZFqxEI7aNfIR_dy3QyRy7ISC5S0mRpMtQA4/preview",
+                "type": 302
+            },
+            {
                 "source": "/sponsors-form",
                 "destination": "https://sunnytech.fillout.com/sponsors-2026",
                 "type": 302
