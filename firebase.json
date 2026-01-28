@@ -14,11 +14,6 @@
                 "type": 302
             },
             {
-                "source": "/sponsoring",
-                "destination": "https://docs.google.com/presentation/d/1jsxls3OaH1bfKDQp9KZSsGyMEhLgG_kWkrIB0Sw2byA/preview",
-                "type": 302
-            },
-            {
                 "source": "/sponsoring-en",
                 "destination": "https://docs.google.com/presentation/d/1qA2EeIbIZFqxEI7aNfIR_dy3QyRy7ISC5S0mRpMtQA4/preview",
                 "type": 302
