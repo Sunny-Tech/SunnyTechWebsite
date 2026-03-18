@@ -231,36 +231,52 @@ const organizerTwitter = '@sunnyTech_MTP'
                     const start = performance.now()
                     const dur = 20000 + Math.random() * 15000 // 20 – 35 s: slow ink bleed
 
+                    // Use CSS transitions for transform/opacity so the browser compositor
+                    // handles interpolation — gives hardware-accelerated smooth easing
+                    // instead of 1-px-per-frame jumps driven by JS.
+                    const durSec = (dur / 1000).toFixed(1)
+                    target.style.transition = [
+                        `transform ${durSec}s cubic-bezier(0.2, 0, 0.6, 1)`,
+                        `opacity ${durSec}s cubic-bezier(0.1, 0, 0.5, 1)`,
+                    ].join(', ')
+
+                    // One rAF gap so the browser registers the transition before we
+                    // set the target values that trigger it.
+                    requestAnimationFrame(() => {
+                        target.style.transform = 'translateY(120px)'
+                        target.style.opacity = '0'
+                    })
+
+                    // Clean up once the opacity CSS transition finishes (fires once per property;
+                    // checking propertyName avoids acting on the transform transitionend too).
+                    target.addEventListener('transitionend', (e: TransitionEvent) => {
+                        if (e.propertyName !== 'opacity') return
+                        target.style.visibility = 'hidden'
+                        svgEl.remove()
+                    })
+
+                    // SVG presentation attributes are not CSS-transitionable, so the
+                    // displacement scale still needs a rAF loop with ease-in quadratic.
                     function frame(now: number) {
                         const p = Math.min((now - start) / dur, 1)
-
-                        // Displacement grows → ink spreads/blurs as it absorbs water
-                        dispMap?.setAttribute('scale', String(p * 40))
-
-                        // Quadratic easing simulates gravitational acceleration
-                        target.style.transform = `translateY(${p * p * 100}px)`
-
-                        // Ink concentration drops as it dilutes
-                        target.style.opacity = String(Math.max(0, 1 - p * 1.5))
-
-                        if (p < 1) {
-                            requestAnimationFrame(frame)
-                        } else {
-                            target.style.visibility = 'hidden'
-                            svgEl.remove()
-                        }
+                        // Ease-in: displacement builds slowly then accelerates
+                        dispMap?.setAttribute('scale', String(p * p * 40))
+                        if (p < 1) requestAnimationFrame(frame)
                     }
 
                     requestAnimationFrame(frame)
                 }
 
                 function scheduleDissolve() {
-                    const candidates = Array.from(document.querySelectorAll<HTMLElement>('h1, h2, h3, p, li')).filter(
+                    const candidates = Array.from(
+                        document.querySelectorAll<HTMLElement>(
+                            'h1, h2, h3, h4, h5, h6, p, li, img, picture, figure, button, blockquote, pre'
+                        )
+                    ).filter(
                         (el) =>
                             !el.dataset.inkDissolving &&
                             !el.closest('#rainy-tech-overlay') &&
                             !el.closest('nav') &&
-                            (el.textContent?.trim().length ?? 0) > 0 &&
                             el.getBoundingClientRect().height > 0
                     )
 
