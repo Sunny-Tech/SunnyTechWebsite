@@ -174,6 +174,106 @@ const organizerTwitter = '@sunnyTech_MTP'
                 ctx.restore()
             }
 
+            // Ink Gravity Shader — makes text vanish like ink washed away by rain.
+            // Uses SVG feTurbulence + feDisplacementMap as a fragment-shader-style
+            // displacement field, animated per element via requestAnimationFrame.
+            function applyInkGravityShader() {
+                if (document.getElementById('ink-gravity-styles')) return
+
+                const styleEl = document.createElement('style')
+                styleEl.id = 'ink-gravity-styles'
+                styleEl.textContent = `.ink-dissolving { will-change: filter, transform, opacity; }`
+                document.head.appendChild(styleEl)
+
+                let filterIdx = 0
+
+                function dissolveTextElement(el: HTMLElement) {
+                    if (el.dataset.inkDissolving) return
+                    el.dataset.inkDissolving = '1'
+
+                    // Inline elements need a block-level wrapper for filter to render correctly
+                    let target: HTMLElement = el
+                    if (window.getComputedStyle(el).display === 'inline') {
+                        const wrapper = document.createElement('span')
+                        wrapper.style.display = 'inline-block'
+                        el.parentNode?.insertBefore(wrapper, el)
+                        wrapper.appendChild(el)
+                        target = wrapper
+                    }
+
+                    filterIdx++
+                    const fid = `ink-g-${filterIdx}`
+                    const seed = Math.floor(Math.random() * 999)
+
+                    // Each element gets its own SVG filter (unique seed & id) so
+                    // animations are fully independent — just like per-pixel shader uniforms.
+                    const svgEl = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
+                    svgEl.setAttribute('aria-hidden', 'true')
+                    svgEl.style.cssText = 'position:fixed;width:0;height:0;overflow:hidden;pointer-events:none'
+                    svgEl.innerHTML = `<defs>
+                        <filter id="${fid}" x="-15%" y="-5%" width="140%" height="600%"
+                                color-interpolation-filters="sRGB">
+                            <!-- Turbulence noise ≈ fragment shader noise function -->
+                            <feTurbulence type="turbulence" baseFrequency="0.04 0.07"
+                                numOctaves="4" seed="${seed}" stitchTiles="stitch" result="turb"/>
+                            <!-- Displacement map: y-channel drives downward gravity flow -->
+                            <feDisplacementMap in="SourceGraphic" in2="turb"
+                                xChannelSelector="R" yChannelSelector="G"
+                                scale="0" id="${fid}-d"/>
+                        </filter>
+                    </defs>`
+                    document.body.appendChild(svgEl)
+
+                    target.style.filter = `url(#${fid})`
+                    target.classList.add('ink-dissolving')
+
+                    const dispMap = svgEl.querySelector(`#${fid}-d`) as SVGElement | null
+                    const start = performance.now()
+                    const dur = 4500 + Math.random() * 1500 // 4.5 – 6 s
+
+                    function frame(now: number) {
+                        const p = Math.min((now - start) / dur, 1)
+
+                        // Displacement grows → ink spreads/blurs as it absorbs water
+                        dispMap?.setAttribute('scale', String(p * 40))
+
+                        // Quadratic easing simulates gravitational acceleration
+                        target.style.transform = `translateY(${p * p * 100}px)`
+
+                        // Ink concentration drops as it dilutes
+                        target.style.opacity = String(Math.max(0, 1 - p * 1.5))
+
+                        if (p < 1) {
+                            requestAnimationFrame(frame)
+                        } else {
+                            target.style.visibility = 'hidden'
+                            svgEl.remove()
+                        }
+                    }
+
+                    requestAnimationFrame(frame)
+                }
+
+                function scheduleDissolve() {
+                    const candidates = Array.from(document.querySelectorAll<HTMLElement>('h1, h2, h3, p, li')).filter(
+                        (el) =>
+                            !el.dataset.inkDissolving &&
+                            !el.closest('#rainy-tech-overlay') &&
+                            !el.closest('nav') &&
+                            (el.textContent?.trim().length ?? 0) > 0 &&
+                            el.getBoundingClientRect().height > 0
+                    )
+
+                    if (candidates.length === 0) return
+
+                    dissolveTextElement(candidates[Math.floor(Math.random() * candidates.length)])
+                    setTimeout(scheduleDissolve, 2000 + Math.random() * 3000)
+                }
+
+                // Delay start: let the rain fall for a few seconds before text starts dissolving
+                setTimeout(scheduleDissolve, 4000)
+            }
+
             function applyRainyTheme() {
                 const now = new Date()
 
@@ -315,6 +415,9 @@ const organizerTwitter = '@sunnyTech_MTP'
 
                     document.body.appendChild(overlay)
                 }
+
+                // Activate ink-gravity shader: text dissolves like real ink in rain
+                applyInkGravityShader()
             }
 
             // Run on initial load and on Astro View Transitions navigation
