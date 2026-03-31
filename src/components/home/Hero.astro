@@ -1,6 +1,7 @@
 ---
 import { Picture } from 'astro:assets'
 import backgroundHome from '../../assets/home.jpg'
+import backgroundRain from '../../assets/home_rain.webp'
 import ButtonLink from '../ui-elements/ButtonLink.astro'
 import Cluster from '../ui-elements/Cluster.astro'
 ---
@@ -21,7 +22,14 @@ import Cluster from '../ui-elements/Cluster.astro'
             </ButtonLink>
         </Cluster>
     </div>
-    <Picture src={backgroundHome} formats={['avif', 'webp']} id="backgroundHome" alt="" loading="lazy" />
+    <Picture
+        src={backgroundHome}
+        formats={['avif', 'webp']}
+        id="backgroundHome"
+        alt=""
+        loading="lazy"
+        data-rainy-src={backgroundRain.src}
+    />
 </div>
 
 <style>
