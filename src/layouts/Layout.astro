@@ -24,6 +24,40 @@ const keywords =
 
 const organizerName = 'Sunny Tech'
 const organizerTwitter = '@sunnyTech_MTP'
+
+const eventJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Event',
+    name: `${siteName} 2026`,
+    description: pageDescription,
+    url,
+    startDate: '2026-07-02',
+    endDate: '2026-07-03',
+    eventStatus: 'https://schema.org/EventScheduled',
+    eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+    image,
+    location: {
+        '@type': 'Place',
+        name: 'Faculté des Sciences de Montpellier',
+        address: {
+            '@type': 'PostalAddress',
+            streetAddress: 'Place Eugène Bataillon',
+            addressLocality: 'Montpellier',
+            postalCode: '34095',
+            addressCountry: 'FR',
+        },
+        geo: {
+            '@type': 'GeoCoordinates',
+            latitude: 43.6312537,
+            longitude: 3.8612405,
+        },
+    },
+    organizer: {
+        '@type': 'Organization',
+        name: organizerName,
+        url,
+    },
+}
 ---
 
 <!doctype html>
@@ -71,6 +105,8 @@ const organizerTwitter = '@sunnyTech_MTP'
         <meta content={image} name="twitter:image" />
 
         <title>{fullPageTitle}</title>
+
+        <script is:inline type="application/ld+json" set:html={JSON.stringify(eventJsonLd)} />
 
         <slot name="head" />
 
@@ -124,8 +160,9 @@ const organizerTwitter = '@sunnyTech_MTP'
         --animation: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         --slide-animation: 0.4s cubic-bezier(0, 0, 0.2, 1);
         --border-radius: 0.25rem;
-        --font-family: -apple-system, blinkmacsystemfont, 'Segoe UI', roboto, helvetica, arial, sans-serif,
-            'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+        --font-family:
+            -apple-system, blinkmacsystemfont, 'Segoe UI', roboto, helvetica, arial, sans-serif, 'Apple Color Emoji',
+            'Segoe UI Emoji', 'Segoe UI Symbol';
         --max-container-width: 1280px;
 
         /* Spacings */
