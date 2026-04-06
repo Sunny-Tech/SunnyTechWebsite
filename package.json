@@ -11,10 +11,11 @@
         "prepare": "husky"
     },
     "dependencies": {
-        "@astrojs/check": "^0.9.4",
+        "@astrojs/check": "^0.9.8",
         "@astropub/md": "^1.0.0",
-        "astro": "^5.8.0",
+        "astro": "^6.1.4",
         "firebase": "^11.6.0",
+        "lodash": "^4.18.1",
         "markdown-to-txt": "^2.0.1",
         "prettier-plugin-astro": "^0.14.1",
         "typescript": "^5.6.3"

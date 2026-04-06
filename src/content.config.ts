@@ -1,5 +1,6 @@
-import { z, defineCollection } from 'astro:content'
+import { defineCollection } from 'astro:content'
 import { file, glob } from 'astro/loaders'
+import { z } from 'astro/zod'
 
 const blogCollection = defineCollection({
     loader: glob({ pattern: '**/*.md', base: './src/content/blog' }),
@@ -20,9 +21,9 @@ const ticketsCollection = defineCollection({
     schema: z.object({
         name: z.string(),
         price: z.number(),
-        url: z.string().url(),
-        startDate: z.string().date().optional(),
-        endDate: z.string().date().optional(),
+        url: z.url(),
+        startDate: z.iso.date().optional(),
+        endDate: z.iso.date().optional(),
         ticketsCount: z.number(),
         available: z.boolean(),
         soldOut: z.boolean(),

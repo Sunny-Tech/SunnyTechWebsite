@@ -50,7 +50,7 @@ export async function getStaticPaths() {
 
     return [
         ...sortedDays.map((day, index) => ({
-            params: { num: index + 1 },
+            params: { num: String(index + 1) },
             props: {
                 day,
                 sessions: sessionsByDay.get(day) || [],
