@@ -152,8 +152,6 @@ function applyRainyTheme() {
     if (menuLogo) {
         menuLogo.style.mask = "url('/logos-sunnytech/logo_medium_rain.png') no-repeat"
         menuLogo.style.maskSize = 'contain'
-        menuLogo.style.webkitMask = "url('/logos-sunnytech/logo_medium_rain.png') no-repeat"
-        menuLogo.style.webkitMaskSize = 'contain'
         menuLogo.style.backgroundColor = 'transparent'
         menuLogo.style.backgroundImage = "url('/logos-sunnytech/logo_medium_rain.png')"
         menuLogo.style.backgroundSize = 'contain'
