@@ -25,3 +25,4 @@ pnpm-debug.log*
 
 # vscode
 .history/
+.claude/launch.json
