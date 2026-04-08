@@ -7,9 +7,10 @@
     const ctx = canvas.getContext('2d')
 
     if (ctx) {
-        // Define the logical size of the canvas
-        const logicalWidth = 600 // Approximate width based on drawing commands
-        const logicalHeight = 400 // Approximate height based on drawing commands
+        // Match parent width, keep fixed height
+        const parent = canvas.parentElement
+        const logicalWidth = parent ? parent.clientWidth : 600
+        const logicalHeight = 400
 
         // Get the device pixel ratio, falling back to 1
         const dpr = window.devicePixelRatio || 1
@@ -25,41 +26,33 @@
         // Function to generate a random number within a range
         const getRandom = (min: number, max: number): number => Math.random() * (max - min) + min
 
-        const numFlamingos = 4 // Let's draw 5 flamingos
+        const numFlamingos = 4
         const flamingos = []
 
-        // Define maximum extents of the flamingo from its center (offsetX, offsetY)
-        // These are estimates based on max possible dimensions of flamingo parts
-        const MAX_FLAMINGO_EXTENT_X = 180 // Max horizontal extent from body center (e.g., splayed leg tip)
-        const MAX_FLAMINGO_EXTENT_Y_DOWN = 300 // Max extent downwards from body center (e.g., leg tip + body radius part)
-
-        // Calculate safe ranges for offsetX and offsetY
-        const minOffsetX = 100
-        const maxOffsetX = logicalWidth - MAX_FLAMINGO_EXTENT_X
-        const minOffsetY = 0
-        const maxOffsetY = logicalHeight - MAX_FLAMINGO_EXTENT_Y_DOWN
+        const pinkColors = ['#E8597C', '#D63F63', '#F472B6', '#EC4899', '#DB2777', '#E05A8D']
 
         for (let i = 0; i < numFlamingos; i++) {
-            const color = `#${Math.floor(Math.random() * 200 + 0xd63f49)
-                .toString(16)
-                .padStart(6, '0')}`
+            const color = pinkColors[Math.floor(Math.random() * pinkColors.length)]
+            const scale = getRandom(0.7, 1.2)
+            const facing = Math.random() > 0.3 ? 1 : -1
+            const oneLeg = Math.random() > 0.6
 
-            const leftLegAngle = getRandom(-0.5, 0.5)
-            const rightLegAngle = getRandom(leftLegAngle, leftLegAngle + 0.5)
             flamingos.push({
-                offsetX: getRandom(minOffsetX, maxOffsetX),
-                offsetY: getRandom(minOffsetY, maxOffsetY),
-                headRadius: getRandom(15, 25),
-                beakSize: getRandom(8, 12),
-                neckLength: getRandom(50, 80),
-                neckAngle: 1,
-                bodyRadius: getRandom(20, 60),
-                legLength: getRandom(100, 140),
-                leftLegAngle: leftLegAngle,
-                rightLegAngle: rightLegAngle,
+                offsetX: getRandom(120, logicalWidth - 120),
+                offsetY: getRandom(120, logicalHeight - 160),
+                headRadius: getRandom(10, 14) * scale,
+                neckLength: getRandom(70, 110) * scale,
+                bodyRadiusX: getRandom(35, 50) * scale,
+                bodyRadiusY: getRandom(22, 32) * scale,
+                legLength: getRandom(90, 130) * scale,
                 color: color,
+                facing: facing,
+                oneLeg: oneLeg,
             })
         }
+
+        // Sort by Y position for depth ordering
+        flamingos.sort((a, b) => a.offsetY - b.offsetY)
 
         flamingos.forEach((flamingoProps) => {
             flamySimple(ctx, flamingoProps)
