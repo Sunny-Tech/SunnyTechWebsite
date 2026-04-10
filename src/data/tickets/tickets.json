@@ -10,7 +10,7 @@
         "highlighted": false,
         "displayNewsletterRegistration": false,
         "startDate": "2026-01-27", 
-        "message": "Ouverture le mardi 27 janvier à 10h00, 50 places étudiantes sont prises par la fac de sciences (le lieu)."
+        "message": "Sold out."
     },
     {
         "id": "default2",
@@ -22,7 +22,7 @@
         "soldOut": false,
         "highlighted": true,
         "startDate": "2026-01-27", 
-        "message": "100 places déjà vendues le mardi 27 janvier\n100 places disponibles pour la Vague 2 le mercredi 15 avril à 20h30\n60 places disponibles pour la Vague 3 le samedi 25 avril à 14h",
+        "message": "100 places disponibles le mercredi 15 avril à 20h30\n60 places disponibles pour la Vague 3 le samedi 25 avril à 14h",
         "displayNewsletterRegistration": false
     }
 ]
