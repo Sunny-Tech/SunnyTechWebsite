@@ -32,12 +32,16 @@ const { sponsors, otherSponsorsCount } = Astro.props
 }
 
 <script>
-    window.addEventListener('scroll', () => {
-        const banner = document.querySelector('#sponsor-banner') as HTMLElement | null
-        if (banner) {
+    const banner = document.querySelector('#sponsor-banner') as HTMLElement | null
+
+    if (banner) {
+        const handleScroll = () => {
             banner.classList.toggle('hidden', window.scrollY > 0)
         }
-    })
+
+        handleScroll()
+        window.addEventListener('scroll', handleScroll, { passive: true })
+    }
 </script>
 
 <style>
