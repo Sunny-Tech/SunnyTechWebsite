@@ -14,15 +14,27 @@ interface Props {
 
 const { title, description, metaImage } = Astro.props
 
-const response = await fetch(OPENPLANNER_URL)
-const openPlannerData: OpenPlannerType = await response.json()
-const bannerSponsors = openPlannerData.sponsors.flatMap((cat) =>
-    cat.sponsors.filter((s) => s.customFields?.['option-comm'] === true)
-)
-const totalSponsors = openPlannerData.sponsors
-    .filter((cat) => !cat.name.toLowerCase().includes('partenaire'))
-    .flatMap((cat) => cat.sponsors).length
-const otherSponsorsCount = totalSponsors - bannerSponsors.length
+type BannerSponsor = OpenPlannerType['sponsors'][number]['sponsors'][number]
+let bannerSponsors: BannerSponsor[] = []
+let otherSponsorsCount = 0
+
+if (OPENPLANNER_URL) {
+    try {
+        const response = await fetch(OPENPLANNER_URL)
+        if (response.ok) {
+            const openPlannerData: OpenPlannerType = await response.json()
+            bannerSponsors = openPlannerData.sponsors.flatMap((cat) =>
+                cat.sponsors.filter((s) => s.customFields?.['option-comm'] === true)
+            )
+            const totalSponsors = openPlannerData.sponsors
+                .filter((cat) => !cat.name.toLowerCase().includes('partenaire'))
+                .flatMap((cat) => cat.sponsors).length
+            otherSponsorsCount = totalSponsors - bannerSponsors.length
+        }
+    } catch {
+        bannerSponsors = []
+    }
+}
 
 const url = import.meta.env.SITE
 const image = metaImage || url + '/social-share5.jpg'

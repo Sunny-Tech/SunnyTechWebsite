@@ -22,8 +22,7 @@ const { sponsors, otherSponsorsCount } = Astro.props
                     ))}
                     {otherSponsorsCount > 0 && (
                         <span class="sponsor-banner-others">
-                            et {otherSponsorsCount} autre{otherSponsorsCount > 1 ? 's' : ''} sponsor
-                            {otherSponsorsCount > 1 ? 's' : ''}
+                            {`et ${otherSponsorsCount} autre${otherSponsorsCount > 1 ? 's' : ''} sponsor${otherSponsorsCount > 1 ? 's' : ''}`}
                         </span>
                     )}
                 </div>
