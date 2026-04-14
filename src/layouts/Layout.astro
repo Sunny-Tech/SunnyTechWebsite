@@ -19,6 +19,10 @@ const openPlannerData: OpenPlannerType = await response.json()
 const bannerSponsors = openPlannerData.sponsors.flatMap((cat) =>
     cat.sponsors.filter((s) => s.customFields?.['option-comm'] === true)
 )
+const totalSponsors = openPlannerData.sponsors
+    .filter((cat) => !cat.name.toLowerCase().includes('partenaire'))
+    .flatMap((cat) => cat.sponsors).length
+const otherSponsorsCount = totalSponsors - bannerSponsors.length
 
 const url = import.meta.env.SITE
 const image = metaImage || url + '/social-share5.jpg'
@@ -125,7 +129,7 @@ const eventJsonLd = {
     </head>
     <body>
         <a href="#main-content" class="skip-link">Aller au contenu principal</a>
-        <SponsorBanner sponsors={bannerSponsors} />
+        <SponsorBanner sponsors={bannerSponsors} otherSponsorsCount={otherSponsorsCount} />
         <Menu />
         <main id="#main-content">
             <slot />
@@ -171,9 +175,8 @@ const eventJsonLd = {
         --animation: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         --slide-animation: 0.4s cubic-bezier(0, 0, 0.2, 1);
         --border-radius: 0.25rem;
-        --font-family:
-            -apple-system, blinkmacsystemfont, 'Segoe UI', roboto, helvetica, arial, sans-serif, 'Apple Color Emoji',
-            'Segoe UI Emoji', 'Segoe UI Symbol';
+        --font-family: -apple-system, blinkmacsystemfont, 'Segoe UI', roboto, helvetica, arial, sans-serif,
+            'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
         --max-container-width: 1280px;
 
         /* Spacings */

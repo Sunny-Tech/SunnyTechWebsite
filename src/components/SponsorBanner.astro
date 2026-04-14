@@ -3,9 +3,10 @@ import type { Sponsor } from '../type'
 
 interface Props {
     sponsors: Sponsor[]
+    otherSponsorsCount: number
 }
 
-const { sponsors } = Astro.props
+const { sponsors, otherSponsorsCount } = Astro.props
 ---
 
 {
@@ -19,6 +20,12 @@ const { sponsors } = Astro.props
                             <img src={sponsor.logoUrl} alt={sponsor.name} class="sponsor-banner-logo" />
                         </a>
                     ))}
+                    {otherSponsorsCount > 0 && (
+                        <span class="sponsor-banner-others">
+                            et {otherSponsorsCount} autre{otherSponsorsCount > 1 ? 's' : ''} sponsor
+                            {otherSponsorsCount > 1 ? 's' : ''}
+                        </span>
+                    )}
                 </div>
             </div>
         </div>
@@ -84,6 +91,12 @@ const { sponsors } = Astro.props
         height: 2rem;
         width: auto;
         object-fit: contain;
+    }
+
+    .sponsor-banner-others {
+        font-size: var(--fs0);
+        color: var(--text-subtle);
+        white-space: nowrap;
     }
 
     @media (max-width: 640px) {
