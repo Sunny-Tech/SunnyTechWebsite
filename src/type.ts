@@ -34,6 +34,7 @@ export interface Sponsor {
     name: string
     logoUrl: string
     jobPosts?: JobPost[]
+    customFields?: { [key: string]: string | boolean }
 }
 
 export interface Track {

@@ -1,0 +1,110 @@
+---
+import type { Sponsor } from '../type'
+
+interface Props {
+    sponsors: Sponsor[]
+    otherSponsorsCount: number
+}
+
+const { sponsors, otherSponsorsCount } = Astro.props
+---
+
+{
+    sponsors.length > 0 && (
+        <div id="sponsor-banner" class="sponsor-banner">
+            <div class="sponsor-banner-content">
+                <span class="sponsor-banner-text">Cet évènement est permis grâce au soutien de</span>
+                <div class="sponsor-banner-logos">
+                    {sponsors.map((sponsor) => (
+                        <a href={sponsor.website} target="_blank" rel="noopener noreferrer" class="sponsor-banner-link">
+                            <img src={sponsor.logoUrl} alt={sponsor.name} class="sponsor-banner-logo" />
+                        </a>
+                    ))}
+                    {otherSponsorsCount > 0 && (
+                        <span class="sponsor-banner-others">
+                            {`et ${otherSponsorsCount} autre${otherSponsorsCount > 1 ? 's' : ''} sponsor${otherSponsorsCount > 1 ? 's' : ''}`}
+                        </span>
+                    )}
+                </div>
+            </div>
+        </div>
+    )
+}
+
+<script>
+    const banner = document.querySelector('#sponsor-banner') as HTMLElement | null
+
+    if (banner) {
+        const handleScroll = () => {
+            banner.classList.toggle('hidden', window.scrollY > 0)
+        }
+
+        handleScroll()
+        window.addEventListener('scroll', handleScroll, { passive: true })
+    }
+</script>
+
+<style>
+    .sponsor-banner {
+        background-color: var(--grey-1);
+        padding: var(--s-1) var(--s0);
+        overflow: hidden;
+        max-height: 4rem;
+        transition:
+            max-height 0.3s ease,
+            padding 0.3s ease,
+            opacity 0.3s ease;
+        opacity: 1;
+
+        &.hidden {
+            max-height: 0;
+            padding-top: 0;
+            padding-bottom: 0;
+            opacity: 0;
+        }
+    }
+
+    .sponsor-banner-content {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--s0);
+        max-width: var(--max-container-width);
+        margin: 0 auto;
+    }
+
+    .sponsor-banner-text {
+        font-size: var(--fs0);
+        color: var(--text-subtle);
+        white-space: nowrap;
+    }
+
+    .sponsor-banner-logos {
+        display: flex;
+        align-items: center;
+        gap: var(--s0);
+    }
+
+    .sponsor-banner-link {
+        display: flex;
+        align-items: center;
+    }
+
+    .sponsor-banner-logo {
+        height: 2rem;
+        width: auto;
+        object-fit: contain;
+    }
+
+    .sponsor-banner-others {
+        font-size: var(--fs0);
+        color: var(--text-subtle);
+        white-space: nowrap;
+    }
+
+    @media (max-width: 640px) {
+        .sponsor-banner-text {
+            display: none;
+        }
+    }
+</style>
