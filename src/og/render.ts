@@ -1,10 +1,13 @@
 import { readFile } from 'node:fs/promises'
-import { fileURLToPath } from 'node:url'
-import { dirname, resolve } from 'node:path'
+import { resolve } from 'node:path'
 import satori from 'satori'
 import { Resvg } from '@resvg/resvg-js'
 
-const __dirname = dirname(fileURLToPath(import.meta.url))
+// Resolve assets against the project root (where astro dev / astro build runs).
+// __dirname points inside dist/.prerender/chunks/ after the build bundles this
+// module, so any `__dirname`-relative asset lookup breaks at build time.
+const PROJECT_ROOT = process.cwd()
+const fromRoot = (p: string) => resolve(PROJECT_ROOT, p)
 
 let cachedFonts: Awaited<ReturnType<typeof loadFonts>> | null = null
 let cachedLogo: string | null = null
@@ -13,8 +16,8 @@ let cachedFlamingo: string | null = null
 
 async function loadFonts() {
     const [regular, bold] = await Promise.all([
-        readFile(resolve(__dirname, 'fonts/Roboto-Regular.ttf')),
-        readFile(resolve(__dirname, 'fonts/Roboto-Bold.ttf')),
+        readFile(fromRoot('src/og/fonts/Roboto-Regular.ttf')),
+        readFile(fromRoot('src/og/fonts/Roboto-Bold.ttf')),
     ])
     return [
         { name: 'Roboto', data: regular, weight: 400 as const, style: 'normal' as const },
@@ -24,14 +27,14 @@ async function loadFonts() {
 
 export async function getLogoDataUri(): Promise<string> {
     if (cachedLogo) return cachedLogo
-    const buf = await readFile(resolve(__dirname, '../../public/logos-sunnytech/logo_high.png'))
+    const buf = await readFile(fromRoot('public/logos-sunnytech/logo_high.png'))
     cachedLogo = `data:image/png;base64,${buf.toString('base64')}`
     return cachedLogo
 }
 
 export async function getMonochromeLogoDataUri(): Promise<string> {
     if (cachedMonoLogo) return cachedMonoLogo
-    const raw = await readFile(resolve(__dirname, '../../public/logos-sunnytech/logo-monochrome.svg'), 'utf-8')
+    const raw = await readFile(fromRoot('public/logos-sunnytech/logo-monochrome.svg'), 'utf-8')
     cachedMonoLogo = `data:image/svg+xml;base64,${Buffer.from(raw).toString('base64')}`
     return cachedMonoLogo
 }
@@ -45,7 +48,7 @@ export async function getFlamingoDataUri(fillHex = '#ffffff'): Promise<string> {
     if (cachedFlamingo && cachedFlamingo.startsWith(`${key}|`)) {
         return cachedFlamingo.slice(key.length + 1)
     }
-    const raw = await readFile(resolve(__dirname, '../../public/favicon.svg'), 'utf-8')
+    const raw = await readFile(fromRoot('public/favicon.svg'), 'utf-8')
     // Repaint the favicon's pink (#FB4552) with the requested fill. The mask and
     // circle from the source SVG are preserved — the rendered result is the
     // flamingo silhouette clipped to its circle, in the chosen color.
