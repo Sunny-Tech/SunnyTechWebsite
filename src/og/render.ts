@@ -1,5 +1,6 @@
-import { readFile } from 'node:fs/promises'
-import { resolve } from 'node:path'
+import { mkdir, readFile, writeFile } from 'node:fs/promises'
+import { existsSync } from 'node:fs'
+import { dirname, resolve } from 'node:path'
 import satori from 'satori'
 import { Resvg } from '@resvg/resvg-js'
 
@@ -8,6 +9,38 @@ import { Resvg } from '@resvg/resvg-js'
 // module, so any `__dirname`-relative asset lookup breaks at build time.
 const PROJECT_ROOT = process.cwd()
 const fromRoot = (p: string) => resolve(PROJECT_ROOT, p)
+
+/**
+ * Persistent between-build cache for generated OG PNGs. Kept outside dist/
+ * because Astro wipes dist/ at the start of every build. CI restores this
+ * directory with actions/cache so unchanged images don't re-render.
+ */
+const OG_CACHE_DIR = fromRoot('.og-cache')
+
+/** Read a previously generated OG PNG from disk. Returns null on miss. */
+export async function readOgCache(relPath: string): Promise<Buffer | null> {
+    const full = resolve(OG_CACHE_DIR, relPath)
+    if (!existsSync(full)) return null
+    try {
+        return await readFile(full)
+    } catch {
+        return null
+    }
+}
+
+/** Write a generated OG PNG to the between-build cache. */
+export async function writeOgCache(relPath: string, buffer: Buffer): Promise<void> {
+    const full = resolve(OG_CACHE_DIR, relPath)
+    await mkdir(dirname(full), { recursive: true })
+    await writeFile(full, buffer)
+}
+
+/** Build a `Content-Type: image/png` Response from a PNG buffer. */
+export function pngResponse(buffer: Buffer): Response {
+    return new Response(new Uint8Array(buffer), {
+        headers: { 'Content-Type': 'image/png' },
+    })
+}
 
 let cachedFonts: Awaited<ReturnType<typeof loadFonts>> | null = null
 let cachedLogo: string | null = null

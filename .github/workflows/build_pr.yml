@@ -7,6 +7,8 @@ jobs:
     build:
         runs-on: ubuntu-latest
         environment: production
+        env:
+            OPENPLANNER_URL: 'https://storage.googleapis.com/conferencecenterr.appspot.com/events/YFlN9koUK0qPuYkvbqQg/1f8cd1c0-b0ed-4f24-811d-d8b64718ea29.json'
         steps:
             - uses: szenius/set-timezone@v2.0
               with:
@@ -16,6 +18,24 @@ jobs:
               with:
                   node-version-file: .nvmrc
                   cache: 'npm'
+
+            # Hash the OpenPlanner dataset so any speaker / session change
+            # busts the OG image cache below.
+            - name: Hash OpenPlanner data
+              id: openplanner
+              run: |
+                  HASH=$(curl -sSL --fail "$OPENPLANNER_URL" | sha256sum | cut -c1-16)
+                  echo "hash=$HASH" >> "$GITHUB_OUTPUT"
+
+            # Reuse previously-rendered OG PNGs when none of their inputs changed.
+            # Endpoints fall through to satori + resvg on cache miss and repopulate
+            # this directory so subsequent runs stay fast.
+            - name: Cache rendered OG images
+              uses: actions/cache@v4
+              with:
+                  path: .og-cache
+                  key: og-${{ hashFiles('src/og/**', 'src/pages/og/**', 'public/favicon.svg', 'public/logos-sunnytech/**') }}-${{ steps.openplanner.outputs.hash }}
+
             - run: npm ci && npm run build
               env:
                   FIREBASE_API_KEY: '${{ secrets.FIREBASE_API_KEY }}'
@@ -26,4 +46,3 @@ jobs:
                   FIREBASE_MESSAGING_SENDER_ID: '${{ vars.FIREBASE_MESSAGING_SENDER_ID }}'
                   FIREBASE_APP_ID: '${{ vars.FIREBASE_APP_ID }}'
                   FIREBASE_MEASUREMENT_ID: '${{ vars.FIREBASE_MEASUREMENT_ID }}'
-                  OPENPLANNER_URL: 'https://storage.googleapis.com/conferencecenterr.appspot.com/events/YFlN9koUK0qPuYkvbqQg/1f8cd1c0-b0ed-4f24-811d-d8b64718ea29.json'
