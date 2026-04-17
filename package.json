@@ -12,6 +12,7 @@
     },
     "dependencies": {
         "@astrojs/check": "^0.9.8",
+        "@resvg/resvg-js": "^2.6.2",
         "astro": "^6.1.4",
         "astro-md-2": "^2.0.0",
         "firebase": "^11.6.0",
@@ -19,6 +20,7 @@
         "markdown-to-txt": "^2.0.1",
         "marked": "^18.0.0",
         "prettier-plugin-astro": "^0.14.1",
+        "satori": "^0.26.0",
         "typescript": "^5.9.3"
     },
     "devDependencies": {
