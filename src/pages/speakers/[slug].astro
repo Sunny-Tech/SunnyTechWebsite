@@ -6,6 +6,7 @@ import LayoutWithTitle from '../../layouts/LayoutWithTitle.astro'
 import GenericIcon from '../../components/icons/GenericIcon.astro'
 import MarkdownWrapper from '../../components/ui-elements/MarkdownWrapper.astro'
 import SessionItem from '../../components/schedule/SessionItem.astro'
+import { speakerOgSlug } from '../og/speakers/[slug].png'
 
 export const getStaticPaths = async () => {
     const response = await fetch(OPENPLANNER_URL)
@@ -14,6 +15,7 @@ export const getStaticPaths = async () => {
     const { speakers, sessions, event } = openPlannerData
     const { categories, tracks } = event
 
+    const seen = new Map<string, number>()
     return speakers.map((speaker) => {
         const speakerSessions = sessions
             .filter((session) => session.speakerIds.includes(speaker.id))
@@ -23,19 +25,26 @@ export const getStaticPaths = async () => {
                 track: tracks.find((track) => track.id === session.trackId),
             }))
 
+        let ogSlug = speakerOgSlug(speaker.name, speaker.id)
+        const count = (seen.get(ogSlug) ?? 0) + 1
+        seen.set(ogSlug, count)
+        if (count > 1) ogSlug = `${ogSlug}-${count}`
+
         return {
             params: { slug: speaker.id },
             props: {
                 ...speaker,
                 sessions: speakerSessions,
+                ogSlug,
             },
         }
     })
 }
-const { name, company, bio, jobTitle, socials, photoUrl, sessions } = Astro.props
+const { name, company, bio, jobTitle, socials, photoUrl, sessions, ogSlug } = Astro.props
+const ogImage = `${import.meta.env.SITE}/og/speakers/${ogSlug}.png`
 ---
 
-<LayoutWithTitle htmlTitle={`SunnyTech speaker – ${name}`} title={name}>
+<LayoutWithTitle htmlTitle={`SunnyTech speaker – ${name}`} title={name} metaImage={ogImage}>
     {
         photoUrl && (
             <img

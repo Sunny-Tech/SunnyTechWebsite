@@ -37,7 +37,21 @@ if (OPENPLANNER_URL) {
 }
 
 const url = import.meta.env.SITE
-const image = metaImage || url + '/social-share5.jpg'
+
+function computeOgPath(pathname: string): string {
+    const clean = pathname.replace(/\/$/, '') || '/'
+    // Speaker pages pass an explicit metaImage (see src/pages/speakers/[slug].astro).
+    if (clean === '/speakers') return '/og/pages/speakers.png'
+    if (clean === '/' || clean === '') return '/og/default.png'
+    if (clean.startsWith('/schedule')) return '/og/pages/schedule.png'
+    if (clean.startsWith('/blog')) return '/og/default.png'
+    const staticPages = ['team', 'jobs', 'location', 'anecdotes', 'jeu', 'coc', '404']
+    const seg = clean.replace(/^\//, '').split('/')[0]
+    if (staticPages.includes(seg)) return `/og/pages/${seg}.png`
+    return '/og/default.png'
+}
+
+const image = metaImage || url + computeOgPath(Astro.url.pathname)
 const siteName = 'Sunny Tech'
 const siteNameWithTagline = 'Sunny Tech, la conférence Tech organisée à Montpellier'
 const pageTitle = title || siteName
@@ -187,8 +201,9 @@ const eventJsonLd = {
         --animation: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         --slide-animation: 0.4s cubic-bezier(0, 0, 0.2, 1);
         --border-radius: 0.25rem;
-        --font-family: -apple-system, blinkmacsystemfont, 'Segoe UI', roboto, helvetica, arial, sans-serif,
-            'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+        --font-family:
+            -apple-system, blinkmacsystemfont, 'Segoe UI', roboto, helvetica, arial, sans-serif, 'Apple Color Emoji',
+            'Segoe UI Emoji', 'Segoe UI Symbol';
         --max-container-width: 1280px;
 
         /* Spacings */

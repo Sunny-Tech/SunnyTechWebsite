@@ -1,0 +1,69 @@
+import { readFile } from 'node:fs/promises'
+import { fileURLToPath } from 'node:url'
+import { dirname, resolve } from 'node:path'
+import satori from 'satori'
+import { Resvg } from '@resvg/resvg-js'
+
+const __dirname = dirname(fileURLToPath(import.meta.url))
+
+let cachedFonts: Awaited<ReturnType<typeof loadFonts>> | null = null
+let cachedLogo: string | null = null
+let cachedMonoLogo: string | null = null
+let cachedFlamingo: string | null = null
+
+async function loadFonts() {
+    const [regular, bold] = await Promise.all([
+        readFile(resolve(__dirname, 'fonts/Roboto-Regular.ttf')),
+        readFile(resolve(__dirname, 'fonts/Roboto-Bold.ttf')),
+    ])
+    return [
+        { name: 'Roboto', data: regular, weight: 400 as const, style: 'normal' as const },
+        { name: 'Roboto', data: bold, weight: 700 as const, style: 'normal' as const },
+    ]
+}
+
+export async function getLogoDataUri(): Promise<string> {
+    if (cachedLogo) return cachedLogo
+    const buf = await readFile(resolve(__dirname, '../../public/logos-sunnytech/logo_high.png'))
+    cachedLogo = `data:image/png;base64,${buf.toString('base64')}`
+    return cachedLogo
+}
+
+export async function getMonochromeLogoDataUri(): Promise<string> {
+    if (cachedMonoLogo) return cachedMonoLogo
+    const raw = await readFile(resolve(__dirname, '../../public/logos-sunnytech/logo-monochrome.svg'), 'utf-8')
+    cachedMonoLogo = `data:image/svg+xml;base64,${Buffer.from(raw).toString('base64')}`
+    return cachedMonoLogo
+}
+
+/**
+ * Flamingo silhouette (from public/favicon.svg) with color overridden.
+ * Satori supports SVG via data URI for <img>. Color can be tuned by caller.
+ */
+export async function getFlamingoDataUri(fillHex = '#ffffff'): Promise<string> {
+    const key = `flamingo:${fillHex}`
+    if (cachedFlamingo && cachedFlamingo.startsWith(`${key}|`)) {
+        return cachedFlamingo.slice(key.length + 1)
+    }
+    const raw = await readFile(resolve(__dirname, '../../public/favicon.svg'), 'utf-8')
+    // Keep only the flamingo path — strip the outer circle mask so we get a transparent bird silhouette.
+    const svg = raw.replace(/#FB4552/gi, fillHex)
+    const dataUri = `data:image/svg+xml;base64,${Buffer.from(svg).toString('base64')}`
+    cachedFlamingo = `${key}|${dataUri}`
+    return dataUri
+}
+
+export async function renderOg(node: any): Promise<Buffer> {
+    if (!cachedFonts) cachedFonts = await loadFonts()
+    const svg = await satori(node, {
+        width: 1200,
+        height: 630,
+        fonts: cachedFonts,
+    })
+    const png = new Resvg(svg, {
+        fitTo: { mode: 'width', value: 1200 },
+    })
+        .render()
+        .asPng()
+    return png
+}
