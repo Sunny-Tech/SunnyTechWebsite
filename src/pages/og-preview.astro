@@ -1,17 +1,36 @@
 ---
+// Dev-only visual QA gallery. In production builds the page renders a
+// minimal 404 body (and skips the OpenPlanner fetch) so nothing useful
+// ships to sunny-tech.io.
 import { OPENPLANNER_URL } from 'astro:env/client'
 import type { OpenPlannerType } from '../type'
+import { speakerOgSlug } from './og/speakers/[slug].png'
 
-const response = await fetch(OPENPLANNER_URL)
-const data: OpenPlannerType = await response.json()
-const sampleSpeakers = data.speakers.slice(0, 4)
+const isProd = import.meta.env.PROD
+
+type SampleSpeaker = { name: string; slug: string }
+let sampleSpeakers: SampleSpeaker[] = []
+
+if (!isProd) {
+    const response = await fetch(OPENPLANNER_URL)
+    const data: OpenPlannerType = await response.json()
+    const seen = new Map<string, number>()
+    sampleSpeakers = data.speakers.slice(0, 4).map((s) => {
+        let slug = speakerOgSlug(s.name, s.id)
+        const count = (seen.get(slug) ?? 0) + 1
+        seen.set(slug, count)
+        if (count > 1) slug = `${slug}-${count}`
+        return { name: s.name, slug }
+    })
+}
+
 const staticPages = ['team', 'speakers', 'schedule', 'jobs', 'location', 'anecdotes', 'jeu', 'coc', '404']
 ---
 
 <html>
     <head>
         <meta charset="utf-8" />
-        <title>OG preview</title>
+        <title>{isProd ? 'Not Found' : 'OG preview'}</title>
         <style>
             body {
                 font-family: sans-serif;
@@ -51,38 +70,42 @@ const staticPages = ['team', 'speakers', 'schedule', 'jobs', 'location', 'anecdo
         </style>
     </head>
     <body>
-        <h1>OG image previews</h1>
+        {
+            isProd ? (
+                <p>404</p>
+            ) : (
+                <>
+                    <h1>OG image previews</h1>
 
-        <h2>Default</h2>
-        <div class="grid">
-            <figure class="tile">
-                <img src="/og/default.png" alt="default" />
-                <figcaption>/og/default.png</figcaption>
-            </figure>
-        </div>
+                    <h2>Default</h2>
+                    <div class="grid">
+                        <figure class="tile">
+                            <img src="/og/default.png" alt="default" />
+                            <figcaption>/og/default.png</figcaption>
+                        </figure>
+                    </div>
 
-        <h2>Static pages</h2>
-        <div class="grid">
-            {
-                staticPages.map((p) => (
-                    <figure class="tile">
-                        <img src={`/og/pages/${p}.png`} alt={p} />
-                        <figcaption>/{p}</figcaption>
-                    </figure>
-                ))
-            }
-        </div>
+                    <h2>Static pages</h2>
+                    <div class="grid">
+                        {staticPages.map((p) => (
+                            <figure class="tile">
+                                <img src={`/og/pages/${p}.png`} alt={p} />
+                                <figcaption>/{p}</figcaption>
+                            </figure>
+                        ))}
+                    </div>
 
-        <h2>Speakers (sample)</h2>
-        <div class="grid">
-            {
-                sampleSpeakers.map((s) => (
-                    <figure class="tile">
-                        <img src={`/og/speakers/${s.id}.png`} alt={s.name} />
-                        <figcaption>{s.name}</figcaption>
-                    </figure>
-                ))
-            }
-        </div>
+                    <h2>Speakers (sample)</h2>
+                    <div class="grid">
+                        {sampleSpeakers.map((s) => (
+                            <figure class="tile">
+                                <img src={`/og/speakers/${s.slug}.png`} alt={s.name} />
+                                <figcaption>{s.name}</figcaption>
+                            </figure>
+                        ))}
+                    </div>
+                </>
+            )
+        }
     </body>
 </html>

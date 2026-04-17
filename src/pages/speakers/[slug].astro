@@ -6,13 +6,11 @@ import LayoutWithTitle from '../../layouts/LayoutWithTitle.astro'
 import GenericIcon from '../../components/icons/GenericIcon.astro'
 import MarkdownWrapper from '../../components/ui-elements/MarkdownWrapper.astro'
 import SessionItem from '../../components/schedule/SessionItem.astro'
+// Imported (not inlined) because Astro runs getStaticPaths in an isolated
+// scope that cannot see local frontmatter consts, and because the endpoint
+// that actually generates the PNG owns the slug format.
+import { speakerOgSlug } from '../og/speakers/[slug].png'
 
-const speakerOgSlug = (name: string, id: string) =>
-    `${name}-${id}`
-        .toLowerCase()
-        .trim()
-        .replace(/[^a-z0-9]+/g, '-')
-        .replace(/^-+|-+$/g, '')
 export const getStaticPaths = async () => {
     const response = await fetch(OPENPLANNER_URL)
     const openPlannerData: OpenPlannerType = await response.json()
