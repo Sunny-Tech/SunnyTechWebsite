@@ -1,6 +1,7 @@
 import type { APIRoute } from 'astro'
 import { getFlamingoDataUri, getMonochromeLogoDataUri, renderOg } from '../../../og/render'
 import { pageTemplate } from '../../../og/templates'
+import { EVENT } from '../../../og/event'
 
 type PageSpec = {
     title: string
@@ -12,17 +13,17 @@ const PAGES: Record<string, PageSpec> = {
     team: {
         eyebrow: 'Équipe',
         title: 'Les bénévoles',
-        description: 'Une association à but non lucratif, créée par la communauté tech de Montpellier.',
+        description: `Une association à but non lucratif, créée par la communauté tech de ${EVENT.city}.`,
     },
     speakers: {
         eyebrow: 'Programme',
         title: 'Speakers',
-        description: "Découvrez les conférencier·e·s de l'édition 2026.",
+        description: `Découvrez les conférencier·e·s de l'édition ${EVENT.year}.`,
     },
     schedule: {
         eyebrow: 'Programme',
         title: 'Schedule',
-        description: 'Deux jours de conférences les 2 et 3 juillet 2026.',
+        description: `Deux jours de conférences les ${EVENT.displayDates}.`,
     },
     jobs: {
         eyebrow: 'Sponsors',
@@ -32,7 +33,7 @@ const PAGES: Record<string, PageSpec> = {
     location: {
         eyebrow: 'Venue',
         title: 'Lieu & accès',
-        description: 'Faculté des Sciences de Montpellier — place Eugène Bataillon.',
+        description: `Faculté des Sciences de ${EVENT.city} — place Eugène Bataillon.`,
     },
     anecdotes: {
         eyebrow: 'Bonus',

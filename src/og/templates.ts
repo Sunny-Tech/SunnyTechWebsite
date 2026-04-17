@@ -3,6 +3,7 @@
  * Colors align with site tokens (src/layouts/Layout.astro):
  *   pink-2 #d63f49, pink-3 #901f26, pink-1 #e89399, white.
  */
+import { EVENT, EVENT_FOOTER_LOCATION, EVENT_FULL_NAME } from './event'
 
 const BG_GRADIENT = 'linear-gradient(135deg, #f4724e 0%, #d63f49 55%, #901f26 100%)'
 const WHITE = '#ffffff'
@@ -148,7 +149,7 @@ function brandFooter(monoLogoUri: string): Node {
                                 opacity: 0.95,
                             },
                         },
-                        '2 & 3 juillet 2026'
+                        EVENT.displayDates
                     ),
                     el(
                         'div',
@@ -159,7 +160,7 @@ function brandFooter(monoLogoUri: string): Node {
                                 marginTop: '4px',
                             },
                         },
-                        'Montpellier · sunny-tech.io'
+                        EVENT_FOOTER_LOCATION
                     ),
                 ]
             ),
@@ -192,7 +193,7 @@ export function defaultTemplate(logoUri: string, flamingoUri?: string): Node {
                                 opacity: 0.9,
                             },
                         },
-                        'La conférence Tech de Montpellier'
+                        EVENT.tagline
                     ),
                     el(
                         'div',
@@ -205,7 +206,7 @@ export function defaultTemplate(logoUri: string, flamingoUri?: string): Node {
                                 textShadow: TEXT_SHADOW,
                             },
                         },
-                        'Sunny Tech 2026'
+                        EVENT_FULL_NAME
                     ),
                     el(
                         'div',
@@ -217,7 +218,7 @@ export function defaultTemplate(logoUri: string, flamingoUri?: string): Node {
                                 maxWidth: '900px',
                             },
                         },
-                        'Une conférence annuelle des technologies du numérique, créée par des passionnés, pour des passionnés.'
+                        EVENT.description
                     ),
                 ]
             ),
