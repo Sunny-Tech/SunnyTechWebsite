@@ -56,5 +56,41 @@
         :global(p + h3) {
             margin-top: 1.5rem;
         }
+
+        :global(hr) {
+            border: none;
+            border-top: 2px solid var(--line);
+            margin: 2.5rem 0;
+        }
+
+        :global(table) {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.95em;
+        }
+
+        :global(th) {
+            background-color: var(--component);
+            color: var(--text);
+            font-weight: 600;
+            text-align: left;
+            padding: 0.6rem 1rem;
+            border-bottom: 2px solid var(--border);
+        }
+
+        :global(td) {
+            padding: 0.55rem 1rem;
+            border-bottom: 1px solid var(--line);
+            color: var(--text);
+        }
+
+        :global(tr:last-child td) {
+            border-bottom: none;
+        }
+
+        :global(tr:hover td) {
+            background-color: var(--component);
+        }
     }
 </style>
