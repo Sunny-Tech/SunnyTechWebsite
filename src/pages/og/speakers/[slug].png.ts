@@ -9,8 +9,9 @@ const EVENT_SUFFIX = 'sunnytech-2026-07'
 
 export function speakerOgSlug(name: string, id: string): string {
     const base = slugify(name)
+    const idFragment = slugify(id).slice(-6) || id.slice(-6) || id
     // Disambiguate when two speakers share a slug by appending a short id fragment.
-    return `${base || id}-${EVENT_SUFFIX}`
+    return base ? `${base}-${idFragment}-${EVENT_SUFFIX}` : `${id}-${EVENT_SUFFIX}`
 }
 
 export async function getStaticPaths() {
