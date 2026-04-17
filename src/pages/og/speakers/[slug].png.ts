@@ -3,16 +3,7 @@ import { OPENPLANNER_URL } from 'astro:env/client'
 import type { OpenPlannerType } from '../../../type'
 import { getFlamingoDataUri, getMonochromeLogoDataUri, renderOg } from '../../../og/render'
 import { speakerTemplate } from '../../../og/templates'
-import { slugify } from '../../../og/slug'
-
-const EVENT_SUFFIX = 'sunnytech-2026-07'
-
-export function speakerOgSlug(name: string, id: string): string {
-    const base = slugify(name)
-    const idFragment = slugify(id).slice(-6) || id.slice(-6) || id
-    // Disambiguate when two speakers share a slug by appending a short id fragment.
-    return base ? `${base}-${idFragment}-${EVENT_SUFFIX}` : `${id}-${EVENT_SUFFIX}`
-}
+import { speakerOgSlug } from '../../../og/speakerSlug'
 
 export async function getStaticPaths() {
     const response = await fetch(OPENPLANNER_URL)

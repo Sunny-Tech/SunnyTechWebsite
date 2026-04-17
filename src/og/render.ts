@@ -46,7 +46,9 @@ export async function getFlamingoDataUri(fillHex = '#ffffff'): Promise<string> {
         return cachedFlamingo.slice(key.length + 1)
     }
     const raw = await readFile(resolve(__dirname, '../../public/favicon.svg'), 'utf-8')
-    // Keep only the flamingo path — strip the outer circle mask so we get a transparent bird silhouette.
+    // Repaint the favicon's pink (#FB4552) with the requested fill. The mask and
+    // circle from the source SVG are preserved — the rendered result is the
+    // flamingo silhouette clipped to its circle, in the chosen color.
     const svg = raw.replace(/#FB4552/gi, fillHex)
     const dataUri = `data:image/svg+xml;base64,${Buffer.from(svg).toString('base64')}`
     cachedFlamingo = `${key}|${dataUri}`
