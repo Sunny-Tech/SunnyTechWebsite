@@ -51,7 +51,17 @@ function computeOgPath(pathname: string): string {
     return '/og/default.png'
 }
 
+function computeOgImageType(imageUrl: string): string {
+    const pathname = imageUrl.split('?')[0].toLowerCase()
+    if (pathname.endsWith('.png')) return 'image/png'
+    if (pathname.endsWith('.jpg') || pathname.endsWith('.jpeg')) return 'image/jpeg'
+    if (pathname.endsWith('.gif')) return 'image/gif'
+    if (pathname.endsWith('.webp')) return 'image/webp'
+    return 'image/png'
+}
+
 const image = metaImage || url + computeOgPath(Astro.url.pathname)
+const ogImageType = computeOgImageType(image)
 const siteName = 'Sunny Tech'
 const siteNameWithTagline = 'Sunny Tech, la conférence Tech organisée à Montpellier'
 const pageTitle = title || siteName
