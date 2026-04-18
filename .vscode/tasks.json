@@ -3,7 +3,7 @@
     "tasks": [
         {
             "label": "dev",
-            "command": "npm",
+            "command": "bun",
             "args": ["run", "dev"],
             "options": {
                 "statusbar": {

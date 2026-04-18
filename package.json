@@ -31,5 +31,9 @@
     },
     "lint-staged": {
         "**/*": "prettier --write --ignore-unknown"
-    }
+    },
+    "trustedDependencies": [
+        "@firebase/util",
+        "protobufjs"
+    ]
 }

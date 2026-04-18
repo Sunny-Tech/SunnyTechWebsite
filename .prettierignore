@@ -2,4 +2,5 @@
 build
 coverage
 dist
+bun.lock
 

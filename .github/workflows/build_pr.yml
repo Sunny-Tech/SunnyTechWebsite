@@ -14,10 +14,9 @@ jobs:
               with:
                   timezoneLinux: 'Europe/Paris'
             - uses: actions/checkout@v6
-            - uses: actions/setup-node@v6
+            - uses: oven-sh/setup-bun@v2
               with:
-                  node-version-file: .nvmrc
-                  cache: 'npm'
+                  bun-version-file: .bun-version
 
             # Hash the OpenPlanner dataset so any speaker / session change
             # busts the OG image cache below.
@@ -36,7 +35,7 @@ jobs:
                   path: .og-cache
                   key: og-${{ hashFiles('src/og/**', 'src/pages/og/**', 'public/favicon.svg', 'public/logos-sunnytech/**') }}-${{ steps.openplanner.outputs.hash }}
 
-            - run: npm ci && npm run build
+            - run: bun install --frozen-lockfile && bun run build
               env:
                   FIREBASE_API_KEY: '${{ secrets.FIREBASE_API_KEY }}'
                   FIREBASE_AUTH_DOMAIN: '${{ vars.FIREBASE_AUTH_DOMAIN }}'
