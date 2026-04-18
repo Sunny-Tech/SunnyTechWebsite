@@ -31,7 +31,7 @@ jobs:
                   echo "hash=$HASH" >> "$GITHUB_OUTPUT"
 
             - name: Cache rendered OG images
-              uses: actions/cache@v4
+              uses: actions/cache@v5
               with:
                   path: .og-cache
                   key: og-${{ hashFiles('src/og/**', 'src/pages/og/**', 'public/favicon.svg', 'public/logos-sunnytech/**') }}-${{ steps.openplanner.outputs.hash }}
