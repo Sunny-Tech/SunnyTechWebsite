@@ -3,11 +3,11 @@
     "type": "module",
     "version": "0.0.1",
     "scripts": {
-        "dev": "astro dev",
-        "start": "astro dev",
-        "build": "astro check && astro build",
-        "preview": "astro preview",
-        "astro": "astro",
+        "dev": "bun --bun ./node_modules/.bin/astro dev",
+        "start": "bun --bun ./node_modules/.bin/astro dev",
+        "build": "bun --bun ./node_modules/.bin/astro check && bun --bun ./node_modules/.bin/astro build",
+        "preview": "bun --bun ./node_modules/.bin/astro preview",
+        "astro": "bun --bun ./node_modules/.bin/astro",
         "prepare": "husky"
     },
     "dependencies": {
