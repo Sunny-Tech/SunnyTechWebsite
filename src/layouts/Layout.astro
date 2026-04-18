@@ -5,6 +5,7 @@ import type { OpenPlannerType } from '../type'
 import FooterBlock from '../components/footer/FooterBlock.astro'
 import Menu from '../components/Menu.astro'
 import SponsorBanner from '../components/SponsorBanner.astro'
+import { computeOgImageType, computeOgPath } from '../og/ogImage'
 
 interface Props {
     title: string
@@ -37,7 +38,10 @@ if (OPENPLANNER_URL) {
 }
 
 const url = import.meta.env.SITE
-const image = metaImage || url + '/social-share5.jpg'
+// Speaker pages pass an explicit metaImage (see src/pages/speakers/[slug].astro);
+// other pages fall back to the path-derived endpoint.
+const image = metaImage || url + computeOgPath(Astro.url.pathname)
+const ogImageType = computeOgImageType(image)
 const siteName = 'Sunny Tech'
 const siteNameWithTagline = 'Sunny Tech, la conférence Tech organisée à Montpellier'
 const pageTitle = title || siteName
@@ -121,7 +125,7 @@ const eventJsonLd = {
         <meta content={pageDescription} property="og:description" />
         <meta content="fr" property="og:locale" />
         <meta content={image} property="og:image" />
-        <meta content="image/jpeg" property="og:image:type" />
+        <meta content={ogImageType} property="og:image:type" />
 
         <!-- Twitter meta data -->
         <meta content="summary_large_image" name="twitter:card" />
@@ -187,8 +191,9 @@ const eventJsonLd = {
         --animation: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         --slide-animation: 0.4s cubic-bezier(0, 0, 0.2, 1);
         --border-radius: 0.25rem;
-        --font-family: -apple-system, blinkmacsystemfont, 'Segoe UI', roboto, helvetica, arial, sans-serif,
-            'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+        --font-family:
+            -apple-system, blinkmacsystemfont, 'Segoe UI', roboto, helvetica, arial, sans-serif, 'Apple Color Emoji',
+            'Segoe UI Emoji', 'Segoe UI Symbol';
         --max-container-width: 1280px;
 
         /* Spacings */
