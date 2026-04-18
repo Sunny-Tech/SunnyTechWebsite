@@ -21,6 +21,12 @@ jobs:
               with:
                   timezoneLinux: 'Europe/Paris'
             - uses: actions/checkout@v6
+            # Astro's CLI invokes node via its shebang, so even though Bun runs
+            # the script itself we still need a Node runtime that meets
+            # Astro's >=22.12 requirement.
+            - uses: actions/setup-node@v6
+              with:
+                  node-version: '22'
             - uses: oven-sh/setup-bun@v2
               with:
                   bun-version-file: .bun-version
