@@ -1,6 +1,9 @@
 # build output
 dist/
 
+# between-build cache for generated OG images (restored by CI via actions/cache)
+.og-cache/
+
 # generated types
 .astro/
 

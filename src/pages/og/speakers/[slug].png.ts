@@ -1,7 +1,14 @@
 import type { APIRoute } from 'astro'
 import { OPENPLANNER_URL } from 'astro:env/client'
 import type { OpenPlannerType } from '../../../type'
-import { getFlamingoDataUri, getMonochromeLogoDataUri, renderOg } from '../../../og/render'
+import {
+    getFlamingoDataUri,
+    getMonochromeLogoDataUri,
+    pngResponse,
+    readOgCache,
+    renderOg,
+    writeOgCache,
+} from '../../../og/render'
 import { speakerTemplate } from '../../../og/templates'
 import { speakerOgSlug } from '../../../og/speakerSlug'
 
@@ -26,7 +33,11 @@ export async function getStaticPaths() {
     })
 }
 
-export const GET: APIRoute = async ({ props }) => {
+export const GET: APIRoute = async ({ params, props }) => {
+    const cacheKey = `speakers/${params.slug}.png`
+    const cached = await readOgCache(cacheKey)
+    if (cached) return pngResponse(cached)
+
     const [logo, flamingo] = await Promise.all([getMonochromeLogoDataUri(), getFlamingoDataUri()])
     const png = await renderOg(
         speakerTemplate(
@@ -40,7 +51,6 @@ export const GET: APIRoute = async ({ props }) => {
             flamingo
         )
     )
-    return new Response(new Uint8Array(png), {
-        headers: { 'Content-Type': 'image/png' },
-    })
+    await writeOgCache(cacheKey, png)
+    return pngResponse(png)
 }

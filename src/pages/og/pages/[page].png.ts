@@ -1,5 +1,12 @@
 import type { APIRoute } from 'astro'
-import { getFlamingoDataUri, getMonochromeLogoDataUri, renderOg } from '../../../og/render'
+import {
+    getFlamingoDataUri,
+    getMonochromeLogoDataUri,
+    pngResponse,
+    readOgCache,
+    renderOg,
+    writeOgCache,
+} from '../../../og/render'
 import { pageTemplate } from '../../../og/templates'
 import { EVENT } from '../../../og/event'
 
@@ -61,7 +68,11 @@ export function getStaticPaths() {
     }))
 }
 
-export const GET: APIRoute = async ({ props }) => {
+export const GET: APIRoute = async ({ params, props }) => {
+    const cacheKey = `pages/${params.page}.png`
+    const cached = await readOgCache(cacheKey)
+    if (cached) return pngResponse(cached)
+
     const [logo, flamingo] = await Promise.all([getMonochromeLogoDataUri(), getFlamingoDataUri()])
     const png = await renderOg(
         pageTemplate(
@@ -74,7 +85,6 @@ export const GET: APIRoute = async ({ props }) => {
             flamingo
         )
     )
-    return new Response(new Uint8Array(png), {
-        headers: { 'Content-Type': 'image/png' },
-    })
+    await writeOgCache(cacheKey, png)
+    return pngResponse(png)
 }

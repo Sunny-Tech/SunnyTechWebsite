@@ -1,11 +1,22 @@
 import type { APIRoute } from 'astro'
-import { getFlamingoDataUri, getMonochromeLogoDataUri, renderOg } from '../../og/render'
+import {
+    getFlamingoDataUri,
+    getMonochromeLogoDataUri,
+    pngResponse,
+    readOgCache,
+    renderOg,
+    writeOgCache,
+} from '../../og/render'
 import { defaultTemplate } from '../../og/templates'
 
+const CACHE_KEY = 'default.png'
+
 export const GET: APIRoute = async () => {
+    const cached = await readOgCache(CACHE_KEY)
+    if (cached) return pngResponse(cached)
+
     const [logo, flamingo] = await Promise.all([getMonochromeLogoDataUri(), getFlamingoDataUri()])
     const png = await renderOg(defaultTemplate(logo, flamingo))
-    return new Response(new Uint8Array(png), {
-        headers: { 'Content-Type': 'image/png' },
-    })
+    await writeOgCache(CACHE_KEY, png)
+    return pngResponse(png)
 }
