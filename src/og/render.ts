@@ -1,5 +1,4 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
-import { existsSync } from 'node:fs'
 import { dirname, resolve } from 'node:path'
 import satori from 'satori'
 import { Resvg } from '@resvg/resvg-js'
@@ -14,25 +13,40 @@ const fromRoot = (p: string) => resolve(PROJECT_ROOT, p)
  * Persistent between-build cache for generated OG PNGs. Kept outside dist/
  * because Astro wipes dist/ at the start of every build. CI restores this
  * directory with actions/cache so unchanged images don't re-render.
+ *
+ * Reads are gated so local edits to templates / logos / fonts aren't served
+ * from a stale cache directory. CI opts in via CI=true (set automatically by
+ * GitHub Actions); devs can opt in with OG_CACHE=1. Writes always run so the
+ * first CI build on a fresh cache populates it.
  */
 const OG_CACHE_DIR = fromRoot('.og-cache')
+const CACHE_READS_ENABLED = process.env.CI === 'true' || process.env.OG_CACHE === '1'
 
 /** Read a previously generated OG PNG from disk. Returns null on miss. */
 export async function readOgCache(relPath: string): Promise<Buffer | null> {
+    if (!CACHE_READS_ENABLED) return null
     const full = resolve(OG_CACHE_DIR, relPath)
-    if (!existsSync(full)) return null
     try {
         return await readFile(full)
-    } catch {
-        return null
+    } catch (error) {
+        if ((error as NodeJS.ErrnoException)?.code === 'ENOENT') return null
+        throw error
     }
 }
 
-/** Write a generated OG PNG to the between-build cache. */
+/**
+ * Write a generated OG PNG to the between-build cache. Best-effort only: the
+ * cache is an optimization, so a failure here (read-only FS, permissions,
+ * transient IO) must not fail the whole build.
+ */
 export async function writeOgCache(relPath: string, buffer: Buffer): Promise<void> {
     const full = resolve(OG_CACHE_DIR, relPath)
-    await mkdir(dirname(full), { recursive: true })
-    await writeFile(full, buffer)
+    try {
+        await mkdir(dirname(full), { recursive: true })
+        await writeFile(full, buffer)
+    } catch (error) {
+        console.warn(`[og-cache] failed to write ${relPath}:`, error)
+    }
 }
 
 /** Build a `Content-Type: image/png` Response from a PNG buffer. */
