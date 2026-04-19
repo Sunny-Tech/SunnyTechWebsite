@@ -1,8 +1,12 @@
 ---
 const FAQ_LINK = 'https://www.sunny-tech.io/faq'
 
-const navigation = [
-    { label: 'Programme', route: '/schedule' },
+type NavItem = { label: string; route: string; activeMatch?: string }
+
+const navigation: NavItem[] = [
+    // Link directly to day-1 to skip the /schedule → /schedule/day-1 redirect,
+    // but highlight the entry for any /schedule/* page.
+    { label: 'Programme', route: '/schedule/day-1', activeMatch: '/schedule' },
     { label: 'Speakers', route: '/speakers' },
     { label: 'Équipe', route: '/team' },
     // { label: 'Jobs', route: '/jobs' },
@@ -14,12 +18,13 @@ const navigation = [
 
 const routeName = Astro.url.pathname
 
-const isActiveRoute = (route: string) => {
-    if (route === '/') {
-        return route === routeName
+const isActiveRoute = (nav: NavItem) => {
+    const match = nav.activeMatch ?? nav.route
+    if (match === '/') {
+        return match === routeName
     }
 
-    return routeName.startsWith(route)
+    return routeName.startsWith(match)
 }
 ---
 
@@ -33,7 +38,7 @@ const isActiveRoute = (route: string) => {
         <nav class="nav-items">
             {
                 navigation.map((nav) => (
-                    <a href={nav.route} class:list={['nav-item', { active: isActiveRoute(nav.route) }]}>
+                    <a href={nav.route} class:list={['nav-item', { active: isActiveRoute(nav) }]}>
                         {nav.label}
                     </a>
                 ))
@@ -51,7 +56,7 @@ const isActiveRoute = (route: string) => {
                 (
                     <nav class="nav-items">
                         {navigation.map((nav) => (
-                            <a href={nav.route} class:list={['nav-item', { active: isActiveRoute(nav.route) }]}>
+                            <a href={nav.route} class:list={['nav-item', { active: isActiveRoute(nav) }]}>
                                 {nav.label}
                             </a>
                         ))}
