@@ -15,6 +15,10 @@ export function computeOgPath(pathname: string): string {
     if (clean === '/speakers') return '/og/pages/speakers.png'
     if (clean === '/' || clean === '') return '/og/default.png'
     if (clean.startsWith('/schedule')) return '/og/pages/schedule.png'
+    if (clean === '/blog') return '/og/pages/blog.png'
+    // Individual /blog/<slug> articles pass an explicit metaImage (see
+    // src/pages/blog/[...slug].astro); a stray unknown /blog/* route falls
+    // back to default.
     if (clean.startsWith('/blog')) return '/og/default.png'
     const staticPages = ['team', 'jobs', 'location', 'anecdotes', 'jeu', 'coc', '404']
     const seg = clean.replace(/^\//, '').split('/')[0]
