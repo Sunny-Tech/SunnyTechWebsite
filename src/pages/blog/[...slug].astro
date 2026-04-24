@@ -14,9 +14,13 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props
 const { Content } = await render(entry)
+const ogImage = `${import.meta.env.SITE}/og/blog/${entry.id}.png`
 ---
 
-<LayoutWithTitle title={entry.data.title} description={entry.data.date.toLocaleString('fr-FR', { dateStyle: 'long' })}>
+<LayoutWithTitle
+    title={entry.data.title}
+    description={entry.data.date.toLocaleString('fr-FR', { dateStyle: 'long' })}
+    metaImage={ogImage}>
     <MarkdownWrapper>
         <Content />
     </MarkdownWrapper>

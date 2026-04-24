@@ -55,6 +55,11 @@ const PAGES: Record<string, PageSpec> = {
         title: 'Code de conduite',
         description: 'Une conférence respectueuse, inclusive et bienveillante pour tou·te·s.',
     },
+    blog: {
+        eyebrow: 'Blog',
+        title: 'Blog',
+        description: "Coulisses, chiffres et décisions de l'équipe Sunny Tech.",
+    },
     '404': {
         eyebrow: 'Erreur 404',
         title: 'Page introuvable',
