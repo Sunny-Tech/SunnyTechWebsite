@@ -1,3 +1,4 @@
+import { createHash } from 'node:crypto'
 import type { APIRoute } from 'astro'
 import { getCollection } from 'astro:content'
 import {
@@ -22,7 +23,11 @@ export async function getStaticPaths() {
 }
 
 export const GET: APIRoute = async ({ params, props }) => {
-    const cacheKey = `blog/${params.slug}.png`
+    const contentHash = createHash('sha256')
+        .update(props.title + props.date)
+        .digest('hex')
+        .slice(0, 8)
+    const cacheKey = `blog/${params.slug}-${contentHash}.png`
     const cached = await readOgCache(cacheKey)
     if (cached) return pngResponse(cached)
 
