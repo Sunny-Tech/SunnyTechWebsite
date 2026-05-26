@@ -1,4 +1,7 @@
 ---
+import { Picture } from 'astro:assets'
+import plan from '../assets/plan-overview-2026.png'
+import plan2026 from '../assets/plan-2026.png'
 import LayoutWithTitle from '../layouts/LayoutWithTitle.astro'
 import Stack from '../components/ui-elements/Stack.astro'
 import MarkdownWrapper from '../components/ui-elements/MarkdownWrapper.astro'
@@ -7,13 +10,12 @@ import { Content } from '../markdown/location.md'
 
 <LayoutWithTitle title="Lieu" description=" Retrouver les informations sur le lieu de SunnyTech et son plan.">
     <Stack align="center" space="40px">
-        <!-- TODO: add plan 2026
         <div style="max-width: 1000px">
-            <Picture src={plan2024} formats={['avif', 'webp']} alt="Plan détaillé du lieu SunnyTech" loading="lazy" />
+            <Picture src={plan2026} formats={['avif', 'webp']} alt="Plan détaillé du lieu SunnyTech" loading="lazy" />
         </div>
         <div style="max-width: 500px">
             <Picture src={plan} formats={['avif', 'webp']} alt="Plan d’ensemble du lieu SunnyTech" loading="lazy" />
-        </div> -->
+        </div>
 
         <MarkdownWrapper>
             <Content />
