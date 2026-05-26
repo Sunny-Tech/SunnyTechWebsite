@@ -1,13 +1,17 @@
 // @ts-check
 import { defineConfig, envField } from 'astro/config'
 
+import sitemap from '@astrojs/sitemap'
+
 // https://astro.build/config
 export default defineConfig({
     site: 'https://sunny-tech.io',
     base: '/',
+
     redirects: {
         '/schedule': '/schedule/day-1',
     },
+
     env: {
         schema: {
             OPENPLANNER_URL: envField.string({ context: 'client', access: 'public', optional: false }),
@@ -21,4 +25,10 @@ export default defineConfig({
             FIREBASE_MEASUREMENT_ID: envField.string({ context: 'client', access: 'public', optional: true }),
         },
     },
+
+    integrations: [
+        sitemap({
+            filter: (page) => !page.includes('/og-preview'),
+        }),
+    ],
 })
