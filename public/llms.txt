@@ -1,0 +1,37 @@
+# Sunny Tech
+
+> Sunny Tech est la 1ère conférence Tech organisée à Montpellier. Conférence annuelle des technologies du numérique, créée par des passionnés, pour des passionnés, avec l'ambition de rayonner nationalement et internationalement à travers l'intervention de conférencier·e·s français de renom.
+
+L'édition 2026 se tient à la Faculté des Sciences de Montpellier (Place E. Bataillon, 34095 Montpellier), desservie par le tram 1 (arrêt "Université Montpellier Triolet"). Portes ouvertes de 8h30 à 19h sur deux jours.
+
+## Programme
+
+- [Programme jour 1](https://sunny-tech.io/schedule/day-1): planning détaillé du premier jour de conférence
+- [Programme jour 2](https://sunny-tech.io/schedule/day-2): planning détaillé du second jour de conférence
+- [Sessions](https://sunny-tech.io/sessions): liste de toutes les sessions et conférences
+- [Speakers](https://sunny-tech.io/speakers): liste des intervenant·e·s
+
+## Informations pratiques
+
+- [Lieu](https://sunny-tech.io/location): adresse, plan d'accès, transports, parking vélo
+- [Code de conduite](https://sunny-tech.io/coc): règles de comportement et politique anti-harcèlement
+- [Équipe](https://sunny-tech.io/team): organisateurs et bénévoles
+- [Jobs](https://sunny-tech.io/jobs): offres d'emploi des sponsors
+- [Anecdotes](https://sunny-tech.io/anecdotes): souvenirs et moments marquants des éditions précédentes
+- [Jeu](https://sunny-tech.io/jeu): jeu de l'événement
+
+## Blog
+
+- [CFP 2026](https://sunny-tech.io/blog/2026-cfp): processus et lignes directrices pour l'appel à conférenciers 2026
+- [Soutien 2025](https://sunny-tech.io/blog/2025-soutien): retour sur le soutien à l'édition 2025
+- [Changements billetterie 2024](https://sunny-tech.io/blog/2024-ticketting-changes): évolution du système de billetterie
+- [Flammy Academy 2024](https://sunny-tech.io/blog/2024-flammy-academy): programme de mentorat pour nouveaux speakers
+- [Bénévolat 2023](https://sunny-tech.io/blog/2023-volunteering): retour sur le bénévolat de l'édition 2023
+- [Statistiques CFP 2023](https://sunny-tech.io/blog/2023-cfp-stats): analyse des candidatures au CFP 2023
+- [Statistiques CFP 2022](https://sunny-tech.io/blog/2022-cfp-stats): analyse des candidatures au CFP 2022
+
+## Réseaux sociaux
+
+- Twitter: [@sunnytech_mtp](https://twitter.com/sunnytech_mtp)
+- LinkedIn: [Sunny Tech](https://www.linkedin.com/company/sunny-tech-event)
+- Bluesky: [@sunnytech.bsky.social](https://bsky.app/profile/sunnytech.bsky.social)
