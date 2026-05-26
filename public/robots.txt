@@ -1,7 +1,10 @@
 User-agent: *
 Allow: /
 
-# Major LLM crawlers — explicitly allowed
+# Explicit opt-in for major LLM / AI crawlers.
+# Google-Extended and Applebot-Extended require an explicit user-agent
+# block to confirm opt-in for AI training; the others are listed for
+# clarity and future-proofing (if the default policy ever changes).
 User-agent: GPTBot
 Allow: /
 
@@ -46,6 +49,5 @@ Allow: /
 
 Sitemap: https://sunny-tech.io/sitemap-index.xml
 
-# Content index for LLMs
-# https://llmstxt.org/
-Sitemap: https://sunny-tech.io/llms.txt
+# Content index for LLMs (https://llmstxt.org/):
+# https://sunny-tech.io/llms.txt
