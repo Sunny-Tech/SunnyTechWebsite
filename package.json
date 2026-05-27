@@ -12,7 +12,7 @@
     },
     "dependencies": {
         "@astrojs/check": "^0.9.8",
-        "@astrojs/sitemap": "^3.7.3",
+        "@casoon/astro-site-files": "^0.3.0",
         "@resvg/resvg-js": "^2.6.2",
         "astro": "^6.1.4",
         "astro-md-2": "^2.0.0",

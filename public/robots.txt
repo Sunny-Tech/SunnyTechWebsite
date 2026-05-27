@@ -1,7 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://sunny-tech.io/sitemap-index.xml
-
-# Content index for LLMs (https://llmstxt.org/):
-# https://sunny-tech.io/llms.txt
