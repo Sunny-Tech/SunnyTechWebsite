@@ -1,52 +1,6 @@
 User-agent: *
 Allow: /
 
-# Explicit opt-in for major LLM / AI crawlers.
-# Google-Extended and Applebot-Extended require an explicit user-agent
-# block to confirm opt-in for AI training; the others are listed for
-# clarity and future-proofing (if the default policy ever changes).
-User-agent: GPTBot
-Allow: /
-
-User-agent: ChatGPT-User
-Allow: /
-
-User-agent: OAI-SearchBot
-Allow: /
-
-User-agent: ClaudeBot
-Allow: /
-
-User-agent: Claude-Web
-Allow: /
-
-User-agent: anthropic-ai
-Allow: /
-
-User-agent: PerplexityBot
-Allow: /
-
-User-agent: Perplexity-User
-Allow: /
-
-User-agent: Google-Extended
-Allow: /
-
-User-agent: Applebot-Extended
-Allow: /
-
-User-agent: CCBot
-Allow: /
-
-User-agent: Bytespider
-Allow: /
-
-User-agent: meta-externalagent
-Allow: /
-
-User-agent: Amazonbot
-Allow: /
-
 Sitemap: https://sunny-tech.io/sitemap-index.xml
 
 # Content index for LLMs (https://llmstxt.org/):
