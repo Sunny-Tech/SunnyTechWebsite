@@ -1,13 +1,19 @@
 // @ts-check
 import { defineConfig, envField } from 'astro/config'
+import siteFiles from '@casoon/astro-site-files'
+import { buildSiteFilesOptions } from './site-files.config.mjs'
+
+const siteFilesOptions = await buildSiteFilesOptions()
 
 // https://astro.build/config
 export default defineConfig({
     site: 'https://sunny-tech.io',
     base: '/',
+
     redirects: {
         '/schedule': '/schedule/day-1',
     },
+
     env: {
         schema: {
             OPENPLANNER_URL: envField.string({ context: 'client', access: 'public', optional: false }),
@@ -21,4 +27,6 @@ export default defineConfig({
             FIREBASE_MEASUREMENT_ID: envField.string({ context: 'client', access: 'public', optional: true }),
         },
     },
+
+    integrations: [siteFiles(siteFilesOptions)],
 })
