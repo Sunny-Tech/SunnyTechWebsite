@@ -61,8 +61,8 @@ export default defineConfig({
 
     integrations: [
         siteFiles({
-            // robots.txt — defaults (User-agent: * Allow all) + auto Sitemap reference
-            robots: {},
+            // robots.txt — plugin default (User-agent: * Allow all + auto Sitemap) is
+            // exactly what we want, no overrides needed.
             // llms.txt — content index per llmstxt.org
             llms: {
                 title: 'Sunny Tech',
