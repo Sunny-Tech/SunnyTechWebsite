@@ -65,6 +65,9 @@
                 input.focus()
                 apply()
             })
+
+            // Sync UI with any value the browser restored (back/forward cache, autofill)
+            apply()
         }
 
         private filterCells(cells: Cell[], query: string) {
