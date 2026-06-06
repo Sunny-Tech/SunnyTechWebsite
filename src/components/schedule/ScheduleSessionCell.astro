@@ -1,0 +1,42 @@
+---
+import SessionItem from './SessionItem.astro'
+import { buildSessionSearchString, type AugmentedSession } from '../../utils/scheduleSearch'
+
+interface Props {
+    session: AugmentedSession
+    rowStart: number
+    trackIndex: number
+}
+
+const { session, rowStart, trackIndex } = Astro.props
+
+const width = session.extendWidth || 1
+const height = session.extendHeight || 1
+---
+
+<div
+    class="day-schedule-cell"
+    data-search={buildSessionSearchString(session)}
+    data-row-start={rowStart}
+    data-row-span={height}
+    style={{
+        gridColumn: `${trackIndex + 2} / span ${width}`,
+        gridRow: `${rowStart} / span ${height}`,
+    }}>
+    <SessionItem
+        id={session.id}
+        title={session.title}
+        dateStart={session.dateStart || undefined}
+        durationMinutes={session.durationMinutes}
+        track={session.track}
+        category={session.category}
+        speakers={session.speakers}
+        language={session.language || 'fr'}
+    />
+</div>
+
+<style>
+    .day-schedule-cell[hidden] {
+        display: none;
+    }
+</style>

@@ -1,0 +1,63 @@
+---
+import SessionItem from './SessionItem.astro'
+import { buildSessionSearchString, type CrossDaySession } from '../../utils/scheduleSearch'
+
+interface Props {
+    session: CrossDaySession
+}
+
+const { session } = Astro.props
+---
+
+<div
+    class="schedule-cross-day-card"
+    data-search={buildSessionSearchString(session)}
+    data-day-url={session.dayUrl}
+    data-day-label={session.dayLabel}
+    hidden>
+    <a class="schedule-cross-day-badge" href={session.dayUrl}>{session.dayLabel}</a>
+    <SessionItem
+        id={session.id}
+        title={session.title}
+        dateStart={session.dateStart || undefined}
+        durationMinutes={session.durationMinutes}
+        track={session.track}
+        category={session.category}
+        speakers={session.speakers}
+        language={session.language || 'fr'}
+        alwaysShowExtraInfo={true}
+        hideBookmark={true}
+    />
+</div>
+
+<style>
+    .schedule-cross-day-card {
+        position: relative;
+        display: block;
+    }
+
+    .schedule-cross-day-card[hidden] {
+        display: none;
+    }
+
+    .schedule-cross-day-badge {
+        position: absolute;
+        top: var(--s-3);
+        right: var(--s-3);
+        z-index: 1;
+        padding: var(--s-3) var(--s-2);
+        border-radius: 999px;
+        background-color: var(--brand-solid);
+        color: var(--brand-on-solid, #fff);
+        font-size: 0.8em;
+        font-weight: 600;
+        text-decoration: none;
+        text-transform: capitalize;
+        transition: background-color var(--animation);
+
+        &:hover {
+            background-color: var(--brand-solid-hover, var(--brand-solid));
+            text-decoration: none;
+        }
+    }
+</style>

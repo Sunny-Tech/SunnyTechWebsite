@@ -1,52 +1,63 @@
 ---
 import { OPENPLANNER_URL } from 'astro:env/client'
-import type { Category, OpenPlannerType, Session, Speaker, Track } from '../../type'
+import type { OpenPlannerType } from '../../type'
+import type { AugmentedSession, CrossDaySession } from '../../utils/scheduleSearch'
 import Cluster from '../../components/ui-elements/Cluster.astro'
 import ButtonLink from '../../components/ui-elements/ButtonLink.astro'
 import LayoutWithTitle from '../../layouts/LayoutWithTitle.astro'
 import DaySchedule from '../../components/schedule/DaySchedule.astro'
 import UserSchedule from '../../components/schedule/UserSchedule.astro'
+import ScheduleSearchBar from '../../components/schedule/ScheduleSearchBar.astro'
 
 export async function getStaticPaths() {
+    const groupSessionsByDay = (sessions: AugmentedSession[]): Map<number, AugmentedSession[]> => {
+        const byDay = new Map<number, AugmentedSession[]>()
+        for (const session of sessions) {
+            if (!session.dateStart || !session.trackId) continue
+            const day = new Date(session.dateStart)
+            day.setHours(0, 0, 0, 0)
+            const key = day.getTime()
+            const bucket = byDay.get(key) || []
+            bucket.push(session)
+            byDay.set(key, bucket)
+        }
+        for (const bucket of byDay.values()) {
+            bucket.sort((a, b) => new Date(a.dateStart!).getTime() - new Date(b.dateStart!).getTime())
+        }
+        return byDay
+    }
+
     const response = await fetch(OPENPLANNER_URL)
     const openPlannerData: OpenPlannerType = await response.json()
 
     const { event, speakers, sessions } = openPlannerData
     const { tracks, categories } = event
 
-    const augmentedSessions = sessions.map((session) => {
-        const sessionSpeakers = speakers.filter((speaker) => session.speakerIds.includes(speaker.id))
-        const sessionCategory = categories.find((cat) => cat.id === session.categoryId)
-        const sessionTrack = tracks.find((track) => track.id === session.trackId)
+    const augmentedSessions: AugmentedSession[] = sessions.map((session) => ({
+        ...session,
+        speakers: speakers.filter((speaker) => session.speakerIds.includes(speaker.id)),
+        category: categories.find((cat) => cat.id === session.categoryId),
+        track: tracks.find((track) => track.id === session.trackId),
+    }))
 
-        return {
-            ...session,
-            speakers: sessionSpeakers,
-            category: sessionCategory,
-            track: sessionTrack,
-        }
-    })
-
-    const sessionsByDay = augmentedSessions.reduce((acc, session) => {
-        if (session.dateStart && session.trackId) {
-            const date = new Date(session.dateStart)
-            date.setHours(0, 0, 0, 0)
-            const timestamps = date.getTime()
-            if (!acc.has(timestamps)) {
-                acc.set(timestamps, [])
-            }
-            acc.get(timestamps)?.push(session)
-            acc.get(timestamps)?.sort((a, b) => {
-                if (!a.dateStart || !b.dateStart) {
-                    return 0
-                }
-                return new Date(a.dateStart).getTime() - new Date(b.dateStart).getTime()
-            })
-        }
-        return acc
-    }, new Map<number, (Session & { track: Track | undefined; speakers: Speaker[]; category: Category | undefined })[]>())
-
+    const sessionsByDay = groupSessionsByDay(augmentedSessions)
     const sortedDays = Array.from(sessionsByDay.keys()).sort()
+
+    const dayUrl = (index: number) => `/schedule/day-${index + 1}`
+    const dayLabel = (timestamp: number) =>
+        new Date(timestamp).toLocaleDateString('fr', { weekday: 'long', day: 'numeric' })
+
+    const buildCrossDay = (currentDay: number): CrossDaySession[] =>
+        sortedDays
+            .map((d, i) => ({ d, i }))
+            .filter((entry) => entry.d !== currentDay)
+            .flatMap(({ d, i }) =>
+                (sessionsByDay.get(d) || []).map((s) => ({
+                    ...s,
+                    dayUrl: dayUrl(i),
+                    dayLabel: dayLabel(d),
+                }))
+            )
 
     return [
         ...sortedDays.map((day, index) => ({
@@ -56,21 +67,23 @@ export async function getStaticPaths() {
                 sessions: sessionsByDay.get(day) || [],
                 days: sortedDays,
                 tracks,
+                crossDaySessions: buildCrossDay(day),
             },
         })),
         {
             params: { num: 'favorite' },
             props: {
-                day: 'favorite',
+                day: 'favorite' as const,
                 sessions: augmentedSessions,
                 days: sortedDays,
                 tracks,
+                crossDaySessions: [] as CrossDaySession[],
             },
         },
     ]
 }
 
-const { day, sessions, days, tracks } = Astro.props
+const { day, sessions, days, tracks, crossDaySessions } = Astro.props
 
 const pageTitle =
     day === 'favorite' ? 'Mon programme' : `Programme ${new Date(day).toLocaleDateString('fr', { dateStyle: 'long' })}`
@@ -94,10 +107,11 @@ const pageTitle =
             external
             variant={'transparent'}>PDF</ButtonLink
         >
+        {day !== 'favorite' && <ScheduleSearchBar />}
     </Cluster>
 
     {day === 'favorite' && <UserSchedule tracks={tracks} sessions={sessions} />}
-    {day !== 'favorite' && <DaySchedule tracks={tracks} sessions={sessions} />}
+    {day !== 'favorite' && <DaySchedule tracks={tracks} sessions={sessions} crossDaySessions={crossDaySessions} />}
 </LayoutWithTitle>
 
 <script>
@@ -129,3 +143,11 @@ const pageTitle =
 
     customElements.define('user-avatar', UserAvatar)
 </script>
+
+<style is:global>
+    .container:has(> .stack > .day-schedule),
+    .container:has(> .stack > div > .day-schedule),
+    .container:has(> .stack > .schedule-search-empty) {
+        padding-top: 0;
+    }
+</style>
