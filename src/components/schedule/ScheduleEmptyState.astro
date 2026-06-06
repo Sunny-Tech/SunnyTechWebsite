@@ -1,0 +1,57 @@
+---
+import ScheduleCrossDayCard from './ScheduleCrossDayCard.astro'
+import type { CrossDaySession } from '../../utils/scheduleSearch'
+
+interface Props {
+    crossDaySessions?: CrossDaySession[]
+}
+
+const { crossDaySessions = [] } = Astro.props
+---
+
+<div class="schedule-search-empty" hidden>
+    <p>Aucun talk ne correspond à votre recherche sur cette journée.</p>
+    {
+        crossDaySessions.length > 0 && (
+            <div class="schedule-cross-day-hint" hidden>
+                <p class="schedule-cross-day-title">Résultats sur les autres journées :</p>
+                <div class="schedule-cross-day-list">
+                    {crossDaySessions.map((session) => (
+                        <ScheduleCrossDayCard session={session} />
+                    ))}
+                </div>
+            </div>
+        )
+    }
+</div>
+
+<style>
+    .schedule-search-empty {
+        margin-bottom: var(--s1);
+        font-weight: 500;
+    }
+
+    .schedule-cross-day-hint {
+        margin-top: var(--s0);
+        font-weight: 400;
+    }
+
+    .schedule-cross-day-title {
+        margin-bottom: var(--s-1);
+        font-weight: 500;
+    }
+
+    .schedule-cross-day-list {
+        display: grid;
+        gap: var(--s0);
+        grid-template-columns: 1fr;
+
+        @media (min-width: 600px) {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        @media (min-width: 1100px) {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+</style>

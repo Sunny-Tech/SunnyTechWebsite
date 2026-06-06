@@ -1,29 +1,40 @@
 ---
-import type { Track, Session, Speaker, Category } from '../../type'
-import SessionItem from './SessionItem.astro'
+import type { Track } from '../../type'
+import type { AugmentedSession, CrossDaySession } from '../../utils/scheduleSearch'
+import ScheduleSessionCell from './ScheduleSessionCell.astro'
+import ScheduleEmptyState from './ScheduleEmptyState.astro'
 
 interface Props {
     tracks: Track[]
-    sessions: (Session & { track: Track | undefined; speakers: Speaker[]; category: Category | undefined })[]
+    sessions: AugmentedSession[]
+    crossDaySessions?: CrossDaySession[]
 }
 
-const { tracks, sessions } = Astro.props
+const { tracks, sessions, crossDaySessions = [] } = Astro.props
 
-const GRID_CONFIG = {
-    TIME_COLUMN_WIDTH: '60px',
-    TRACK_MIN_WIDTH: '120px',
-}
+const TIME_COLUMN_WIDTH = '60px'
+const TRACK_MIN_WIDTH = '120px'
+
+const formatHM = (date: Date) => date.toLocaleTimeString('fr', { hour: '2-digit', minute: '2-digit' })
 
 const uniqueTimeSlots = Array.from(
-    new Set(
-        sessions.map((session) =>
-            new Date(session.dateStart!).toLocaleTimeString('fr', { hour: '2-digit', minute: '2-digit' })
-        )
-    )
+    new Set(sessions.filter((s) => s.dateStart).map((s) => formatHM(new Date(s.dateStart!))))
 ).sort()
 
-const gridTemplateColumns = `${GRID_CONFIG.TIME_COLUMN_WIDTH} repeat(${tracks.length}, minmax(${GRID_CONFIG.TRACK_MIN_WIDTH}, 1fr))`
+const gridTemplateColumns = `${TIME_COLUMN_WIDTH} repeat(${tracks.length}, minmax(${TRACK_MIN_WIDTH}, 1fr))`
+
+const cellsToRender = sessions
+    .map((session) => {
+        if (!session.dateStart || !session.trackId) return null
+        const rowStart = uniqueTimeSlots.findIndex((t) => t === formatHM(new Date(session.dateStart!))) + 2
+        const trackIndex = tracks.findIndex((t) => t.id === session.trackId)
+        if (rowStart < 2 || trackIndex === -1) return null
+        return { session, rowStart, trackIndex }
+    })
+    .filter((cell): cell is { session: AugmentedSession; rowStart: number; trackIndex: number } => cell !== null)
 ---
+
+<ScheduleEmptyState crossDaySessions={crossDaySessions} />
 
 <div>
     <div class="day-schedule" style={{ gridTemplateColumns }}>
@@ -36,7 +47,7 @@ const gridTemplateColumns = `${GRID_CONFIG.TIME_COLUMN_WIDTH} repeat(${tracks.le
 
         {
             uniqueTimeSlots.map((time, index) => (
-                <div class="day-schedule-time" style={{ gridRow: index + 2 }}>
+                <div class="day-schedule-time" data-time-row={index + 2} style={{ gridRow: index + 2 }}>
                     <span>{time.split(':')[0]}</span>
                     <span class="day-schedule-time-minute">{time.split(':')[1]}</span>
                 </div>
@@ -44,44 +55,18 @@ const gridTemplateColumns = `${GRID_CONFIG.TIME_COLUMN_WIDTH} repeat(${tracks.le
         }
 
         {
-            sessions.map((session) => {
-                if (!session.dateStart || !session.trackId) return null
-
-                const sessionStart = new Date(session.dateStart)
-                const rowStart =
-                    uniqueTimeSlots.findIndex(
-                        (time) => time === sessionStart.toLocaleTimeString('fr', { hour: '2-digit', minute: '2-digit' })
-                    ) + 2
-                const trackIndex = tracks.findIndex((track) => track.id === session.trackId)
-                const width = session.extendWidth || 1
-                const height = session.extendHeight || 1
-
-                if (rowStart < 2 || trackIndex === -1) return null
-
-                return (
-                    <div
-                        style={{
-                            gridColumn: `${trackIndex + 2} / span ${width}`,
-                            gridRow: `${rowStart} / span ${height}`,
-                        }}>
-                        <SessionItem
-                            id={session.id}
-                            title={session.title}
-                            dateStart={session.dateStart}
-                            durationMinutes={session.durationMinutes}
-                            track={session.track}
-                            category={session.category}
-                            speakers={session.speakers}
-                            language={session.language || 'fr'}
-                        />
-                    </div>
-                )
-            })
+            cellsToRender.map(({ session, rowStart, trackIndex }) => (
+                <ScheduleSessionCell session={session} rowStart={rowStart} trackIndex={trackIndex} />
+            ))
         }
     </div>
 </div>
 
 <style>
+    .day-schedule-time[hidden] {
+        display: none;
+    }
+
     .day-schedule {
         position: relative;
 
