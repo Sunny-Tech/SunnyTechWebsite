@@ -19,8 +19,8 @@ const slug = title
     .normalize('NFD')
     .replace(/[̀-ͯ]/g, '')
     .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '')
     .slice(0, 60)
+    .replace(/^-+|-+$/g, '')
 
 const shareText = `${title} — Sunny Tech`
 const encodedUrl = encodeURIComponent(url)
@@ -185,7 +185,9 @@ const socials = [
                 document.body.appendChild(anchor)
                 anchor.click()
                 anchor.remove()
-                URL.revokeObjectURL(objectUrl)
+                // Delay revocation so the download has time to start (Safari
+                // cancels in-flight downloads if the object URL is freed too soon).
+                setTimeout(() => URL.revokeObjectURL(objectUrl), 10_000)
             } catch {
                 // Fallback: let the browser open the asset directly.
                 window.open(url, '_blank', 'noopener')
