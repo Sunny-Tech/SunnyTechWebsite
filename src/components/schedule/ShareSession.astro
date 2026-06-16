@@ -1,0 +1,316 @@
+---
+// Share button + modal for a session: download the teaser image/video or
+// post the talk on a social network. Downloads use fetch→blob so cross-origin
+// teaser assets save instead of opening in a new tab.
+import Twitter from '../icons/Twitter.astro'
+import LinkedIn from '../icons/LinkedIn.astro'
+
+interface Props {
+    title: string
+    url: string
+    teaserImageUrl?: string | null
+    teaserVideoUrl?: string | null
+}
+
+const { title, url, teaserImageUrl, teaserVideoUrl } = Astro.props
+
+const slug = title
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .slice(0, 60)
+
+const shareText = `${title} — Sunny Tech`
+const encodedUrl = encodeURIComponent(url)
+const encodedText = encodeURIComponent(shareText)
+
+const socials = [
+    {
+        name: 'LinkedIn',
+        href: `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`,
+    },
+    {
+        name: 'X',
+        href: `https://twitter.com/intent/tweet?text=${encodedText}&url=${encodedUrl}`,
+    },
+    {
+        name: 'Bluesky',
+        href: `https://bsky.app/intent/compose?text=${encodeURIComponent(`${shareText} ${url}`)}`,
+    },
+]
+---
+
+<share-session data-slug={slug}>
+    <button type="button" class="share-trigger" aria-haspopup="dialog">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+            <path
+                fill="currentColor"
+                d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3a3 3 0 0 0-3-3a3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3a3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65a2.92 2.92 0 0 0 2.9 2.92a2.92 2.92 0 0 0 2.92-2.92a2.92 2.92 0 0 0-2.92-2.92"
+            ></path>
+        </svg>
+        Partager
+    </button>
+
+    <dialog class="share-dialog" aria-label="Partager cette session">
+        <div class="share-dialog-head">
+            <h2>Partager</h2>
+            <button type="button" class="share-close" aria-label="Fermer">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+                    <path
+                        fill="currentColor"
+                        d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12z"
+                    ></path>
+                </svg>
+            </button>
+        </div>
+
+        {
+            (teaserImageUrl || teaserVideoUrl) && (
+                <section class="share-section">
+                    <h3>Télécharger</h3>
+                    <div class="share-actions">
+                        {teaserImageUrl && (
+                            <button
+                                type="button"
+                                class="share-action share-download"
+                                data-url={teaserImageUrl}
+                                data-ext="png">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="22"
+                                    height="22"
+                                    viewBox="0 0 24 24"
+                                    aria-hidden="true">
+                                    <path
+                                        fill="currentColor"
+                                        d="M5 21q-.825 0-1.412-.587T3 19V5q0-.825.588-1.412T5 3h14q.825 0 1.413.588T21 5v14q0 .825-.587 1.413T19 21zm0-2h14V5H5zm1-2h12l-3.75-5l-3 4L9 13zm-1 2V5z"
+                                    />
+                                </svg>
+                                Image
+                            </button>
+                        )}
+                        {teaserVideoUrl && (
+                            <button
+                                type="button"
+                                class="share-action share-download"
+                                data-url={teaserVideoUrl}
+                                data-ext="mp4">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="22"
+                                    height="22"
+                                    viewBox="0 0 24 24"
+                                    aria-hidden="true">
+                                    <path
+                                        fill="currentColor"
+                                        d="M17 10.5V7q0-.425-.288-.712T16 6H4q-.425 0-.712.288T3 7v10q0 .425.288.713T4 18h12q.425 0 .713-.288T17 17v-3.5l4 4v-11zM4 17V7v10z"
+                                    />
+                                </svg>
+                                Vidéo
+                            </button>
+                        )}
+                    </div>
+                </section>
+            )
+        }
+
+        <section class="share-section">
+            <h3>Publier</h3>
+            <div class="share-actions">
+                {
+                    socials.map(({ name, href }) => (
+                        <a class="share-action" href={href} target="_blank" rel="noopener noreferrer">
+                            {name === 'X' && <Twitter height="20px" width="20px" />}
+                            {name === 'LinkedIn' && <LinkedIn height="20px" width="20px" />}
+                            {name === 'Bluesky' && (
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="20"
+                                    height="20"
+                                    viewBox="0 0 600 530"
+                                    aria-hidden="true">
+                                    <path
+                                        fill="currentColor"
+                                        d="M135.72 44.03C202.216 93.951 273.74 195.17 300 249.49c26.262-54.316 97.782-155.54 164.28-205.46C512.26 8.009 590-19.862 590 68.825c0 17.712-10.155 148.79-16.111 170.07-20.703 73.984-96.144 92.854-163.25 81.433 117.3 19.964 147.14 86.092 82.697 152.22-122.39 125.59-175.91-31.511-189.63-71.766-2.514-7.38-3.69-10.832-3.708-7.896-.017-2.936-1.193.516-3.707 7.896-13.714 40.255-67.233 197.36-189.63 71.766-64.444-66.128-34.605-132.26 82.697-152.22-67.108 11.421-142.55-7.55-163.25-81.433C20.15 217.612 9.997 86.535 9.997 68.825c0-88.687 77.742-60.816 125.72-24.795z"
+                                    />
+                                </svg>
+                            )}
+                            {name}
+                        </a>
+                    ))
+                }
+            </div>
+        </section>
+    </dialog>
+</share-session>
+
+<script>
+    class ShareSession extends HTMLElement {
+        connectedCallback() {
+            const trigger = this.querySelector<HTMLButtonElement>('.share-trigger')
+            const dialog = this.querySelector<HTMLDialogElement>('.share-dialog')
+            const close = this.querySelector<HTMLButtonElement>('.share-close')
+            const slug = this.dataset.slug || 'session'
+            if (!trigger || !dialog) return
+
+            trigger.addEventListener('click', () => dialog.showModal())
+            close?.addEventListener('click', () => dialog.close())
+            // Click on the backdrop (outside the dialog content) closes it.
+            dialog.addEventListener('click', (event) => {
+                if (event.target === dialog) dialog.close()
+            })
+
+            for (const button of this.querySelectorAll<HTMLButtonElement>('.share-download')) {
+                button.addEventListener('click', () => this.download(button, slug))
+            }
+        }
+
+        private async download(button: HTMLButtonElement, slug: string) {
+            const url = button.dataset.url
+            const ext = button.dataset.ext || 'bin'
+            if (!url || button.dataset.busy) return
+
+            button.dataset.busy = 'true'
+            button.classList.add('is-busy')
+            try {
+                const response = await fetch(url)
+                if (!response.ok) throw new Error(`HTTP ${response.status}`)
+                const blob = await response.blob()
+                const objectUrl = URL.createObjectURL(blob)
+                const anchor = document.createElement('a')
+                anchor.href = objectUrl
+                anchor.download = `${slug}.${ext}`
+                document.body.appendChild(anchor)
+                anchor.click()
+                anchor.remove()
+                URL.revokeObjectURL(objectUrl)
+            } catch {
+                // Fallback: let the browser open the asset directly.
+                window.open(url, '_blank', 'noopener')
+            } finally {
+                delete button.dataset.busy
+                button.classList.remove('is-busy')
+            }
+        }
+    }
+
+    customElements.define('share-session', ShareSession)
+</script>
+
+<style>
+    .share-trigger {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        font: inherit;
+        font-weight: 600;
+        text-transform: uppercase;
+        color: white;
+        background-color: var(--brand-solid);
+        border: 0;
+        border-radius: 0.25rem;
+        cursor: pointer;
+        transition: background-color var(--animation);
+    }
+
+    .share-trigger:hover {
+        background-color: var(--brand-solid-hover);
+    }
+
+    .share-dialog {
+        width: min(420px, calc(100vw - 2rem));
+        margin: auto;
+        padding: 0;
+        border: 1px solid var(--line);
+        border-radius: var(--s-1);
+        background-color: var(--background);
+        color: var(--text);
+    }
+
+    .share-dialog::backdrop {
+        background-color: rgb(0 0 0 / 0.5);
+    }
+
+    .share-dialog-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: var(--s0) var(--s0) 0;
+    }
+
+    .share-dialog-head h2 {
+        margin: 0;
+        font-size: var(--fs2);
+    }
+
+    .share-close {
+        display: inline-flex;
+        padding: 0.25rem;
+        color: inherit;
+        background: transparent;
+        border: 0;
+        border-radius: 999px;
+        cursor: pointer;
+        opacity: 0.6;
+        transition: opacity var(--animation);
+    }
+
+    .share-close:hover {
+        opacity: 1;
+    }
+
+    .share-section {
+        padding: var(--s0);
+    }
+
+    .share-section h3 {
+        margin: 0 0 var(--s-1);
+        font-size: var(--fs-1);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        opacity: 0.6;
+    }
+
+    .share-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--s-1);
+    }
+
+    .share-action {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        flex: 1 1 auto;
+        justify-content: center;
+        padding: 0.625rem 1rem;
+        font: inherit;
+        font-weight: 600;
+        color: var(--brand-solid);
+        text-decoration: none;
+        background-color: var(--background);
+        border: 1px solid var(--line);
+        border-radius: 0.5rem;
+        cursor: pointer;
+        transition:
+            border-color var(--animation),
+            background-color var(--animation);
+    }
+
+    .share-action:hover {
+        border-color: var(--brand-solid);
+        background-color: var(--component);
+    }
+
+    .share-action.is-busy {
+        opacity: 0.6;
+        pointer-events: none;
+    }
+
+    .share-action svg {
+        flex-shrink: 0;
+    }
+</style>

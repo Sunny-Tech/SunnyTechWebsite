@@ -11,6 +11,7 @@ import LayoutWithTitle from '../../layouts/LayoutWithTitle.astro'
 import Speaker from '../../components/schedule/Speaker.astro'
 import FlagUK from '../../components/icons/FlagUK.astro'
 import ButtonLink from '../../components/ui-elements/ButtonLink.astro'
+import ShareSession from '../../components/schedule/ShareSession.astro'
 
 export async function getStaticPaths() {
     const response = await fetch(OPENPLANNER_URL)
@@ -63,6 +64,7 @@ const {
     durationMinutes,
     parentUrl,
     teaserImageUrl,
+    teaserVideoUrl,
     hideTrackTitle,
     language,
     showInFeedback,
@@ -72,6 +74,8 @@ const {
 
 const rawAbstract = abstract ? markdownToTxt(abstract) : undefined
 const metaDescription = rawAbstract ? rawAbstract?.split('\n')?.[0] : undefined
+
+const sessionUrl = new URL(`/sessions/${id}`, Astro.site).href
 
 const openFeedbackLink = showInFeedback
     ? `https://openfeedback.io/sunnytech2026/${dateStart?.split('T')[0]}/${id}?hideHeader=true&forceColorScheme=light`
@@ -124,6 +128,12 @@ const openFeedbackLink = showInFeedback
                     </ButtonLink>
                 )
             }
+            <ShareSession
+                title={title}
+                url={sessionUrl}
+                teaserImageUrl={teaserImageUrl}
+                teaserVideoUrl={teaserVideoUrl}
+            />
             <Stack>
                 {
                     speakers.map((speaker) => (
