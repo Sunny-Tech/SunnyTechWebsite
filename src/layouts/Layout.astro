@@ -8,7 +8,7 @@ import SponsorBanner from '../components/SponsorBanner.astro'
 import { computeOgImageType, computeOgPath } from '../og/ogImage'
 
 interface Props {
-    title: string
+    title?: string
     description?: string
     metaImage?: string | null
 }
@@ -43,7 +43,7 @@ const url = import.meta.env.SITE
 const image = metaImage || url + computeOgPath(Astro.url.pathname)
 const ogImageType = computeOgImageType(image)
 const siteName = 'Sunny Tech'
-const siteNameWithTagline = 'Sunny Tech, la conférence Tech organisée à Montpellier'
+const siteNameWithTagline = 'Sunny Tech 2026, la conférence Tech organisée à Montpellier — 2 & 3 juillet'
 const pageTitle = title || siteName
 const fullPageTitle = title ? `${title} | ${siteName}` : siteNameWithTagline
 const pageDescription =
