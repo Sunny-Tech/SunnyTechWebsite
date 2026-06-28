@@ -16,6 +16,23 @@ export type OpenPlannerType = {
         members: Member[]
     }[]
     speakers: Speaker[]
+    tickets: Ticket[]
+}
+
+export interface Ticket {
+    id: string
+    name: string
+    price: number
+    currency?: string | null
+    url: string
+    ticketsCount: number
+    available: boolean
+    soldOut: boolean
+    highlighted: boolean
+    displayNewsletterRegistration?: boolean
+    startDate?: string | null
+    endDate?: string | null
+    message?: string | null
 }
 
 export interface Member {
