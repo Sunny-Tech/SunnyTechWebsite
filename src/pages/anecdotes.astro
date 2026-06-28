@@ -1,11 +1,234 @@
 ---
 import LayoutWithTitle from '../layouts/LayoutWithTitle.astro'
-import MarkdownWrapper from '../components/ui-elements/MarkdownWrapper.astro'
-import { Content } from '../markdown/anecdotes.md'
+import rawAnecdotes from '../data/anecdotes.txt?raw'
+
+const anecdotes = rawAnecdotes
+    .split('\n')
+    .map((line) => line.trim())
+    .filter(Boolean)
 ---
 
 <LayoutWithTitle title="Anecdotes des Sponsors">
-    <MarkdownWrapper>
-        <Content />
-    </MarkdownWrapper>
+    <div class="anecdotes-page">
+        <p class="intro">
+            <em
+                >Voici les anecdotes qui ont été partagées par les sponsors, à toi de trouver à qui elles
+                correspondent&nbsp;! 🕵️</em
+            >
+        </p>
+        <p class="last-update text-subtle">Dernière mise à jour : 27/06/25 09:26</p>
+
+        <div class="anecdotes-controls">
+            <span class="anecdotes-counter" id="anecdotes-counter" aria-live="polite">
+                0% cochés (reste {anecdotes.length})
+            </span>
+            <button class="anecdotes-reset" id="anecdotes-reset" hidden>Réinitialiser</button>
+        </div>
+
+        <ul class="anecdote-list" id="anecdote-list">
+            {
+                anecdotes.map((text) => (
+                    <li class="anecdote-item">
+                        <label class="anecdote-label">
+                            <input type="checkbox" class="anecdote-checkbox" />
+                            <span class="anecdote-text">{text}</span>
+                        </label>
+                    </li>
+                ))
+            }
+        </ul>
+    </div>
 </LayoutWithTitle>
+
+<script>
+    const STORAGE_KEY = 'sunnytech-anecdotes-2026'
+
+    function hashText(str: string): string {
+        let h = 5381
+        for (let i = 0; i < str.length; i++) {
+            h = ((h << 5) + h) ^ str.charCodeAt(i)
+        }
+        return (h >>> 0).toString(36)
+    }
+
+    function getChecked(): Set<string> {
+        try {
+            const raw = localStorage.getItem(STORAGE_KEY)
+            return new Set(raw ? JSON.parse(raw) : [])
+        } catch {
+            return new Set()
+        }
+    }
+
+    function saveChecked(checked: Set<string>): void {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify([...checked]))
+    }
+
+    function updateCounter(total: number, checkedCount: number): void {
+        const counter = document.getElementById('anecdotes-counter')
+        const resetBtn = document.getElementById('anecdotes-reset') as HTMLButtonElement | null
+        if (!counter) return
+        const pct = total > 0 ? Math.round((checkedCount / total) * 100) : 0
+        const remaining = total - checkedCount
+        counter.textContent = `${pct}% cochés (reste ${remaining})`
+        if (resetBtn) {
+            resetBtn.hidden = checkedCount === 0
+        }
+    }
+
+    function init() {
+        const list = document.getElementById('anecdote-list')
+        if (!list) return
+
+        const items = Array.from(list.querySelectorAll<HTMLLIElement>('.anecdote-item'))
+        const checked = getChecked()
+        const total = items.length
+
+        items.forEach((item) => {
+            const textEl = item.querySelector<HTMLElement>('.anecdote-text')
+            const checkbox = item.querySelector<HTMLInputElement>('.anecdote-checkbox')
+            if (!textEl || !checkbox) return
+
+            const id = hashText(textEl.textContent?.trim() ?? '')
+            item.dataset.id = id
+
+            if (checked.has(id)) {
+                checkbox.checked = true
+                item.classList.add('is-checked')
+            }
+        })
+
+        // Sort: unchecked first, checked last — only on load
+        const unchecked = items.filter((el) => !el.classList.contains('is-checked'))
+        const checkedItems = items.filter((el) => el.classList.contains('is-checked'))
+        ;[...unchecked, ...checkedItems].forEach((el) => list.appendChild(el))
+
+        updateCounter(total, checked.size)
+
+        list.addEventListener('change', (e) => {
+            const checkbox = e.target as HTMLInputElement
+            if (!checkbox.classList.contains('anecdote-checkbox')) return
+            const item = checkbox.closest<HTMLLIElement>('.anecdote-item')
+            if (!item) return
+
+            const id = item.dataset.id ?? ''
+            const currentChecked = getChecked()
+
+            if (checkbox.checked) {
+                currentChecked.add(id)
+                item.classList.add('is-checked')
+            } else {
+                currentChecked.delete(id)
+                item.classList.remove('is-checked')
+            }
+
+            saveChecked(currentChecked)
+            updateCounter(total, currentChecked.size)
+        })
+
+        const resetBtn = document.getElementById('anecdotes-reset')
+        resetBtn?.addEventListener('click', () => {
+            saveChecked(new Set())
+            items.forEach((item) => {
+                item.classList.remove('is-checked')
+                const cb = item.querySelector<HTMLInputElement>('.anecdote-checkbox')
+                if (cb) cb.checked = false
+            })
+            updateCounter(total, 0)
+        })
+    }
+
+    document.addEventListener('astro:page-load', init)
+</script>
+
+<style>
+    .anecdotes-page {
+        max-width: 70ch;
+    }
+
+    .intro {
+        line-height: 1.5;
+        margin-bottom: 0.4rem;
+    }
+
+    .last-update {
+        font-size: var(--fs-1);
+        margin-bottom: 1.5rem;
+    }
+
+    .anecdotes-controls {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-bottom: 1.25rem;
+        padding: 0.6rem 1rem;
+        background: var(--component);
+        border-radius: var(--border-radius);
+    }
+
+    .anecdotes-counter {
+        font-size: var(--fs-1);
+        font-weight: 600;
+        color: var(--text-subtle);
+    }
+
+    .anecdotes-reset {
+        font-size: var(--fs-1);
+        background: none;
+        border: 1px solid var(--border);
+        border-radius: var(--border-radius);
+        padding: 0.2rem 0.6rem;
+        cursor: pointer;
+        color: var(--text-subtle);
+        transition: all var(--animation);
+
+        &:hover {
+            border-color: var(--text);
+            color: var(--text);
+        }
+    }
+
+    .anecdote-list {
+        list-style: none;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .anecdote-item {
+        border-left: 3px solid var(--pink-2);
+        border-radius: var(--border-radius);
+        background: var(--component);
+        transition:
+            opacity var(--animation),
+            border-color var(--animation);
+    }
+
+    .anecdote-item.is-checked {
+        opacity: 0.45;
+        border-left-color: var(--grey-3);
+    }
+
+    .anecdote-label {
+        display: flex;
+        gap: 0.75rem;
+        align-items: flex-start;
+        padding: 0.9em 1em;
+        cursor: pointer;
+    }
+
+    .anecdote-checkbox {
+        flex-shrink: 0;
+        margin-top: 0.25em;
+        accent-color: var(--brand-solid);
+        width: 1rem;
+        height: 1rem;
+        cursor: pointer;
+    }
+
+    .anecdote-text {
+        line-height: 1.5;
+    }
+</style>
