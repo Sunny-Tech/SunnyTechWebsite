@@ -1,10 +1,10 @@
 ---
-import type { CollectionEntry } from 'astro:content'
+import type { Ticket } from '../../type'
 import ButtonLink from '../ui-elements/ButtonLink.astro'
 import Stack from '../ui-elements/Stack.astro'
 
 interface Props {
-    ticket: CollectionEntry<'tickets'>
+    ticket: Ticket
 }
 
 const { ticket } = Astro.props
@@ -20,7 +20,14 @@ const {
     highlighted,
     message,
     displayNewsletterRegistration,
-} = ticket.data
+} = ticket
+
+const fmtDate = (d: string) => new Date(d).toLocaleString('fr', { month: 'long', day: 'numeric' })
+const dateLabel = startDate
+    ? endDate
+        ? `Du ${fmtDate(startDate)} au ${fmtDate(endDate)}`
+        : `À partir du ${fmtDate(startDate)}`
+    : ''
 ---
 
 <article
@@ -44,10 +51,7 @@ const {
     </header>
     <Stack space="2rem" align="center">
         <p class="text-center">
-            {endDate ? (!!endDate ? 'Du' : 'À partir du') : ''}
-            {startDate ? new Date(startDate).toLocaleString('fr', { month: 'long', day: 'numeric' }) : ''}
-            {!!endDate ? 'au' : ''}
-            {!!endDate && new Date(endDate).toLocaleString('fr', { month: 'long', day: 'numeric' })}<br />
+            {dateLabel}<br />
             <strong>{ticketsCount}</strong> places
         </p>
         {

@@ -1,11 +1,11 @@
 ---
-import type { CollectionEntry } from 'astro:content'
+import type { Ticket } from '../../type'
 import ContentContainer from '../ui-elements/ContentContainer.astro'
 import Grid from '../ui-elements/Grid.astro'
 import TicketCard from './TicketCard.astro'
 
 interface Props {
-    tickets: CollectionEntry<'tickets'>[]
+    tickets: Ticket[]
 }
 
 const { tickets } = Astro.props
