@@ -46,7 +46,7 @@
             },
             {
                 "source": "/video",
-                "destination": "https://openplanner.fr/public/event/YFlN9koUK0qPuYkvbqQg/intermission?track=amphi-120-1&size=55&blink=1&interval=8",
+                "destination": "https://openplanner.fr/public/event/YFlN9koUK0qPuYkvbqQg/intermission?size=55&blink=1&interval=8",
                 "type": 302
             },
             {
