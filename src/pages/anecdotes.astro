@@ -22,7 +22,7 @@ const anecdotes = rawAnecdotes
 
         <div class="anecdotes-controls">
             <span class="anecdotes-counter" id="anecdotes-counter" aria-live="polite">
-                0% cochés (reste {anecdotes.length})
+                {anecdotes.length} à trouver (0 / {anecdotes.length})
             </span>
             <button class="anecdotes-reset" id="anecdotes-reset" hidden>Réinitialiser</button>
         </div>
@@ -70,9 +70,8 @@ const anecdotes = rawAnecdotes
         const counter = document.getElementById('anecdotes-counter')
         const resetBtn = document.getElementById('anecdotes-reset') as HTMLButtonElement | null
         if (!counter) return
-        const pct = total > 0 ? Math.round((checkedCount / total) * 100) : 0
         const remaining = total - checkedCount
-        counter.textContent = `${pct}% cochés (reste ${remaining})`
+        counter.textContent = `${remaining} à trouver (${checkedCount} / ${total})`
         if (resetBtn) {
             resetBtn.hidden = checkedCount === 0
         }
