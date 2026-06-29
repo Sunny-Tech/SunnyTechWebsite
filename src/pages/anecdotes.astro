@@ -18,6 +18,8 @@ const anecdotes = rawAnecdotes
         </p>
         <p class="last-update text-subtle">Dernière mise à jour : 27/06/25 09:26</p>
 
+        <p class="notice">ℹ️ Aucune de ces anecdotes ne correspond au sponsor SMAG.</p>
+
         <div class="anecdotes-controls">
             <span class="anecdotes-counter" id="anecdotes-counter" aria-live="polite">
                 0% cochés (reste {anecdotes.length})
@@ -153,6 +155,16 @@ const anecdotes = rawAnecdotes
 
     .last-update {
         font-size: var(--fs-1);
+        margin-bottom: 1rem;
+    }
+
+    .notice {
+        font-size: var(--fs-1);
+        color: var(--text-subtle);
+        background: var(--component);
+        border-left: 3px solid var(--border);
+        border-radius: var(--border-radius);
+        padding: 0.5rem 0.75rem;
         margin-bottom: 1.5rem;
     }
 
