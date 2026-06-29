@@ -1,38 +1,40 @@
 ## Défi des secrets
 
-_Associez les anecdotes aux bons sponsors, gagnez des **tickets**, et utilisez-les pour des **gourmandises** 🍿 ou pour participer à la **loterie** 🎁 !_
+Associez les anecdotes aux bons sponsors, récoltez les 🦩 **Flamy** et tentez votre chance à la **loterie** 🎁 !
 
 ## Comment jouer ?
 
-1. **Consultez [la liste des anecdotes](/anecdotes)**
+1. **Prenez votre collecteur à 🦩 Flamy** — fournie avec votre bracelet, sinon disponible à l'accueil.
+2. **Consultez [la liste des anecdotes](/anecdotes)** — ℹ️ elle évolue tout au long de la conférence.
+3. **Discutez avec les sponsors** pour deviner à qui correspond chaque anecdote.
+4. **Validez vos réponses** auprès du sponsor : une bonne réponse vous rapporte un 🦩 Flamy.
+5. **Échangez vos Flamy à l'accueil** : 4 🦩 = 1 ticket 🎫 (jusqu'à 4 tickets au total).
 
-   > 📌 *[La liste](/anecdotes) peut évoluer tout au long de la conférence — pensez à la consulter régulièrement !*
+<!-- Bug Astro: espace manquant entre une liste et un titre -->
+<br>
 
-2. **Discutez avec les sponsors**
+## Loterie
 
-   > Échangez avec eux pour deviner à qui correspond chaque anecdote.
+Deux tirages : **jeudi soir** (soirée networking) et **vendredi soir** (keynote de clôture).
 
-3. **Validez vos réponses**
+Les lots sont identiques pour chaque tirage :
 
-   > Pour chaque bonne réponse, vous remportez **un ticket** 🎫.
+1. 🖨️ Une mini-imprimante 3D
+2. 🎮 Une console portable rétro
+3. 🎟️ Une place pour SunnyTech l'année prochaine
 
-4. **Utilisez vos tickets** comme vous le souhaitez :
-   1. 🍿 **Échangez** les contre du popcorn ou de la barbe à papa (1 ticket = 1 popcorn ou 1 barbe à papa)
-   2. 🎁 **Participez à la loterie SunnyTech**.
-<br/><br/>
-## Points importants
+<!-- Bug Astro: espace manquant entre une liste et un paragraphe -->
+<br>
 
-* La [liste des anecdotes](/anecdotes) peut évoluer en cours de conférence. Restez à l'affût !
-* Pour la loterie :
-  * Détachez chaque ticket.
-  * Inscrivez clairement vos **coordonnées** au dos :
-    * Nom
-    * Email
-    * Numéro de téléphone
-  * Glissez ensuite le ticket dans l’**urne à l'accueil**.
-* Si vous avez des questions, n'hésitez pas à demander à l'un.e des bénévoles (tee-shirt jaune)
+> ⚠️ La présence est obligatoire pour récupérer les lots physiques.
+
+<!-- Bug Astro: espace manquant entre une quote et un paragraphe -->
+<br>
+
+Sur chaque ticket, notez vos **nom**, **email** et **téléphone** au dos, puis glissez-le dans l'urne à l'accueil.
+
 ## Bonne chance !
 
-Amusez-vous bien tout au long de SunnyTech, et que le plus curieux gagne ! 🦩
+Que les plus curieux gagnent ! 🦩
 
-Le règlement complet [est disponible ici](https://docs.google.com/document/d/16_iKaZ3iIz_SWdv_J0UHEzFao6zDDWZC6Vm71gtA-Bc/edit?usp=sharing).
+_Des questions ? Les bénévoles en tee-shirt jaune sont là pour vous aider. — Règlement complet [est disponible ici](https://docs.google.com/document/d/16_iKaZ3iIz_SWdv_J0UHEzFao6zDDWZC6Vm71gtA-Bc/edit?usp=sharing)._
