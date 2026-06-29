@@ -2,10 +2,9 @@
 import LayoutWithTitle from '../layouts/LayoutWithTitle.astro'
 import rawAnecdotes from '../data/anecdotes.txt?raw'
 
-const anecdotes = rawAnecdotes
-    .split('\n')
-    .map((line) => line.trim())
-    .filter(Boolean)
+const lines = rawAnecdotes.split('\n').map((line) => line.trim())
+const lastUpdated = lines[0]?.startsWith('#') ? lines[0].slice(1).trim() : null
+const anecdotes = lines.filter((line) => line && !line.startsWith('#'))
 ---
 
 <LayoutWithTitle title="Anecdotes des Sponsors">
@@ -16,7 +15,7 @@ const anecdotes = rawAnecdotes
                 correspondent&nbsp;! 🕵️</em
             >
         </p>
-        <p class="last-update text-subtle">Dernière mise à jour : 27/06/25 09:26</p>
+        {lastUpdated && <p class="last-update text-subtle">Dernière mise à jour : {lastUpdated}</p>}
 
         <p class="notice">ℹ️ Aucune de ces anecdotes ne correspond au sponsor SMAG.</p>
 
