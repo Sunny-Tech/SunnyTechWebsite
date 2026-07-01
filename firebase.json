@@ -53,6 +53,11 @@
                 "source": "/tshirt-old",
                 "destination": "https://www.billetweb.fr/sunny-tech-2025&quick=6392964",
                 "type": 302
+            },
+            {
+                "source": "/stt",
+                "destination": "https://openplanner.fr/public/event/YFlN9koUK0qPuYkvbqQg/transcription",
+                "type": 302
             }
         ],
         "headers": [
