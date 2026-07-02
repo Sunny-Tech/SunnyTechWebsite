@@ -2,6 +2,8 @@
 
 Associez les anecdotes aux bons sponsors, récoltez les 🦩 **Flamy** et tentez votre chance à la **loterie** 🎁 !
 
+### ➡️ [Voir la liste des anecdotes](/anecdotes) ⬅️
+
 ## Comment jouer ?
 
 1. **Prenez votre collecteur à 🦩 Flamy** — fournie avec votre bracelet, sinon disponible à l'accueil.
