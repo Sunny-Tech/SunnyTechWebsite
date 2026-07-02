@@ -3,6 +3,7 @@
 Associez les anecdotes aux bons sponsors, récoltez les 🦩 **Flamy** et tentez votre chance à la **loterie** 🎁 !
 
 ### ➡️ [Voir la liste des anecdotes](/anecdotes) ⬅️
+<br>
 
 ## Comment jouer ?
 
