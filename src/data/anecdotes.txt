@@ -9,6 +9,7 @@ Notre logo est un isocaèdre.
 Chaque jeudi, une tradition bien ancrée rassemble une partie de l’équipe autour d’un moment convivial devenu incontournable au fil des années.
 On a dû changer de nom récemment parce que personne n'arrivait à le prononcer correctement sans bafouiller. Venez nous demander l'ancien, on vous met au défi de le dire trois fois très vite !
 Chez nous, certaines réunions ont lieu à Carnon, au Pic Saint-Loup et même en Paillote…
+Notre premier produit n'a rien à voir avec ce qu'on fait aujourd'hui.
 Notre CEO passe plus de temps à coder que notre plus vétéran dev.
 On ne produit aucun logiciel, on ne vend aucun SaaS, et pourtant on est indirectement responsables du code et de la sécurité de dizaines de vos applications.
 Nous travaillons avec des profils qui savent parfois monter un serveur, coder une application ou parler cybersécurité… avant même d’avoir leur premier CDI.
