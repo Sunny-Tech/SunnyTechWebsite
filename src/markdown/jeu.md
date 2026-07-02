@@ -40,4 +40,4 @@ Sur chaque ticket, notez vos **nom**, **email** et **téléphone** au dos, puis 
 
 Que les plus curieux gagnent ! 🦩
 
-_Des questions ? Les bénévoles en tee-shirt jaune sont là pour vous aider. — Règlement complet [est disponible ici](https://docs.google.com/document/d/16_iKaZ3iIz_SWdv_J0UHEzFao6zDDWZC6Vm71gtA-Bc/edit?usp=sharing)._
+_Des questions ? Les bénévoles en tee-shirt jaune sont là pour vous aider. — Règlement complet [est disponible ici](https://docs.google.com/document/d/18AjE5IgPl8mZop2GlsgahG8zfz3n5bKM7vYcVB5Cf2A/edit?usp=sharing)._
