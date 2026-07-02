@@ -16,6 +16,7 @@ interface Props {
     speakers: Speaker[]
     alwaysShowExtraInfo?: boolean
     hideBookmark?: boolean
+    hideTrackTitle?: boolean
     language?: string
 }
 
@@ -30,6 +31,7 @@ const {
     language,
     alwaysShowExtraInfo = false,
     hideBookmark = false,
+    hideTrackTitle = false,
 } = Astro.props
 ---
 
@@ -54,7 +56,7 @@ const {
                 } –{' '}
                 {durationMinutes} min
             </div>
-            {track && <div class="schedule-session-track">Salle : {track.name}</div>}
+            {track && !hideTrackTitle && <div class="schedule-session-track">Salle : {track.name}</div>}
         </div>
         <div style={{ marginTop: 'auto', paddingTop: 'var(--s0)' }}>
             <Stack space="var(--s-2)">
