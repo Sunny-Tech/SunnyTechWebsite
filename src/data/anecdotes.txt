@@ -1,5 +1,5 @@
 
-# 02/07/2026 09:40
+# 02/07/2026 14:20
 Certains négocient avec des tableaux Excel. Chez nous, quelques friandises colorées peuvent parfois s’avérer tout aussi efficaces.
 Nous sommes connus pour notre moteur d'indexation et notre magnifique collection de chaussettes !
 À Montpellier, on est 120… et seulement 8 ne sont ni dans la Tech ou ni le Produit
@@ -8,6 +8,8 @@ En parcourant nos locaux, vous pourriez tomber sur d’étranges pyramides inspi
 Notre logo est un isocaèdre.
 Chaque jeudi, une tradition bien ancrée rassemble une partie de l’équipe autour d’un moment convivial devenu incontournable au fil des années.
 On a dû changer de nom récemment parce que personne n'arrivait à le prononcer correctement sans bafouiller. Venez nous demander l'ancien, on vous met au défi de le dire trois fois très vite !
+Nous sommes le premier Pass Français à avoir obtenu la certification ISO 27001
+Nous venons de déposer le J0 SecNumCloud.
 Chez nous, certaines réunions ont lieu à Carnon, au Pic Saint-Loup et même en Paillote…
 Notre premier produit n'a rien à voir avec ce qu'on fait aujourd'hui.
 Notre CEO passe plus de temps à coder que notre plus vétéran dev.
@@ -16,6 +18,8 @@ Je suis un éditeur de logiciels dédié à la commande publique depuis 1989
 On ne produit aucun logiciel, on ne vend aucun SaaS, et pourtant on est indirectement responsables du code et de la sécurité de dizaines de vos applications.
 Nous travaillons avec des profils qui savent parfois monter un serveur, coder une application ou parler cybersécurité… avant même d’avoir leur premier CDI.
 Nos T-shirt sont fait avec des artistes locaux. On hésite à devenir une boite de retail.
+Nous sommes le premier Pass Français à avoir obtenu la certification ISO 27001
+Nous venons de déposer le J0 SecNumCloud.
 Un de nos collaborateur nous a connu sur le salon Sunny Tech et il peut vous raconter l'histoire de comment est né Sunny Tech.
 Notre nom est un cocktail linguistique : moitié "vie" en japonais, moitié "chemin" en latin. Un indice ? Tout est lié à la recherche de l'épanouissement professionnel.
 Fans de jeux vidéo, on a commencé par organiser des LAN dans nos bureaux… puis l’an dernier, on s’est lancés dans des tournois inter-équipes sur LoL, Counter-Strike, Overwatch...
