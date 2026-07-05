@@ -3,7 +3,8 @@ import LayoutWithTitle from '../layouts/LayoutWithTitle.astro'
 import rawAnecdotes from '../data/anecdotes.txt?raw'
 
 const lines = rawAnecdotes.split('\n').map((line) => line.trim())
-const lastUpdated = lines[0]?.startsWith('#') ? lines[0].slice(1).trim() : null
+const headerLine = lines.find((line) => line.startsWith('#'))
+const lastUpdated = headerLine ? headerLine.slice(1).trim() : null
 const anecdotes = lines.filter((line) => line && !line.startsWith('#'))
 ---
 
