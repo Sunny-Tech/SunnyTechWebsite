@@ -7,18 +7,18 @@ import Hero from '../components/home/Hero.astro'
 import HomeContentBlock from '../components/home/HomeContentBlock.astro'
 import HomeAboutBlock from '../components/home/HomeAboutBlock.astro'
 import HomeGalleryBlock from '../components/home/HomeGalleryBlock.astro'
-import HomeTicketsBlock from '../components/home/HomeTicketsBlock.astro'
+// import HomeTicketsBlock from '../components/home/HomeTicketsBlock.astro'
 
 const response = await fetch(OPENPLANNER_URL)
 const openPlannerData: OpenPlannerType = await response.json()
-const tickets = openPlannerData.tickets ?? []
+// const tickets = openPlannerData.tickets ?? []
 ---
 
 <Layout>
     <Hero />
 
     <HomeContentBlock />
-    <HomeTicketsBlock tickets={tickets} />
+    <!-- <HomeTicketsBlock tickets={tickets} /> -->
     <HomeGalleryBlock />
     <HomeAboutBlock />
 
