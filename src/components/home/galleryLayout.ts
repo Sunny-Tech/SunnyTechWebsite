@@ -29,10 +29,10 @@ const CURATED_PHOTOS: CuratedPhoto[] = [
     { id: '21645587-8a13-47ac-ac89-0c033c2d194a', position: '40% 30%' },
     // 5 - muffins from above, any crop works
     { id: '789606d4-97cd-4883-9ff9-4345c04d2615', position: '50% 50%' },
-    // 6 - attendees at the breakfast table, faces in the upper half
-    { id: '01a8429f-d454-467f-885b-f110be2a0156', position: '50% 35%' },
-    // 7 - outdoor buffet, people and jars in the lower half
-    { id: '0a6fbaed-8fe4-4352-8401-5e003c596e5f', position: '50% 70%' },
+    // 6 - outdoor stands and crowd, sky at the top
+    { id: '0cdb9ecf-0924-41a8-b3be-4735a46e337d', position: '50% 70%' },
+    // 7 - attendees at the breakfast table, three faces left of center
+    { id: '01a8429f-d454-467f-885b-f110be2a0156', position: '45% 35%' },
     // 8 - raised hands in a workshop room
     { id: 'e373b1e3-3870-40f1-89b8-1dedb5c9cc96', position: '50% 60%' },
 ]
