@@ -6,6 +6,7 @@ import FooterBlock from '../components/footer/FooterBlock.astro'
 import Menu from '../components/Menu.astro'
 import SponsorBanner from '../components/SponsorBanner.astro'
 import { computeOgImageType, computeOgPath } from '../og/ogImage'
+import { EVENT, EVENT_FULL_NAME } from '../og/event'
 
 interface Props {
     title?: string
@@ -43,7 +44,7 @@ const url = import.meta.env.SITE
 const image = metaImage || url + computeOgPath(Astro.url.pathname)
 const ogImageType = computeOgImageType(image)
 const siteName = 'Sunny Tech'
-const siteNameWithTagline = 'Sunny Tech 2026, la conférence Tech organisée à Montpellier — 2 & 3 juillet'
+const siteNameWithTagline = 'Sunny Tech 2027, la conférence Tech organisée à Montpellier — 1er & 2 juillet'
 const pageTitle = title || siteName
 const fullPageTitle = title ? `${title} | ${siteName}` : siteNameWithTagline
 const pageDescription =
@@ -58,28 +59,22 @@ const organizerTwitter = '@sunnyTech_MTP'
 const eventJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Event',
-    name: `${siteName} 2026`,
+    name: EVENT_FULL_NAME,
     description: pageDescription,
     url,
-    startDate: '2026-07-02',
-    endDate: '2026-07-03',
+    startDate: EVENT.startDate,
+    endDate: EVENT.endDate,
     eventStatus: 'https://schema.org/EventScheduled',
     eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
     image,
+    // Venue not announced yet: city only
     location: {
         '@type': 'Place',
-        name: 'Faculté des Sciences de Montpellier',
+        name: EVENT.city,
         address: {
             '@type': 'PostalAddress',
-            streetAddress: 'Place Eugène Bataillon',
-            addressLocality: 'Montpellier',
-            postalCode: '34095',
+            addressLocality: EVENT.city,
             addressCountry: 'FR',
-        },
-        geo: {
-            '@type': 'GeoCoordinates',
-            latitude: 43.6312537,
-            longitude: 3.8612405,
         },
     },
     organizer: {
