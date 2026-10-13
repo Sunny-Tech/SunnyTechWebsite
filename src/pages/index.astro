@@ -12,6 +12,7 @@ import HomeGalleryBlock from '../components/home/HomeGalleryBlock.astro'
 const response = await fetch(OPENPLANNER_URL)
 const openPlannerData: OpenPlannerType = await response.json()
 // const tickets = openPlannerData.tickets ?? []
+const galleryImages = openPlannerData.blocks?.home?.gallery?.['gallery-images'] ?? []
 ---
 
 <Layout>
@@ -19,7 +20,7 @@ const openPlannerData: OpenPlannerType = await response.json()
 
     <HomeContentBlock />
     <!-- <HomeTicketsBlock tickets={tickets} /> -->
-    <HomeGalleryBlock />
+    <HomeGalleryBlock images={galleryImages} />
     <HomeAboutBlock />
 
     <SponsorsBlock sponsorCategories={openPlannerData.sponsors} />

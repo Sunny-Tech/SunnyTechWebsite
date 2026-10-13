@@ -17,6 +17,18 @@ export type OpenPlannerType = {
     }[]
     speakers: Speaker[]
     tickets: Ticket[]
+    blocks?: {
+        home?: {
+            gallery?: {
+                'gallery-images'?: GalleryImage[]
+            }
+        }
+    }
+}
+
+export interface GalleryImage {
+    url: string
+    alt?: string | null
 }
 
 export interface Ticket {

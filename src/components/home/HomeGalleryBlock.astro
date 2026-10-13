@@ -1,7 +1,15 @@
 ---
 import ButtonLink from '../ui-elements/ButtonLink.astro'
+import type { GalleryImage } from '../../type'
 
-const gallery = [
+interface Props {
+    images?: GalleryImage[]
+}
+
+// The grid layout below has 8 slots
+const GRID_SLOTS = 8
+
+const fallbackGallery: GalleryImage[] = [
     '/gallery/01.jpg',
     '/gallery/02.jpg',
     '/gallery/03.jpg',
@@ -10,11 +18,14 @@ const gallery = [
     '/gallery/06.jpg',
     '/gallery/07.jpg',
     '/gallery/08.jpg',
-]
+].map((url) => ({ url }))
+
+const { images = [] } = Astro.props
+const gallery = (images.length > 0 ? images : fallbackGallery).slice(0, GRID_SLOTS)
 ---
 
 <div class="photos-grid">
-    {gallery.map((photo) => <img class="grid-item" src={photo} alt="" loading="lazy" />)}
+    {gallery.map((photo) => <img class="grid-item" src={photo.url} alt={photo.alt ?? ''} loading="lazy" />)}
 
     <div class="gallery-info">
         <div>
