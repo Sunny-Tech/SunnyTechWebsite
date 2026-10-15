@@ -19,8 +19,20 @@ export const EVENT = {
         'Une conférence annuelle des technologies du numérique, créée par des passionnés, pour des passionnés.',
 } as const
 
-/** `sunnytech-2027-07` — appended to speaker OG filenames. */
-export const EVENT_SLUG_SUFFIX = `${EVENT.slug}-${EVENT.year}-${EVENT.startDate.split('-')[1]}`
+/**
+ * Edition whose programme, speakers and sponsors the site still shows. The
+ * OpenPlanner payload keeps the previous edition until the next programme is
+ * published, so those pages are labelled with this year. Align it with EVENT
+ * once OpenPlanner holds the new edition.
+ */
+export const PROGRAM_EDITION = {
+    year: 2026,
+    startDate: '2026-07-02',
+    displayDates: '2 & 3 juillet 2026',
+} as const
+
+/** `sunnytech-2026-07` — appended to speaker OG filenames. */
+export const EVENT_SLUG_SUFFIX = `${EVENT.slug}-${PROGRAM_EDITION.year}-${PROGRAM_EDITION.startDate.split('-')[1]}`
 
 /** `Sunny Tech 2027` — used in titles and default hero copy. */
 export const EVENT_FULL_NAME = `${EVENT.shortName} ${EVENT.year}`

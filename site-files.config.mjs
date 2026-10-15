@@ -148,12 +148,13 @@ function buildBlogSection() {
 
 const STATIC_LLMS_SECTIONS = [
     {
-        title: 'Programme',
+        // Still the 2026 programme, see PROGRAM_EDITION in src/og/event.ts
+        title: 'Programme 2026',
         links: [
-            { title: 'Programme jour 1', url: '/schedule/day-1' },
-            { title: 'Programme jour 2', url: '/schedule/day-2' },
-            { title: 'Sessions', url: '/sessions' },
-            { title: 'Speakers', url: '/speakers' },
+            { title: 'Programme 2026 jour 1', url: '/schedule/day-1' },
+            { title: 'Programme 2026 jour 2', url: '/schedule/day-2' },
+            { title: 'Sessions 2026', url: '/sessions' },
+            { title: 'Speakers 2026', url: '/speakers' },
         ],
     },
     {

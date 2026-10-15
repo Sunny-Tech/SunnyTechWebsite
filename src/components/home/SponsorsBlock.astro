@@ -1,5 +1,6 @@
 ---
 import type { OpenPlannerType } from '../../type'
+import { PROGRAM_EDITION } from '../../og/event'
 import ButtonLink from '../ui-elements/ButtonLink.astro'
 import ContentContainer from '../ui-elements/ContentContainer.astro'
 import Grid from '../ui-elements/Grid.astro'
@@ -15,7 +16,7 @@ const sponsorsCategoriesSorted = sponsorCategories.sort((a, b) => a.order - b.or
 ---
 
 <ContentContainer>
-    <h2 id="sponsors">Sponsors</h2>
+    <h2 id="sponsors">Sponsors{sponsorsCategoriesSorted.length > 0 && ` ${PROGRAM_EDITION.year}`}</h2>
 
     {sponsorsCategoriesSorted.length === 0 && <h3>Rejoignez les sponsors de l'édition 2027</h3>}
     <ButtonLink href="https://sunny-tech.io/sponsoring" target="_blank" rel="noopener noreferrer" external>
