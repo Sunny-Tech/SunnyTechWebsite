@@ -1,4 +1,6 @@
 ---
+import { PROGRAM_EDITION } from '../og/event'
+
 const FAQ_LINK = 'https://www.sunny-tech.io/faq'
 
 type NavItem = { label: string; route: string; activeMatch?: string }
@@ -6,12 +8,13 @@ type NavItem = { label: string; route: string; activeMatch?: string }
 const navigation: NavItem[] = [
     // Link directly to day-1 to skip the /schedule → /schedule/day-1 redirect,
     // but highlight the entry for any /schedule/* page.
-    { label: 'Programme', route: '/schedule/day-1', activeMatch: '/schedule' },
-    { label: 'Speakers', route: '/speakers' },
+    { label: `Programme ${PROGRAM_EDITION.year}`, route: '/schedule/day-1', activeMatch: '/schedule' },
+    { label: `Speakers ${PROGRAM_EDITION.year}`, route: '/speakers' },
     { label: 'Équipe', route: '/team' },
     // { label: 'Jobs', route: '/jobs' },
     { label: 'Code de conduite', route: '/coc' },
-    { label: 'Lieu', route: '/location' },
+    // Hidden until the venue is announced, the page lives in src/pages/_location.astro
+    // { label: 'Lieu', route: '/location' },
     { label: 'Blog', route: '/blog' },
     { label: 'FAQ', route: FAQ_LINK },
 ]

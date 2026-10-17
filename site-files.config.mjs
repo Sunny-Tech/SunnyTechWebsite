@@ -148,18 +148,18 @@ function buildBlogSection() {
 
 const STATIC_LLMS_SECTIONS = [
     {
-        title: 'Programme',
+        // Still the 2026 programme, see PROGRAM_EDITION in src/og/event.ts
+        title: 'Programme 2026',
         links: [
-            { title: 'Programme jour 1', url: '/schedule/day-1' },
-            { title: 'Programme jour 2', url: '/schedule/day-2' },
-            { title: 'Sessions', url: '/sessions' },
-            { title: 'Speakers', url: '/speakers' },
+            { title: 'Programme 2026 jour 1', url: '/schedule/day-1' },
+            { title: 'Programme 2026 jour 2', url: '/schedule/day-2' },
+            { title: 'Sessions 2026', url: '/sessions' },
+            { title: 'Speakers 2026', url: '/speakers' },
         ],
     },
     {
         title: 'Informations pratiques',
         links: [
-            { title: 'Lieu', url: '/location' },
             { title: 'Code de conduite', url: '/coc' },
             { title: 'Équipe', url: '/team' },
             { title: 'Jobs', url: '/jobs' },
@@ -214,12 +214,12 @@ export async function buildSiteFilesOptions() {
             description:
                 "Sunny Tech est la 1ère conférence Tech organisée à Montpellier. Conférence annuelle des technologies du numérique, créée par des passionnés, pour des passionnés, avec l'ambition de rayonner nationalement et internationalement à travers l'intervention de conférencier·e·s français de renom.",
             details:
-                "L'édition 2026 se tient à la Faculté des Sciences de Montpellier (Place E. Bataillon, 34095 Montpellier), desservie par le tram 1 (arrêt « Université Montpellier Triolet »). Portes ouvertes de 8h30 à 19h sur deux jours.",
+                "L'édition 2027 se tiendra les 1er et 2 juillet 2027 à Montpellier. Le lieu sera annoncé prochainement.",
             sections: [...STATIC_LLMS_SECTIONS, ...dynamicSections],
         },
 
         sitemap: {
-            exclude: ['/og-preview/'],
+            exclude: ['/og-preview/', '/signature/'],
             rss: RSS_CONFIG,
         },
 
