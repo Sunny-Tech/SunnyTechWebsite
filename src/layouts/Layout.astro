@@ -12,9 +12,11 @@ interface Props {
     title?: string
     description?: string
     metaImage?: string | null
+    /** Keeps unlisted pages out of search engines. */
+    noindex?: boolean
 }
 
-const { title, description, metaImage } = Astro.props
+const { title, description, metaImage, noindex = false } = Astro.props
 
 type BannerSponsor = OpenPlannerType['sponsors'][number]['sponsors'][number]
 let bannerSponsors: BannerSponsor[] = []
@@ -90,7 +92,7 @@ const eventJsonLd = {
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="robots" content="index, follow" />
+        <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow'} />
 
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
