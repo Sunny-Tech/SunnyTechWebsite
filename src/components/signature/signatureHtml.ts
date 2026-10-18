@@ -6,11 +6,10 @@
 export interface SignatureInput {
     firstName: string
     lastName: string
-    email: string
     phone?: string
 }
 
-const EMAIL_DOMAIN = 'sunny-tech.io'
+const SITE_DOMAIN = 'sunny-tech.io'
 const TEXT_COLOR = '#818181'
 const NAME_COLOR = '#111111'
 
@@ -21,18 +20,6 @@ const SOCIALS = [
 
 const escapeHtml = (value: string): string => value.replace(/[&<>"']/g, (char) => `&#${char.charCodeAt(0)};`)
 
-/** `Jean-Éric` → `jean-eric@sunny-tech.io` */
-export function defaultEmail(firstName: string): string {
-    const local = firstName
-        .normalize('NFD')
-        .replace(/[̀-ͯ]/g, '')
-        .toLowerCase()
-        .trim()
-        .replace(/\s+/g, '-')
-        .replace(/[^a-z0-9.-]/g, '')
-    return local ? `${local}@${EMAIL_DOMAIN}` : ''
-}
-
 /** `06 12 34 56 78` → `+33612345678`, keeps numbers already in international form. */
 export function telHref(phone: string): string {
     const digits = phone.replace(/[^\d+]/g, '')
@@ -42,7 +29,6 @@ export function telHref(phone: string): string {
 export function signatureHtml(input: SignatureInput, siteUrl: string): string {
     const site = siteUrl.replace(/\/$/, '')
     const fullName = escapeHtml(`${input.firstName} ${input.lastName}`.trim())
-    const email = escapeHtml(input.email.trim())
     const phone = input.phone?.trim()
     const linkStyle = `color:${TEXT_COLOR};text-decoration:none`
 
@@ -63,8 +49,7 @@ export function signatureHtml(input: SignatureInput, siteUrl: string): string {
         `</td>`,
         `<td style="vertical-align:middle;font-size:11px;line-height:150%;color:${TEXT_COLOR};white-space:nowrap">`,
         `<div style="font-size:16px;color:${NAME_COLOR}">${fullName}</div>`,
-        email ? `<div><a href="mailto:${email}" style="${linkStyle}">${email}</a></div>` : '',
-        `<div><a href="${site}" style="${linkStyle}" target="_blank">${EMAIL_DOMAIN}</a>${phoneHtml}</div>`,
+        `<div><a href="${site}" style="${linkStyle}" target="_blank">${SITE_DOMAIN}</a>${phoneHtml}</div>`,
         `<div style="padding-top:4px">${socialsHtml}</div>`,
         `</td>`,
         `</tr>`,
@@ -76,8 +61,7 @@ export function signatureText(input: SignatureInput): string {
     const phone = input.phone?.trim()
     return [
         `${input.firstName} ${input.lastName}`.trim(),
-        input.email.trim(),
-        phone ? `${EMAIL_DOMAIN} | ${phone}` : EMAIL_DOMAIN,
+        phone ? `${SITE_DOMAIN} | ${phone}` : SITE_DOMAIN,
         ...SOCIALS.map((social) => `${social.name}: ${social.url}`),
     ]
         .filter(Boolean)

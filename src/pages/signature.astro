@@ -22,10 +22,6 @@ const siteUrl = import.meta.env.DEV ? Astro.url.origin : (Astro.site?.toString()
                     <input name="lastName" required autocomplete="family-name" />
                 </label>
                 <label>
-                    Email
-                    <input name="email" type="email" placeholder="prenom@sunny-tech.io" />
-                </label>
-                <label>
                     Téléphone <span class="optional">(optionnel)</span>
                     <input name="phone" type="tel" autocomplete="tel" placeholder="06 12 34 56 78" />
                 </label>
@@ -49,12 +45,7 @@ const siteUrl = import.meta.env.DEV ? Astro.url.origin : (Astro.site?.toString()
 </LayoutWithTitle>
 
 <script>
-    import {
-        defaultEmail,
-        signatureHtml,
-        signatureText,
-        type SignatureInput,
-    } from '../components/signature/signatureHtml'
+    import { signatureHtml, signatureText, type SignatureInput } from '../components/signature/signatureHtml'
 
     // The async Clipboard API can be denied (permissions, embedded browsers), so
     // fall back to copying a DOM selection with execCommand.
@@ -112,27 +103,19 @@ const siteUrl = import.meta.env.DEV ? Astro.url.origin : (Astro.site?.toString()
 
             const siteUrl = this.dataset.siteUrl ?? 'https://sunny-tech.io'
             const field = (name: string) => form.elements.namedItem(name) as HTMLInputElement
-            const emailInput = field('email')
-            // The email follows the first name until the user types their own.
-            let emailEdited = false
 
             const read = (): SignatureInput => ({
                 firstName: field('firstName').value.trim(),
                 lastName: field('lastName').value.trim(),
-                email: emailInput.value.trim(),
                 phone: field('phone').value.trim(),
             })
 
             const render = () => {
-                if (!emailEdited) emailInput.value = defaultEmail(field('firstName').value)
                 const input = read()
                 preview.innerHTML = input.firstName || input.lastName ? signatureHtml(input, siteUrl) : ''
                 status.textContent = ''
             }
 
-            emailInput.addEventListener('input', () => {
-                emailEdited = emailInput.value.trim() !== ''
-            })
             form.addEventListener('input', render)
             form.addEventListener('submit', (event) => event.preventDefault())
 
