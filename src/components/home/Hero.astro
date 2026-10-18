@@ -4,7 +4,7 @@ import backgroundHome from '../../assets/home.jpg'
 import backgroundRain from '../../assets/home_rain.webp'
 import ButtonLink from '../ui-elements/ButtonLink.astro'
 import Cluster from '../ui-elements/Cluster.astro'
-import { PROGRAM_EDITION } from '../../og/event'
+import { EVENT } from '../../og/event'
 ---
 
 <div class="container">
@@ -16,7 +16,9 @@ import { PROGRAM_EDITION } from '../../og/event'
         <h2 class="fs1 fw-regular">#SeaTechAndSun ☀️️️</h2>
 
         <Cluster>
-            <ButtonLink href="/schedule/day-1">Voir le programme {PROGRAM_EDITION.year}</ButtonLink>
+            <ButtonLink href="https://sunny-tech.io/sponsoring" target="_blank" rel="noopener noreferrer" external>
+                Devenez sponsor de l'édition {EVENT.year}
+            </ButtonLink>
             <ButtonLink href="https://www.youtube.com/@SunnyTechMtp/videos" target="_blank" external>
                 Voir les replays
             </ButtonLink>
