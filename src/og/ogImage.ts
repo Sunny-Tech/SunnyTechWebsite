@@ -20,7 +20,7 @@ export function computeOgPath(pathname: string): string {
     // src/pages/blog/[...slug].astro); a stray unknown /blog/* route falls
     // back to default.
     if (clean.startsWith('/blog')) return '/og/default.png'
-    const staticPages = ['team', 'jobs', 'location', 'anecdotes', 'jeu', 'coc', '404']
+    const staticPages = ['team', 'jobs', 'anecdotes', 'jeu', 'coc', '404']
     const seg = clean.replace(/^\//, '').split('/')[0]
     if (staticPages.includes(seg)) return `/og/pages/${seg}.png`
     return '/og/default.png'

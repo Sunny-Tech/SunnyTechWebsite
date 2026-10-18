@@ -37,11 +37,6 @@ const PAGES: Record<string, PageSpec> = {
         title: "Offres d'emploi",
         description: 'Les opportunités proposées par nos sponsors.',
     },
-    location: {
-        eyebrow: 'Venue',
-        title: 'Lieu & accès',
-        description: `Faculté des Sciences de ${EVENT.city} — place Eugène Bataillon.`,
-    },
     anecdotes: {
         eyebrow: 'Bonus',
         title: 'Anecdotes des sponsors',

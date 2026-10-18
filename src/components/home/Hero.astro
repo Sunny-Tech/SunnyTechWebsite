@@ -4,6 +4,7 @@ import backgroundHome from '../../assets/home.jpg'
 import backgroundRain from '../../assets/home_rain.webp'
 import ButtonLink from '../ui-elements/ButtonLink.astro'
 import Cluster from '../ui-elements/Cluster.astro'
+import { EVENT } from '../../og/event'
 ---
 
 <div class="container">
@@ -11,11 +12,13 @@ import Cluster from '../ui-elements/Cluster.astro'
     <div class="content">
         <img src="/logos-sunnytech/logo.svg" alt="SunnyTech" loading="lazy" />
 
-        <h1>2 et 3 juillet 2026 à Montpellier</h1>
+        <h1>1er et 2 juillet 2027 à Montpellier</h1>
         <h2 class="fs1 fw-regular">#SeaTechAndSun ☀️️️</h2>
 
         <Cluster>
-            <ButtonLink href="/schedule/day-1">Voir le programme</ButtonLink>
+            <ButtonLink href="https://sunny-tech.io/sponsoring" target="_blank" rel="noopener noreferrer" external>
+                Devenez sponsor de l'édition {EVENT.year}
+            </ButtonLink>
             <ButtonLink href="https://www.youtube.com/@SunnyTechMtp/videos" target="_blank" external>
                 Voir les replays
             </ButtonLink>

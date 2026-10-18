@@ -10,6 +10,7 @@ import SessionItem from '../../components/schedule/SessionItem.astro'
 // scope that cannot see local frontmatter consts. The shared module is the
 // single source of truth for the OG filename.
 import { speakerOgSlug } from '../../og/speakerSlug'
+import { PROGRAM_EDITION } from '../../og/event'
 
 export const getStaticPaths = async () => {
     const response = await fetch(OPENPLANNER_URL)
@@ -47,7 +48,7 @@ const { name, company, bio, jobTitle, socials, photoUrl, sessions, ogSlug } = As
 const ogImage = `${import.meta.env.SITE}/og/speakers/${ogSlug}.png`
 ---
 
-<LayoutWithTitle htmlTitle={`SunnyTech speaker – ${name}`} title={name} metaImage={ogImage}>
+<LayoutWithTitle htmlTitle={`SunnyTech ${PROGRAM_EDITION.year} speaker – ${name}`} title={name} metaImage={ogImage}>
     {
         photoUrl && (
             <img
