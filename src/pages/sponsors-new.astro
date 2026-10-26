@@ -1,6 +1,4 @@
 ---
-import { OPENPLANNER_URL } from 'astro:env/client'
-import type { OpenPlannerType } from '../type'
 import Layout from '../layouts/Layout.astro'
 import SponsoringHero from '../components/sponsoring/SponsoringHero.astro'
 import SponsoringAbout from '../components/sponsoring/SponsoringAbout.astro'
@@ -9,14 +7,6 @@ import SpecialOffers from '../components/sponsoring/SpecialOffers.astro'
 import EditionHighlights from '../components/sponsoring/EditionHighlights.astro'
 import SponsoringSignup from '../components/sponsoring/SponsoringSignup.astro'
 import { EVENT } from '../og/event'
-
-const response = await fetch(OPENPLANNER_URL)
-const openPlannerData: OpenPlannerType = await response.json()
-// The payload still holds the previous edition's sponsors until the new programme is published.
-const pastSponsors = openPlannerData.sponsors
-    .filter((category) => !category.name.toLowerCase().includes('partenaire'))
-    .sort((a, b) => a.order - b.order)
-    .flatMap((category) => category.sponsors)
 ---
 
 <Layout
@@ -28,11 +18,19 @@ const pastSponsors = openPlannerData.sponsors
         <SponsoringAbout />
         <ClassicOffers />
         <SpecialOffers />
-        <EditionHighlights sponsors={pastSponsors} />
+        <EditionHighlights />
 
         <SponsoringSignup />
     </div>
 </Layout>
+
+<style is:global>
+    /* White menu over the dark hero, as on the home page. */
+    [data-transparent='true'] {
+        --hero-text-color: white;
+        --nav-drawer-bg-color: rgba(0, 0, 0, 0.8);
+    }
+</style>
 
 <style>
     .sponsoring :global(.section-head) {

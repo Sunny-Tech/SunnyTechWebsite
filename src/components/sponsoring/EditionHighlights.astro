@@ -1,6 +1,5 @@
 ---
 import { Picture } from 'astro:assets'
-import type { OpenPlannerType } from '../../type'
 import venue from '../../assets/sponsoring/venue.jpg'
 import themeMagic from '../../assets/sponsoring/theme-magic.png'
 import standCrowd from '../../assets/sponsoring/stand-crowd.jpg'
@@ -11,18 +10,7 @@ import volunteers from '../../assets/sponsoring/volunteers.jpg'
 import ContentContainer from '../ui-elements/ContentContainer.astro'
 import ButtonLink from '../ui-elements/ButtonLink.astro'
 import Cluster from '../ui-elements/Cluster.astro'
-import { FLASHBACK_FIGURES, FLASHBACK_LINKS, PAST_BRANDS } from './sponsoringData'
-
-interface Props {
-    sponsors: OpenPlannerType['sponsors'][number]['sponsors']
-}
-
-const { sponsors } = Astro.props
-
-// Brands already shown as a 2026 logo are not repeated in the history list. OpenPlanner
-// holds legal names ("Elasticsearch SARL", "TEADS "), hence the substring match.
-const sponsorNames = sponsors.map((sponsor) => sponsor.name.toLowerCase())
-const pastBrands = PAST_BRANDS.filter((brand) => !sponsorNames.some((name) => name.includes(brand.toLowerCase())))
+import { FLASHBACK_FIGURES, FLASHBACK_LINKS, TRUSTED_BRANDS } from './sponsoringData'
 
 const gallery = [
     { src: standCrowd, alt: 'Des participant·e·s sur un stand sponsor' },
@@ -100,20 +88,14 @@ const news = [
     </Cluster>
 
     <h2>Ils nous ont fait confiance</h2>
-    {
-        sponsors.length > 0 && (
-            <ul class="logos">
-                {sponsors.map((sponsor) => (
-                    <li>
-                        <img src={sponsor.logoUrl} alt={sponsor.name} loading="lazy" />
-                    </li>
-                ))}
-            </ul>
-        )
-    }
-    <p class="past-intro">Et lors des éditions précédentes :</p>
-    <ul class="brands">
-        {pastBrands.map((brand) => <li>{brand}</li>)}
+    <ul class="logos">
+        {
+            TRUSTED_BRANDS.map((brand) => (
+                <li>
+                    <img src={brand.logo} alt={brand.name} title={brand.name} loading="lazy" />
+                </li>
+            ))
+        }
     </ul>
 
     <div class="section-head">
@@ -201,29 +183,9 @@ const news = [
         }
 
         img {
-            max-height: 100%;
+            width: 100%;
+            height: 100%;
             object-fit: contain;
-        }
-    }
-
-    .past-intro {
-        color: var(--text-subtle);
-    }
-
-    .brands {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.75rem;
-        list-style: none;
-
-        li {
-            padding: 0.5rem 1rem;
-            font-size: var(--fs1);
-            font-weight: 700;
-            letter-spacing: -0.01em;
-            border-radius: 999px;
-            color: var(--text);
-            background: var(--component);
         }
     }
 
