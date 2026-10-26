@@ -55,6 +55,11 @@ const PAGES: Record<string, PageSpec> = {
         title: 'Blog',
         description: "Coulisses, chiffres et décisions de l'équipe Sunny Tech.",
     },
+    'sponsors-new': {
+        eyebrow: 'Sponsoring',
+        title: `Sponsoriser Sunny Tech ${EVENT.year}`,
+        description: `Stands, soirées et recrutement : toutes les formules, les ${EVENT.displayDates}.`,
+    },
     '404': {
         eyebrow: 'Erreur 404',
         title: 'Page introuvable',

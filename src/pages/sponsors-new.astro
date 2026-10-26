@@ -1,0 +1,142 @@
+---
+import { OPENPLANNER_URL } from 'astro:env/client'
+import type { OpenPlannerType } from '../type'
+import Layout from '../layouts/Layout.astro'
+import ContentContainer from '../components/ui-elements/ContentContainer.astro'
+import ButtonLink from '../components/ui-elements/ButtonLink.astro'
+import Cluster from '../components/ui-elements/Cluster.astro'
+import SponsoringHero from '../components/sponsoring/SponsoringHero.astro'
+import SponsoringAbout from '../components/sponsoring/SponsoringAbout.astro'
+import ClassicOffers from '../components/sponsoring/ClassicOffers.astro'
+import SpecialOffers from '../components/sponsoring/SpecialOffers.astro'
+import EditionHighlights from '../components/sponsoring/EditionHighlights.astro'
+import { CONTACT_EMAIL, SPONSORS_FORM_URL, STEPS } from '../components/sponsoring/sponsoringData'
+import { EVENT } from '../og/event'
+
+const response = await fetch(OPENPLANNER_URL)
+const openPlannerData: OpenPlannerType = await response.json()
+// The payload still holds the previous edition's sponsors until the new programme is published.
+const pastSponsors = openPlannerData.sponsors
+    .filter((category) => !category.name.toLowerCase().includes('partenaire'))
+    .sort((a, b) => a.order - b.order)
+    .flatMap((category) => category.sponsors)
+---
+
+<Layout
+    title={`Sponsoriser Sunny Tech ${EVENT.year}`}
+    description={`Stands, soirées, recrutement : toutes les formules pour sponsoriser Sunny Tech, les ${EVENT.displayDates} à ${EVENT.city}.`}
+    noindex>
+    <div class="sponsoring">
+        <SponsoringHero />
+        <SponsoringAbout />
+        <ClassicOffers />
+        <SpecialOffers />
+        <EditionHighlights sponsors={pastSponsors} />
+
+        <section class="cta">
+            <ContentContainer spaceBlock="3rem">
+                <div class="section-head">
+                    <p class="eyebrow">Convaincu·e ?</p>
+                    <h2>Encore 4 étapes et à vous le soutien de Sunny Tech !</h2>
+                </div>
+                <ol class="steps">
+                    {
+                        STEPS.map((step) => (
+                            <li>
+                                <h3>{step.title}</h3>
+                                <p>{step.text}</p>
+                            </li>
+                        ))
+                    }
+                </ol>
+                <p class="note">
+                    Aucun devis ne vous sera adressé par l’organisation&nbsp;: la facture Qonto reprend toutes les
+                    modalités de votre sponsoring.
+                </p>
+                <Cluster>
+                    <ButtonLink
+                        href={SPONSORS_FORM_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        variant="transparent"
+                        external>
+                        Remplir le formulaire sponsors
+                    </ButtonLink>
+                    <a class="contact" href={`mailto:${CONTACT_EMAIL}`}>Une question ? {CONTACT_EMAIL}</a>
+                </Cluster>
+                <p class="fs1">Toute l’équipe vous remercie 😍</p>
+            </ContentContainer>
+        </section>
+    </div>
+</Layout>
+
+<style>
+    .sponsoring :global(.section-head) {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        max-width: 48rem;
+        scroll-margin-top: 5rem;
+    }
+
+    .sponsoring :global(.eyebrow) {
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: var(--brand-solid);
+    }
+
+    .cta {
+        margin-bottom: 3rem;
+        color: var(--brand-contrast);
+        background: linear-gradient(135deg, #f4724e 0%, var(--pink-2) 55%, var(--pink-3) 100%);
+
+        :global(.eyebrow) {
+            color: var(--brand-contrast);
+            opacity: 0.85;
+        }
+    }
+
+    .steps {
+        display: grid;
+        gap: 1.5rem;
+        grid-template-columns: repeat(auto-fit, minmax(min(13rem, 100%), 1fr));
+        list-style: none;
+        counter-reset: step;
+
+        li {
+            counter-increment: step;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+
+            &::before {
+                content: counter(step);
+                display: grid;
+                place-items: center;
+                width: 2.5rem;
+                height: 2.5rem;
+                font-weight: 700;
+                border-radius: 50%;
+                color: var(--brand-solid);
+                background: var(--brand-contrast);
+            }
+        }
+
+        h3 {
+            font-size: var(--fs1);
+            font-weight: 700;
+        }
+    }
+
+    .note {
+        font-size: var(--fs-1);
+        opacity: 0.85;
+    }
+
+    .contact {
+        align-self: center;
+        color: inherit;
+        font-weight: 600;
+    }
+</style>

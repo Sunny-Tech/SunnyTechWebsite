@@ -1,0 +1,169 @@
+---
+import { Picture } from 'astro:assets'
+import speakersParty from '../../assets/sponsoring/speakers-party.jpg'
+import ContentContainer from '../ui-elements/ContentContainer.astro'
+import { OPTIONS, SPECIAL_COMMON_PERKS, SPECIAL_OFFERS } from './sponsoringData'
+---
+
+<section class="specials">
+    <ContentContainer spaceBlock="3rem">
+        <div class="intro">
+            <div class="section-head">
+                <p class="eyebrow">Les spéciales</p>
+                <h2>Des formules pour vous distinguer</h2>
+                <p>
+                    Seules ou en complément d’une formule classique, elles vous donnent une place particulière pendant
+                    l’édition. Chacune inclut&nbsp;: {SPECIAL_COMMON_PERKS.join(', ')}.
+                </p>
+            </div>
+            <Picture
+                src={speakersParty}
+                formats={['avif', 'webp']}
+                widths={[480, 800]}
+                sizes="(min-width: 960px) 480px, 100vw"
+                alt="Des bénévoles et speakers posent autour d’une bouée flamant rose"
+                class="intro-photo"
+            />
+        </div>
+
+        <div class="cards">
+            {
+                SPECIAL_OFFERS.map((offer) => (
+                    <article class="card">
+                        <header>
+                            <h3>{offer.name}</h3>
+                            <p class="price">
+                                {offer.price} <span>HT</span>
+                            </p>
+                        </header>
+                        <p class="tagline">{offer.tagline}</p>
+                        {offer.audience && <p class="audience">{offer.audience}</p>}
+                        <ul>
+                            {offer.perks.map((perk) => (
+                                <li>{perk}</li>
+                            ))}
+                            <li>{offer.tickets}</li>
+                        </ul>
+                    </article>
+                ))
+            }
+        </div>
+
+        <div class="section-head">
+            <p class="eyebrow">Les options</p>
+            <h2>En complément de votre sponsoring</h2>
+        </div>
+        <div class="cards options">
+            {
+                OPTIONS.map((option) => (
+                    <article class="card">
+                        <header>
+                            <h3>
+                                {option.name}
+                                {option.badge && <span class="badge">{option.badge}</span>}
+                            </h3>
+                            <p class="price">
+                                {option.price} <span>HT</span>
+                            </p>
+                        </header>
+                        <p>{option.text}</p>
+                    </article>
+                ))
+            }
+        </div>
+    </ContentContainer>
+</section>
+
+<style>
+    .specials {
+        background: var(--component);
+    }
+
+    .intro {
+        display: grid;
+        gap: 2rem;
+        align-items: center;
+
+        @media (min-width: 960px) {
+            grid-template-columns: 3fr 2fr;
+        }
+
+        :global(.intro-photo) {
+            width: 100%;
+            aspect-ratio: 3 / 2;
+            object-fit: cover;
+            border-radius: 0.75rem;
+        }
+    }
+
+    .cards {
+        display: grid;
+        gap: 1.5rem;
+        grid-template-columns: repeat(auto-fit, minmax(min(15rem, 100%), 1fr));
+
+        &.options {
+            grid-template-columns: repeat(auto-fit, minmax(min(22rem, 100%), 1fr));
+        }
+    }
+
+    .card {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        padding: 1.5rem;
+        border-radius: 0.75rem;
+        background: var(--background);
+        border-top: 4px solid var(--brand-solid);
+
+        header {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        ul {
+            display: grid;
+            gap: 0.5rem;
+            padding-left: 1.25rem;
+            color: var(--text-subtle);
+        }
+    }
+
+    .price {
+        font-size: var(--fs3);
+        font-weight: 700;
+        color: var(--brand-solid);
+
+        span {
+            font-size: var(--fs0);
+            font-weight: 500;
+            color: var(--text-subtle);
+        }
+    }
+
+    .tagline {
+        font-weight: 600;
+    }
+
+    .audience {
+        width: fit-content;
+        padding: 0.125rem 0.625rem;
+        font-size: var(--fs-1);
+        font-weight: 600;
+        border-radius: 999px;
+        color: var(--brand-solid-hover);
+        background: var(--brand-transparent-hover);
+    }
+
+    .badge {
+        margin-left: 0.5rem;
+        padding: 0.125rem 0.5rem;
+        font-size: var(--fs-1);
+        font-weight: 700;
+        text-transform: uppercase;
+        vertical-align: middle;
+        border-radius: var(--border-radius);
+        color: var(--brand-contrast);
+        background: var(--brand-solid);
+    }
+</style>

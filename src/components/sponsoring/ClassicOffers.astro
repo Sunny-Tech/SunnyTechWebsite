@@ -1,0 +1,239 @@
+---
+import { Picture } from 'astro:assets'
+import ContentContainer from '../ui-elements/ContentContainer.astro'
+import { CLASSIC_COMPARISON, CLASSIC_OFFERS } from './sponsoringData'
+---
+
+<ContentContainer spaceBlock="3rem">
+    <div class="section-head" id="formules">
+        <p class="eyebrow">Les classiques</p>
+        <h2>Un stand au cœur de l’événement</h2>
+        <p>
+            Pour conserver une qualité d’événement à la hauteur des attentes des participant·e·s, l’équipe a légèrement
+            revu les offres par rapport à l’édition 2026. Tous les prix sont affichés hors taxes.
+        </p>
+    </div>
+
+    <div class="offers">
+        {
+            CLASSIC_OFFERS.map((offer) => (
+                <article class:list={['offer', { highlighted: offer.highlighted }]}>
+                    <figure>
+                        <Picture
+                            src={offer.image}
+                            formats={['avif', 'webp']}
+                            widths={[480, 800]}
+                            sizes="(min-width: 960px) 400px, 100vw"
+                            alt={`Exemple d’emplacement ${offer.name}`}
+                        />
+                        <figcaption>{offer.imageCaption}</figcaption>
+                    </figure>
+                    <div class="offer-body">
+                        <h3>{offer.name}</h3>
+                        <p class="price">
+                            {offer.price} <span>HT</span>
+                        </p>
+                        <ul class="facts">
+                            <li>
+                                <strong>{offer.stand}</strong>
+                            </li>
+                            <li>
+                                <strong>{offer.tickets} billets</strong> conférences + stand
+                            </li>
+                            <li>
+                                <strong>+{offer.networkingTickets}</strong> entrée{offer.networkingTickets > 1 && 's'}{' '}
+                                soirée Networking
+                            </li>
+                        </ul>
+                        <ul class="perks">
+                            {offer.perks.map((perk) => (
+                                <li>{perk}</li>
+                            ))}
+                        </ul>
+                    </div>
+                </article>
+            ))
+        }
+    </div>
+
+    <details class="comparison">
+        <summary>Comparer les formules en détail</summary>
+        <div class="table-scroll">
+            <table>
+                <thead>
+                    <tr>
+                        <th scope="col"><span class="visually-hidden">Avantage</span></th>
+                        {CLASSIC_OFFERS.map((offer) => <th scope="col">{offer.name}</th>)}
+                    </tr>
+                </thead>
+                {
+                    CLASSIC_COMPARISON.map((group) => (
+                        <tbody>
+                            <tr class="group">
+                                <th scope="colgroup" colspan="4">
+                                    {group.group}
+                                </th>
+                            </tr>
+                            {group.rows.map((row) => (
+                                <tr>
+                                    <th scope="row">{row.label}</th>
+                                    {row.values.map((value) => (
+                                        <td>{value}</td>
+                                    ))}
+                                </tr>
+                            ))}
+                        </tbody>
+                    ))
+                }
+                <tfoot>
+                    <tr>
+                        <th scope="row">Tarif HT</th>
+                        {CLASSIC_OFFERS.map((offer) => <td>{offer.price}</td>)}
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </details>
+</ContentContainer>
+
+<style>
+    .offers {
+        display: grid;
+        gap: 1.5rem;
+        grid-template-columns: repeat(auto-fit, minmax(min(18rem, 100%), 1fr));
+        align-items: start;
+    }
+
+    .offer {
+        display: flex;
+        flex-direction: column;
+        border: 1px solid var(--line);
+        border-radius: 0.75rem;
+        overflow: hidden;
+        background: var(--background);
+
+        &.highlighted {
+            border: 2px solid var(--brand-solid);
+            box-shadow: 0 0.75rem 2rem rgb(214 63 73 / 0.15);
+        }
+    }
+
+    figure {
+        position: relative;
+        margin: 0;
+
+        :global(img) {
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            object-fit: cover;
+        }
+    }
+
+    figcaption {
+        position: absolute;
+        inset: auto 0 0;
+        padding: 1.5rem 1rem 0.5rem;
+        font-size: var(--fs-1);
+        color: var(--brand-contrast);
+        background: linear-gradient(transparent, rgb(0 0 0 / 0.7));
+    }
+
+    .offer-body {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1.5rem;
+    }
+
+    .price {
+        font-size: var(--fs4);
+        font-weight: 700;
+        color: var(--brand-solid);
+        line-height: 1;
+
+        span {
+            font-size: var(--fs0);
+            font-weight: 500;
+            color: var(--text-subtle);
+        }
+    }
+
+    .facts {
+        display: grid;
+        gap: 0.25rem;
+        padding: 1rem;
+        list-style: none;
+        border-radius: 0.5rem;
+        background: var(--component);
+    }
+
+    .perks {
+        display: grid;
+        gap: 0.5rem;
+        padding-left: 1.25rem;
+        color: var(--text-subtle);
+
+        li::marker {
+            content: '🦩 ';
+        }
+    }
+
+    .comparison summary {
+        cursor: pointer;
+        font-weight: 600;
+        color: var(--brand-solid);
+    }
+
+    .table-scroll {
+        overflow-x: auto;
+        margin-top: 1rem;
+    }
+
+    table {
+        width: 100%;
+        min-width: 36rem;
+        border-collapse: collapse;
+
+        th,
+        td {
+            padding: 0.625rem 0.75rem;
+            border-bottom: 1px solid var(--line);
+            text-align: center;
+        }
+
+        th[scope='row'] {
+            position: sticky;
+            left: 0;
+            text-align: left;
+            font-weight: 400;
+            background: var(--background);
+        }
+
+        thead th {
+            color: var(--brand-solid);
+            font-size: var(--fs1);
+        }
+
+        .group th {
+            text-align: left;
+            font-weight: 600;
+            background: var(--component);
+        }
+
+        tfoot {
+            font-weight: 700;
+
+            th[scope='row'] {
+                font-weight: 700;
+            }
+        }
+    }
+
+    .visually-hidden {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+    }
+</style>
