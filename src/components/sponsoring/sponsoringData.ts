@@ -222,7 +222,7 @@ export const FLASHBACK_LINKS = [
 ]
 
 /**
- * Every sponsor since 2019, biggest companies first. Logos are self-hosted in
+ * Every sponsor since 2018, biggest companies first. Logos are self-hosted in
  * public/sponsoring/logos, copied from the archived edition sites.
  */
 export const TRUSTED_BRANDS = [
@@ -245,7 +245,9 @@ export const TRUSTED_BRANDS = [
     { name: 'Clever Cloud', logo: '/sponsoring/logos/clever-cloud.svg' },
     { name: 'Smile', logo: '/sponsoring/logos/smile.png' },
     { name: 'Epitech', logo: '/sponsoring/logos/epitech.svg' },
+    { name: 'CodinGame', logo: '/sponsoring/logos/codingame.png' },
     { name: 'CESI', logo: '/sponsoring/logos/cesi.png' },
+    { name: 'SII', logo: '/sponsoring/logos/sii.png' },
     { name: 'Apside', logo: '/sponsoring/logos/apside.png' },
     { name: 'Meritis', logo: '/sponsoring/logos/meritis.png' },
     { name: 'Kaliop', logo: '/sponsoring/logos/kaliop.svg' },
@@ -285,6 +287,9 @@ export const TRUSTED_BRANDS = [
     { name: 'DecisionBrain', logo: '/sponsoring/logos/decisionbrain.png' },
     { name: 'Devensys', logo: '/sponsoring/logos/devensys.png' },
     { name: 'Smartview', logo: '/sponsoring/logos/smartview.png' },
+    { name: 'Backelite', logo: '/sponsoring/logos/backelite.png' },
+    { name: 'Adagio', logo: '/sponsoring/logos/adagio.png' },
+    { name: 'IOcean', logo: '/sponsoring/logos/iocean.png' },
     { name: 'Aive', logo: '/sponsoring/logos/aive.png' },
     { name: 'Vitrine Media', logo: '/sponsoring/logos/vitrine-media.png' },
     { name: 'Winzana', logo: '/sponsoring/logos/winzana.png' },
