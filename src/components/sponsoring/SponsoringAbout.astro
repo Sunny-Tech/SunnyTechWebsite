@@ -13,11 +13,14 @@ import { BENEFITS, KEY_FIGURES } from './sponsoringData'
                 Depuis 2018, Sunny Tech donne la parole aux passionné·e·s des technologies du numérique dans une
                 conférence annuelle responsable, à Montpellier, avec l’ambition d’un rayonnement international.
             </p>
-            <p>
-                Nous sommes développeurs, product owners, ouverts d’esprit, décalés, chargés de communication,
-                complémentaires, devops… Nous sommes avant tout ravis d’organiser un événement tech unique dans un
-                environnement où chantent les cigales. En 2027, nous vous proposons de vous y associer.
-            </p>
+            <div class="association">
+                <p class="association-title">Association loi 1901 depuis 2016</p>
+                <p>
+                    Sunny Tech est organisée par une association à but non lucratif, créée par des membres de la
+                    communauté tech de Montpellier, toutes et tous bénévoles. Votre sponsoring finance l’événement.
+                </p>
+            </div>
+            <p>En 2027, nous vous proposons de vous y associer.</p>
         </div>
         <Picture
             src={team}
@@ -71,6 +74,22 @@ import { BENEFITS, KEY_FIGURES } from './sponsoringData'
             object-fit: cover;
             border-radius: 0.75rem;
         }
+    }
+
+    .association {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+        padding: 1rem 1.25rem;
+        border-left: 4px solid var(--brand-solid);
+        border-radius: 0 0.5rem 0.5rem 0;
+        background: var(--component);
+    }
+
+    .association-title {
+        font-size: var(--fs1);
+        font-weight: 700;
+        color: var(--brand-solid);
     }
 
     .figures {
