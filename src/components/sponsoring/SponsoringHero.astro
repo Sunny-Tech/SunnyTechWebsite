@@ -10,7 +10,6 @@ import { SPONSORS_FORM_URL } from './sponsoringData'
 <header class="hero">
     <Picture src={amphi} formats={['avif', 'webp']} alt="" class="hero-bg" loading="eager" widths={[800, 1600]} />
     <div class="hero-content">
-        <p class="hero-eyebrow">Dossier de sponsoring</p>
         <h1>Sponsorisez Sunny Tech {EVENT.year}</h1>
         <p class="fs1">{EVENT.displayDates} — {EVENT.city}</p>
         <Cluster justify="center">
@@ -59,12 +58,6 @@ import { SPONSORS_FORM_URL } from './sponsoringData'
         align-items: center;
         gap: 1.25rem;
         padding-top: 4rem;
-    }
-
-    .hero-eyebrow {
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.12em;
     }
 
     h1 {

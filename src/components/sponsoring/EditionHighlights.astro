@@ -11,13 +11,18 @@ import volunteers from '../../assets/sponsoring/volunteers.jpg'
 import ContentContainer from '../ui-elements/ContentContainer.astro'
 import ButtonLink from '../ui-elements/ButtonLink.astro'
 import Cluster from '../ui-elements/Cluster.astro'
-import { FLASHBACK_FIGURES, FLASHBACK_LINKS } from './sponsoringData'
+import { FLASHBACK_FIGURES, FLASHBACK_LINKS, PAST_BRANDS } from './sponsoringData'
 
 interface Props {
     sponsors: OpenPlannerType['sponsors'][number]['sponsors']
 }
 
 const { sponsors } = Astro.props
+
+// Brands already shown as a 2026 logo are not repeated in the history list. OpenPlanner
+// holds legal names ("Elasticsearch SARL", "TEADS "), hence the substring match.
+const sponsorNames = sponsors.map((sponsor) => sponsor.name.toLowerCase())
+const pastBrands = PAST_BRANDS.filter((brand) => !sponsorNames.some((name) => name.includes(brand.toLowerCase())))
 
 const gallery = [
     { src: standCrowd, alt: 'Des participant·e·s sur un stand sponsor' },
@@ -28,8 +33,7 @@ const gallery = [
 
 const news = [
     {
-        title: 'Un nouveau lieu',
-        subtitle: 'Faculté des sciences',
+        title: 'Faculté des sciences',
         image: venue,
         points: [
             '3 amphithéâtres, 3 salles pour les ateliers, les speakers et les conférences, des espaces verts',
@@ -38,8 +42,7 @@ const news = [
         ],
     },
     {
-        title: 'Une thématique attractive',
-        subtitle: 'La magie 🧙',
+        title: 'Thème 2027 : la magie 🧙',
         image: themeMagic,
         points: [
             'Une thématique renouvelée chaque année',
@@ -48,8 +51,7 @@ const news = [
         ],
     },
     {
-        title: 'Un lien renforcé',
-        subtitle: 'avec vous',
+        title: 'Un suivi dédié',
         image: volunteers,
         points: [
             'Une fréquentation accrue de vos stands grâce à un jeu mis en place ensemble*',
@@ -62,8 +64,7 @@ const news = [
 
 <ContentContainer spaceBlock="3rem">
     <div class="section-head">
-        <p class="eyebrow">Flashback</p>
-        <h2>L’édition 2026 en chiffres</h2>
+        <h2>L’édition 2026</h2>
     </div>
     <dl class="figures">
         {
@@ -98,24 +99,25 @@ const news = [
         }
     </Cluster>
 
+    <h2>Ils nous ont fait confiance</h2>
     {
         sponsors.length > 0 && (
-            <>
-                <h3>Ils nous ont fait confiance (merci !)</h3>
-                <ul class="logos">
-                    {sponsors.map((sponsor) => (
-                        <li>
-                            <img src={sponsor.logoUrl} alt={sponsor.name} loading="lazy" />
-                        </li>
-                    ))}
-                </ul>
-            </>
+            <ul class="logos">
+                {sponsors.map((sponsor) => (
+                    <li>
+                        <img src={sponsor.logoUrl} alt={sponsor.name} loading="lazy" />
+                    </li>
+                ))}
+            </ul>
         )
     }
+    <p class="past-intro">Et lors des éditions précédentes :</p>
+    <ul class="brands">
+        {pastBrands.map((brand) => <li>{brand}</li>)}
+    </ul>
 
     <div class="section-head">
-        <p class="eyebrow">Flashforward</p>
-        <h2>Ce qui vous attend en 2027</h2>
+        <h2>En 2027</h2>
     </div>
     <div class="news">
         {
@@ -129,9 +131,7 @@ const news = [
                         sizes="(min-width: 960px) 400px, 100vw"
                     />
                     <div class="news-body">
-                        <h3>
-                            {item.title} <span>— {item.subtitle}</span>
-                        </h3>
+                        <h3>{item.title}</h3>
                         <ul>
                             {item.points.map((point) => (
                                 <li>{point}</li>
@@ -206,6 +206,27 @@ const news = [
         }
     }
 
+    .past-intro {
+        color: var(--text-subtle);
+    }
+
+    .brands {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        list-style: none;
+
+        li {
+            padding: 0.5rem 1rem;
+            font-size: var(--fs1);
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            border-radius: 999px;
+            color: var(--text);
+            background: var(--component);
+        }
+    }
+
     .news {
         display: grid;
         gap: 1.5rem;
@@ -224,10 +245,6 @@ const news = [
             aspect-ratio: 16 / 10;
             object-fit: cover;
             background: var(--white);
-        }
-
-        h3 span {
-            color: var(--brand-solid);
         }
 
         ul {

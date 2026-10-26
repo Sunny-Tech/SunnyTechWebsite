@@ -15,7 +15,7 @@ export const KEY_FIGURES = [
     { value: '65+', label: 'talks sur 2 jours' },
     { value: '2 000', label: 'followers sur LinkedIn et X' },
     { value: '7', label: 'formules de sponsoring' },
-    { value: '10e', label: 'édition en 2027' },
+    { value: '8e', label: 'édition en 2027' },
     { value: '1', label: 'Flamy 🦩' },
 ]
 
@@ -219,6 +219,27 @@ export const FLASHBACK_LINKS = [
         label: 'Replays 2026',
         href: 'https://www.youtube.com/watch?v=v7JkOxSG4gI&list=PLz7aCyCbFOu8_3w6EydaKkjHDiZ9Az1XR',
     },
+]
+
+/** Best-known brands that sponsored a past edition, from the sponsors history. */
+export const PAST_BRANDS = [
+    'Microsoft',
+    'OVHcloud',
+    'MAIF',
+    'Groupama',
+    'La Poste',
+    'Zendesk',
+    'GitLab',
+    'Elastic',
+    'CGI',
+    'Sopra Steria',
+    'Talan',
+    'SLB',
+    'Rakuten',
+    'Teads',
+    'Smile',
+    'CodinGame',
+    'Epitech',
 ]
 
 export const STEPS = [

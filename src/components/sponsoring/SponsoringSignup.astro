@@ -1,0 +1,161 @@
+---
+import ContentContainer from '../ui-elements/ContentContainer.astro'
+import ButtonLink from '../ui-elements/ButtonLink.astro'
+import { CONTACT_EMAIL, SPONSORS_FORM_URL, STEPS } from './sponsoringData'
+---
+
+<section class="signup">
+    <ContentContainer spaceBlock="4rem">
+        <div class="layout">
+            <div class="steps-column">
+                <h2>Devenir sponsor</h2>
+                <ol class="steps">
+                    {
+                        STEPS.map((step) => (
+                            <li>
+                                <h3>{step.title}</h3>
+                                <p>{step.text}</p>
+                            </li>
+                        ))
+                    }
+                </ol>
+            </div>
+
+            <aside class="card">
+                <p class="card-title">On vous garde une place&nbsp;?</p>
+                <p>Le formulaire prend deux minutes. Les formules sont attribuées dans la limite des places.</p>
+                <ButtonLink
+                    href={SPONSORS_FORM_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    variant="transparent"
+                    external>
+                    Remplir le formulaire
+                </ButtonLink>
+                <p class="contact">
+                    Une question&nbsp;? <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
+                </p>
+                <p class="note">
+                    Pas de devis&nbsp;: la facture Qonto reprend toutes les modalités de votre sponsoring.
+                </p>
+            </aside>
+        </div>
+    </ContentContainer>
+</section>
+
+<style>
+    .signup {
+        background: var(--component);
+    }
+
+    .layout {
+        display: grid;
+        gap: 2.5rem;
+        align-items: start;
+
+        @media (min-width: 900px) {
+            grid-template-columns: 3fr 2fr;
+            gap: 4rem;
+        }
+    }
+
+    .steps-column {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .steps {
+        display: grid;
+        list-style: none;
+        counter-reset: step;
+
+        li {
+            counter-increment: step;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+            padding: 0 0 2rem 3.75rem;
+
+            &::before {
+                content: counter(step);
+                position: absolute;
+                left: 0;
+                top: 0;
+                display: grid;
+                place-items: center;
+                width: 2.5rem;
+                height: 2.5rem;
+                font-weight: 700;
+                border-radius: 50%;
+                color: var(--brand-contrast);
+                background: var(--brand-solid);
+            }
+
+            &:not(:last-child)::after {
+                content: '';
+                position: absolute;
+                left: calc(1.25rem - 1px);
+                top: 2.75rem;
+                bottom: 0.25rem;
+                width: 2px;
+                background: var(--brand-border);
+            }
+
+            &:last-child {
+                padding-bottom: 0;
+            }
+        }
+
+        h3 {
+            font-size: var(--fs1);
+            font-weight: 700;
+            line-height: 2.5rem;
+        }
+
+        p {
+            color: var(--text-subtle);
+        }
+    }
+
+    .card {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        padding: 2rem;
+        border-radius: 1rem;
+        color: var(--brand-contrast);
+        background: var(--brand-solid);
+        box-shadow: 0 1rem 2.5rem rgb(144 31 38 / 0.25);
+
+        @media (min-width: 900px) {
+            position: sticky;
+            top: 6rem;
+        }
+
+        :global(a.transparent) {
+            width: 100%;
+            justify-content: center;
+            margin-block: 0.5rem;
+        }
+    }
+
+    .card-title {
+        font-size: var(--fs3);
+        font-weight: 700;
+        line-height: 1.2;
+    }
+
+    .contact a {
+        color: inherit;
+        font-weight: 600;
+    }
+
+    .note {
+        padding-top: 1rem;
+        font-size: var(--fs-1);
+        border-top: 1px solid rgb(255 255 255 / 0.3);
+        opacity: 0.85;
+    }
+</style>

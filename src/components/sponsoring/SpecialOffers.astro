@@ -2,15 +2,15 @@
 import { Picture } from 'astro:assets'
 import speakersParty from '../../assets/sponsoring/speakers-party.jpg'
 import ContentContainer from '../ui-elements/ContentContainer.astro'
-import { OPTIONS, SPECIAL_COMMON_PERKS, SPECIAL_OFFERS } from './sponsoringData'
+import ButtonLink from '../ui-elements/ButtonLink.astro'
+import { OPTIONS, SPECIAL_COMMON_PERKS, SPECIAL_OFFERS, SPONSORS_FORM_URL } from './sponsoringData'
 ---
 
 <section class="specials">
     <ContentContainer spaceBlock="3rem">
         <div class="intro">
             <div class="section-head">
-                <p class="eyebrow">Les spéciales</p>
-                <h2>Des formules pour vous distinguer</h2>
+                <h2>Formules spéciales</h2>
                 <p>
                     Seules ou en complément d’une formule classique, elles vous donnent une place particulière pendant
                     l’édition. Chacune inclut&nbsp;: {SPECIAL_COMMON_PERKS.join(', ')}.
@@ -44,14 +44,18 @@ import { OPTIONS, SPECIAL_COMMON_PERKS, SPECIAL_OFFERS } from './sponsoringData'
                             ))}
                             <li>{offer.tickets}</li>
                         </ul>
+                        <div class="offer-cta">
+                            <ButtonLink href={SPONSORS_FORM_URL} target="_blank" rel="noopener noreferrer" external>
+                                Choisir
+                            </ButtonLink>
+                        </div>
                     </article>
                 ))
             }
         </div>
 
         <div class="section-head">
-            <p class="eyebrow">Les options</p>
-            <h2>En complément de votre sponsoring</h2>
+            <h2>Options</h2>
         </div>
         <div class="cards options">
             {
@@ -126,6 +130,16 @@ import { OPTIONS, SPECIAL_COMMON_PERKS, SPECIAL_OFFERS } from './sponsoringData'
             gap: 0.5rem;
             padding-left: 1.25rem;
             color: var(--text-subtle);
+        }
+    }
+
+    .offer-cta {
+        margin-top: auto;
+        padding-top: 0.5rem;
+
+        :global(a) {
+            width: 100%;
+            justify-content: center;
         }
     }
 
