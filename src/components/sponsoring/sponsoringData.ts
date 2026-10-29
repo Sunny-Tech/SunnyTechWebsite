@@ -188,7 +188,7 @@ export const OFFER_COMPARISON: { group: string; rows: { label: string; values: s
         rows: [
             { label: 'Stand', values: ['15 m²', '9 m²', 'Espace partagé', '–', '–', '–', '–'] },
             {
-                label: 'Billets pour votre équipe (accès aux conférences et au stand)',
+                label: 'Billets pour votre équipe (inclus stand)',
                 values: ['8', '6', '3', '2', '2', '2', '1'],
             },
             { label: 'Entrées soirée Networking en plus', values: ['4', '2', '1', '4', '–', '–', '–'] },
