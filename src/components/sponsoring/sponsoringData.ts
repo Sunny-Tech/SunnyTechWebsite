@@ -64,7 +64,7 @@ export const CLASSIC_OFFERS: ClassicOffer[] = [
         tickets: 8,
         networkingTickets: 4,
         perks: [
-            'Des goodies',
+            'Vos goodies dans le sac des participant·e·s',
             'Supports physiques premium de l’événement',
             'Tirage de votre jeu-concours sur scène',
             'Logo premium entre les talks, sur la borne OuiSnap ! et sur les replays',
@@ -81,7 +81,7 @@ export const CLASSIC_OFFERS: ClassicOffer[] = [
         tickets: 6,
         networkingTickets: 2,
         perks: [
-            'Des goodies',
+            'Vos goodies dans le sac des participant·e·s',
             'Supports physiques classiques de l’événement',
             'Logo entre les talks',
             'Newsletter, annonce du sponsoring, site et bannières Sunny Tech',
@@ -99,33 +99,6 @@ export const CLASSIC_OFFERS: ClassicOffer[] = [
             'Supports physiques de l’événement',
             'Mise en avant du sponsoring',
             'Logo sur le site et les bannières',
-        ],
-    },
-]
-
-/** Each row lists the Platinium, Gold and Silver values, in that order. */
-export const CLASSIC_COMPARISON: { group: string; rows: { label: string; values: [string, string, string] }[] }[] = [
-    {
-        group: 'Pendant l’événement',
-        rows: [
-            { label: 'Stand', values: ['15 m²', '9 m²', 'Espace partagé'] },
-            { label: 'Billets (conférences + stand)', values: ['8', '6', '3'] },
-            { label: 'Entrées soirée Networking en plus', values: ['4', '2', '1'] },
-            { label: 'Goodies', values: ['✔', '✔', '–'] },
-            { label: 'Visibilité sur les supports physiques', values: ['Premium', 'Classique', '✔'] },
-            { label: 'Logo entre les talks + vidéo animée', values: ['Premium', 'Classique', '–'] },
-            { label: 'Tirage de votre jeu-concours sur scène', values: ['✔', '–', '–'] },
-            { label: 'Logo sur le gif de la borne OuiSnap !', values: ['✔', '–', '–'] },
-        ],
-    },
-    {
-        group: 'Avant et après l’événement',
-        rows: [
-            { label: 'Logo sur le site Sunny Tech', values: ['✔', '✔', '✔'] },
-            { label: 'Annonce du soutien sur les réseaux sociaux', values: ['✔', '✔', '–'] },
-            { label: 'Mise en avant du sponsoring + logo sur nos bannières', values: ['✔', '✔', '✔'] },
-            { label: 'Mise en avant dans la newsletter participants', values: ['✔', '✔', '–'] },
-            { label: 'Logo sur les replays (chaîne YouTube)', values: ['✔', '–', '–'] },
         ],
     },
 ]
@@ -201,6 +174,55 @@ export const OPTIONS = [
         name: 'Places supplémentaires',
         price: '130 € / place',
         text: 'Sponsors Platinium, Gold ou Silver : commandez des places hors du pool de billetterie classique, en plus de celles incluses dans votre pack.',
+    },
+]
+
+/**
+ * Comparison of the 7 offers, merging the two annex tables of the deck. Each
+ * row lists one value per offer: Platinium, Gold, Silver, then the specials in
+ * SPECIAL_OFFERS order.
+ */
+export const OFFER_COMPARISON: { group: string; rows: { label: string; values: string[] }[] }[] = [
+    {
+        group: 'Pendant l’événement',
+        rows: [
+            { label: 'Stand', values: ['15 m²', '9 m²', 'Espace partagé', '–', '–', '–', '–'] },
+            {
+                label: 'Billets pour votre équipe (accès aux conférences)',
+                values: ['8', '6', '3', '2', '2', '2', '1'],
+            },
+            { label: 'Entrées soirée Networking en plus', values: ['4', '2', '1', '4', '–', '–', '–'] },
+            { label: 'Entrées soirée Speakers', values: ['–', '–', '–', '–', '2', '–', '–'] },
+            { label: 'Vos goodies dans le sac des participant·e·s', values: ['✔', '✔', '–', '–', '–', '–', '–'] },
+            {
+                label: 'Logo sur les supports physiques et la keynote',
+                values: ['Premium', 'Classique', '✔', '✔', '✔', '✔', '✔'],
+            },
+            { label: 'Logo entre les talks + vidéo animée', values: ['Premium', 'Classique', '–', '–', '–', '–', '–'] },
+            { label: 'Tirage de votre jeu-concours sur scène', values: ['✔', '–', '–', '–', '–', '–', '–'] },
+            { label: 'Logo sur le gif de la borne OuiSnap !', values: ['✔', '–', '–', '–', '–', '–', '–'] },
+            { label: 'Présentation pendant la soirée', values: ['–', '–', '–', '5 min', '10 min', '–', '–'] },
+            {
+                label: 'Kakémonos, flyers et stickers pendant la soirée ou dans l’espace',
+                values: ['–', '–', '–', '✔', '✔', '✔', '–'],
+            },
+            { label: 'Décoration de l’espace détente à votre image', values: ['–', '–', '–', '–', '–', '✔', '–'] },
+            { label: 'Tee-shirt spécial pendant la conférence', values: ['–', '–', '–', '–', '–', '–', '✔'] },
+        ],
+    },
+    {
+        group: 'Avant et après l’événement',
+        rows: [
+            { label: 'Logo sur le site Sunny Tech', values: ['✔', '✔', '✔', '✔', '✔', '✔', '✔'] },
+            { label: 'Annonce du soutien sur les réseaux sociaux', values: ['✔', '✔', '–', '✔', '✔', '✔', '✔'] },
+            { label: 'Logo sur nos bannières', values: ['✔', '✔', '✔', '–', '–', '–', '–'] },
+            { label: 'Mise en avant dans la newsletter participants', values: ['✔', '✔', '–', '–', '–', '–', '–'] },
+            { label: 'Logo sur les replays (chaîne YouTube)', values: ['✔', '–', '–', '–', '–', '–', '–'] },
+            {
+                label: 'Option recrutement : vos offres sur notre site et sur place',
+                values: ['+500 €', '+500 €', '+500 €', '+500 €', '+500 €', '+500 €', '+500 €'],
+            },
+        ],
     },
 ]
 

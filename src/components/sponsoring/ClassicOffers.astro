@@ -2,7 +2,7 @@
 import { Picture } from 'astro:assets'
 import ContentContainer from '../ui-elements/ContentContainer.astro'
 import ButtonLink from '../ui-elements/ButtonLink.astro'
-import { CLASSIC_COMPARISON, CLASSIC_OFFERS, SPONSORS_FORM_URL } from './sponsoringData'
+import { CLASSIC_OFFERS, SPONSORS_FORM_URL } from './sponsoringData'
 ---
 
 <ContentContainer spaceBlock="3rem">
@@ -38,7 +38,7 @@ import { CLASSIC_COMPARISON, CLASSIC_OFFERS, SPONSORS_FORM_URL } from './sponsor
                                 <strong>{offer.stand}</strong>
                             </li>
                             <li>
-                                <strong>{offer.tickets} billets</strong> conférences + stand
+                                <strong>{offer.tickets} billets</strong> pour votre équipe
                             </li>
                             <li>
                                 <strong>+{offer.networkingTickets}</strong> entrée{offer.networkingTickets > 1 && 's'}{' '}
@@ -61,44 +61,7 @@ import { CLASSIC_COMPARISON, CLASSIC_OFFERS, SPONSORS_FORM_URL } from './sponsor
         }
     </div>
 
-    <details class="comparison">
-        <summary>Comparer les formules en détail</summary>
-        <div class="table-scroll">
-            <table>
-                <thead>
-                    <tr>
-                        <th scope="col"><span class="visually-hidden">Avantage</span></th>
-                        {CLASSIC_OFFERS.map((offer) => <th scope="col">{offer.name}</th>)}
-                    </tr>
-                </thead>
-                {
-                    CLASSIC_COMPARISON.map((group) => (
-                        <tbody>
-                            <tr class="group">
-                                <th scope="colgroup" colspan="4">
-                                    {group.group}
-                                </th>
-                            </tr>
-                            {group.rows.map((row) => (
-                                <tr>
-                                    <th scope="row">{row.label}</th>
-                                    {row.values.map((value) => (
-                                        <td>{value}</td>
-                                    ))}
-                                </tr>
-                            ))}
-                        </tbody>
-                    ))
-                }
-                <tfoot>
-                    <tr>
-                        <th scope="row">Tarif HT</th>
-                        {CLASSIC_OFFERS.map((offer) => <td>{offer.price}</td>)}
-                    </tr>
-                </tfoot>
-            </table>
-        </div>
-    </details>
+    <a class="compare-link" href="#comparatif">Comparer les 7 formules en détail ↓</a>
 </ContentContainer>
 
 <style>
@@ -193,62 +156,19 @@ import { CLASSIC_COMPARISON, CLASSIC_OFFERS, SPONSORS_FORM_URL } from './sponsor
         }
     }
 
-    .comparison summary {
-        cursor: pointer;
-        font-weight: 600;
+    .compare-link {
+        align-self: center;
+        padding: 0.75rem 1.5rem;
+        font-weight: 700;
+        text-decoration: none;
+        border: 2px solid var(--brand-solid);
+        border-radius: 999px;
         color: var(--brand-solid);
-    }
+        transition: all var(--animation);
 
-    .table-scroll {
-        overflow-x: auto;
-        margin-top: 1rem;
-    }
-
-    table {
-        width: 100%;
-        min-width: 36rem;
-        border-collapse: collapse;
-
-        th,
-        td {
-            padding: 0.625rem 0.75rem;
-            border-bottom: 1px solid var(--line);
-            text-align: center;
+        &:hover {
+            color: var(--brand-contrast);
+            background: var(--brand-solid);
         }
-
-        th[scope='row'] {
-            position: sticky;
-            left: 0;
-            text-align: left;
-            font-weight: 400;
-            background: var(--background);
-        }
-
-        thead th {
-            color: var(--brand-solid);
-            font-size: var(--fs1);
-        }
-
-        .group th {
-            text-align: left;
-            font-weight: 600;
-            background: var(--component);
-        }
-
-        tfoot {
-            font-weight: 700;
-
-            th[scope='row'] {
-                font-weight: 700;
-            }
-        }
-    }
-
-    .visually-hidden {
-        position: absolute;
-        width: 1px;
-        height: 1px;
-        overflow: hidden;
-        clip: rect(0 0 0 0);
     }
 </style>

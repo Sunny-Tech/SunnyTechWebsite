@@ -1,0 +1,200 @@
+---
+import ContentContainer from '../ui-elements/ContentContainer.astro'
+import { CLASSIC_OFFERS, OFFER_COMPARISON, SPECIAL_OFFERS } from './sponsoringData'
+
+const offers = [...CLASSIC_OFFERS, ...SPECIAL_OFFERS]
+---
+
+<ContentContainer spaceBlock="3rem">
+    <details class="comparison" id="comparatif">
+        <summary>
+            <span class="summary-text">
+                <span class="summary-title">Comparer les 7 formules</span>
+                <span class="summary-hint">Tableau détaillé des formules classiques et spéciales</span>
+            </span>
+            <svg class="chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M7.41 8.58L12 13.17l4.59-4.59L18 10l-6 6l-6-6z"></path>
+            </svg>
+        </summary>
+        <div class="table-scroll">
+            <table>
+                <thead>
+                    <tr class="families">
+                        <td></td>
+                        <th scope="colgroup" colspan={CLASSIC_OFFERS.length}>Classiques</th>
+                        <th scope="colgroup" colspan={SPECIAL_OFFERS.length}>Spéciales</th>
+                    </tr>
+                    <tr>
+                        <th scope="col"><span class="visually-hidden">Avantage</span></th>
+                        {offers.map((offer) => <th scope="col">{offer.name}</th>)}
+                    </tr>
+                </thead>
+                {
+                    OFFER_COMPARISON.map((group) => (
+                        <tbody>
+                            <tr class="group">
+                                <th scope="colgroup" colspan={offers.length + 1}>
+                                    {group.group}
+                                </th>
+                            </tr>
+                            {group.rows.map((row) => (
+                                <tr>
+                                    <th scope="row">{row.label}</th>
+                                    {row.values.map((value) => (
+                                        <td class:list={{ empty: value === '–' }}>{value}</td>
+                                    ))}
+                                </tr>
+                            ))}
+                        </tbody>
+                    ))
+                }
+                <tfoot>
+                    <tr>
+                        <th scope="row">Tarif HT</th>
+                        {offers.map((offer) => <td>{offer.price}</td>)}
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </details>
+</ContentContainer>
+
+<script>
+    // Links to #comparatif (e.g. under the classic offers) open the table on arrival.
+    document.addEventListener('astro:page-load', () => {
+        const details = document.querySelector<HTMLDetailsElement>('#comparatif')
+        document.querySelectorAll('a[href="#comparatif"]').forEach((link) => {
+            link.addEventListener('click', () => {
+                if (details) details.open = true
+            })
+        })
+    })
+</script>
+
+<style>
+    .comparison {
+        scroll-margin-top: 5rem;
+        border: 2px solid var(--brand-solid);
+        border-radius: 0.75rem;
+        overflow: hidden;
+    }
+
+    summary {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 1.25rem 1.5rem;
+        cursor: pointer;
+        list-style: none;
+        color: var(--brand-contrast);
+        background: var(--brand-solid);
+        transition: background-color var(--animation);
+
+        &::-webkit-details-marker {
+            display: none;
+        }
+
+        &:hover {
+            background: var(--brand-solid-hover);
+        }
+    }
+
+    .summary-text {
+        display: flex;
+        flex-direction: column;
+        gap: 0.125rem;
+    }
+
+    .summary-title {
+        font-size: var(--fs2);
+        font-weight: 700;
+    }
+
+    .summary-hint {
+        opacity: 0.85;
+    }
+
+    .chevron {
+        flex: 0 0 2rem;
+        width: 2rem;
+        height: 2rem;
+        fill: currentColor;
+        transition: transform var(--animation);
+    }
+
+    .comparison[open] .chevron {
+        transform: rotate(180deg);
+    }
+
+    .table-scroll {
+        overflow-x: auto;
+    }
+
+    table {
+        width: 100%;
+        min-width: 56rem;
+        border-collapse: collapse;
+        font-size: var(--fs-1);
+
+        th,
+        td {
+            padding: 0.625rem 0.75rem;
+            border-bottom: 1px solid var(--line);
+            text-align: center;
+        }
+
+        th[scope='row'] {
+            position: sticky;
+            left: 0;
+            width: min(16rem, 40vw);
+            min-width: 8rem;
+            text-align: left;
+            font-weight: 400;
+            background: var(--background);
+        }
+
+        thead th[scope='col'] {
+            color: var(--brand-solid);
+            font-size: var(--fs0);
+        }
+
+        .families th {
+            font-size: var(--fs-1);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-subtle);
+
+            & + th {
+                border-left: 2px solid var(--line);
+            }
+        }
+
+        .group th {
+            text-align: left;
+            font-weight: 600;
+            background: var(--component);
+        }
+
+        .empty {
+            color: var(--text-disabled);
+        }
+
+        tfoot {
+            font-weight: 700;
+
+            th[scope='row'] {
+                font-weight: 700;
+            }
+        }
+    }
+
+    .visually-hidden {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+    }
+</style>
