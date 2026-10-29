@@ -76,7 +76,8 @@ const offers = [...CLASSIC_OFFERS, ...SPECIAL_OFFERS]
         scroll-margin-top: 5rem;
         border: 2px solid var(--brand-solid);
         border-radius: 0.75rem;
-        overflow: hidden;
+        /* clip, not hidden: hidden would stop the table head from sticking to the page. */
+        overflow: clip;
     }
 
     summary {
@@ -127,10 +128,11 @@ const offers = [...CLASSIC_OFFERS, ...SPECIAL_OFFERS]
         transform: rotate(180deg);
     }
 
-    /* Scrolls on both axes so the offer names stay on top and the labels on the left. */
-    .table-scroll {
-        max-height: 80vh;
-        overflow: auto;
+    /* Only scrolls sideways when the table doesn't fit: a scroll box stops the head from sticking to the page. */
+    @media (max-width: 61rem) {
+        .table-scroll {
+            overflow-x: auto;
+        }
     }
 
     table {
@@ -149,7 +151,6 @@ const offers = [...CLASSIC_OFFERS, ...SPECIAL_OFFERS]
         th[scope='row'] {
             position: sticky;
             left: 0;
-            z-index: 1;
             width: min(16rem, 40vw);
             min-width: 8rem;
             text-align: left;
@@ -157,10 +158,11 @@ const offers = [...CLASSIC_OFFERS, ...SPECIAL_OFFERS]
             background: var(--background);
         }
 
+        /* Sticks under the site menu (4rem + its 1px border). */
         thead {
             position: sticky;
-            top: 0;
-            z-index: 2;
+            top: calc(4rem + 1px);
+            z-index: 1;
             background: var(--background);
             box-shadow: 0 1px 0 var(--line);
 
