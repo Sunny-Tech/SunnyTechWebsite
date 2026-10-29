@@ -68,6 +68,27 @@ const offers = [...CLASSIC_OFFERS, ...SPECIAL_OFFERS]
                 if (details) details.open = true
             })
         })
+
+        const table = document.querySelector<HTMLTableElement>('#comparatif table')
+        if (!table) return
+        const head = table.tHead!
+
+        // Group titles stick right under the table head, whatever its height.
+        new ResizeObserver(() => table.style.setProperty('--head-height', `${head.offsetHeight}px`)).observe(head)
+
+        // CSS can't target a column on hover, so mark its cells. Group rows span every column and are skipped.
+        const columnCount = head.rows[1].cells.length
+        const clearColumn = () =>
+            table.querySelectorAll('.col-hover').forEach((cell) => cell.classList.remove('col-hover'))
+        table.addEventListener('pointerover', (event) => {
+            clearColumn()
+            const cell = (event.target as HTMLElement).closest('td, th') as HTMLTableCellElement | null
+            if (!cell || cell.cellIndex === 0 || cell.parentElement!.children.length !== columnCount) return
+            for (const row of table.rows) {
+                if (row.cells.length === columnCount) row.cells[cell.cellIndex].classList.add('col-hover')
+            }
+        })
+        table.addEventListener('pointerleave', clearColumn)
     })
 </script>
 
@@ -191,6 +212,9 @@ const offers = [...CLASSIC_OFFERS, ...SPECIAL_OFFERS]
         }
 
         .group th {
+            position: sticky;
+            top: calc(4rem + 1px + var(--head-height, 0px));
+            z-index: 1;
             text-align: left;
             font-weight: 600;
             background: var(--component);
@@ -204,6 +228,17 @@ const offers = [...CLASSIC_OFFERS, ...SPECIAL_OFFERS]
 
         .empty {
             color: var(--text-disabled);
+        }
+
+        @media (hover: hover) {
+            :is(tbody, tfoot) tr:not(.group):hover > *,
+            .col-hover {
+                background: color-mix(in srgb, var(--brand-solid) 8%, var(--background));
+            }
+
+            :is(tbody, tfoot) tr:not(.group):hover > .col-hover {
+                background: var(--brand-transparent-hover);
+            }
         }
 
         tfoot {
