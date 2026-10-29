@@ -34,7 +34,7 @@ const offers = [...CLASSIC_OFFERS, ...SPECIAL_OFFERS]
                         <tbody>
                             <tr class="group">
                                 <th scope="colgroup" colspan={offers.length + 1}>
-                                    {group.group}
+                                    <span>{group.group}</span>
                                 </th>
                             </tr>
                             {group.rows.map((row) => (
@@ -127,8 +127,10 @@ const offers = [...CLASSIC_OFFERS, ...SPECIAL_OFFERS]
         transform: rotate(180deg);
     }
 
+    /* Scrolls on both axes so the offer names stay on top and the labels on the left. */
     .table-scroll {
-        overflow-x: auto;
+        max-height: 80vh;
+        overflow: auto;
     }
 
     table {
@@ -147,11 +149,26 @@ const offers = [...CLASSIC_OFFERS, ...SPECIAL_OFFERS]
         th[scope='row'] {
             position: sticky;
             left: 0;
+            z-index: 1;
             width: min(16rem, 40vw);
             min-width: 8rem;
             text-align: left;
             font-weight: 400;
             background: var(--background);
+        }
+
+        thead {
+            position: sticky;
+            top: 0;
+            z-index: 2;
+            background: var(--background);
+            box-shadow: 0 1px 0 var(--line);
+
+            tr > :first-child {
+                position: sticky;
+                left: 0;
+                background: var(--background);
+            }
         }
 
         thead th[scope='col'] {
@@ -175,6 +192,12 @@ const offers = [...CLASSIC_OFFERS, ...SPECIAL_OFFERS]
             text-align: left;
             font-weight: 600;
             background: var(--component);
+
+            /* Keeps the group name in view when the table scrolls sideways. */
+            span {
+                position: sticky;
+                left: 0.75rem;
+            }
         }
 
         .empty {
