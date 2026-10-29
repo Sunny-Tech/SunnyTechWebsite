@@ -1,0 +1,226 @@
+---
+// Unlisted tool for the team: not in the menu, the sitemap or search engines.
+import LayoutWithTitle from '../layouts/LayoutWithTitle.astro'
+
+// Images in the signature must point to the deployed site; the dev server serves them locally.
+const siteUrl = import.meta.env.DEV ? Astro.url.origin : (Astro.site?.toString() ?? 'https://sunny-tech.io')
+---
+
+<LayoutWithTitle
+    title="Signature email"
+    description="Génère ta signature Sunny Tech, puis colle-la dans ton client mail."
+    noindex>
+    <email-signature data-site-url={siteUrl}>
+        <div class="signature-page">
+            <form class="signature-form" autocomplete="on">
+                <label>
+                    Prénom
+                    <input name="firstName" required autocomplete="given-name" />
+                </label>
+                <label>
+                    Nom
+                    <input name="lastName" required autocomplete="family-name" />
+                </label>
+                <label>
+                    Téléphone <span class="optional">(optionnel)</span>
+                    <input name="phone" type="tel" autocomplete="tel" placeholder="06 12 34 56 78" />
+                </label>
+            </form>
+
+            <section class="signature-result">
+                <h2 class="fs1">Aperçu</h2>
+                <div class="signature-preview"></div>
+                <div class="signature-actions">
+                    <button type="button" data-copy="rich">Copier la signature</button>
+                    <button type="button" data-copy="html" class="secondary">Copier le code HTML</button>
+                    <span class="signature-status" role="status"></span>
+                </div>
+                <p class="signature-help">
+                    Gmail : Paramètres → Voir tous les paramètres → Signature, puis colle avec Cmd/Ctrl + V. Apple Mail
+                    et Thunderbird acceptent aussi le code HTML.
+                </p>
+            </section>
+        </div>
+    </email-signature>
+</LayoutWithTitle>
+
+<script>
+    import { signatureHtml, signatureText, type SignatureInput } from '../components/signature/signatureHtml'
+
+    // The async Clipboard API can be denied (permissions, embedded browsers), so
+    // fall back to copying a DOM selection with execCommand.
+    const copyWithSelection = (node: Node): boolean => {
+        const selection = window.getSelection()
+        if (!selection) return false
+        const range = document.createRange()
+        range.selectNodeContents(node)
+        selection.removeAllRanges()
+        selection.addRange(range)
+        const copied = document.execCommand('copy')
+        selection.removeAllRanges()
+        return copied
+    }
+
+    const copyRich = async (html: string, text: string, preview: HTMLElement): Promise<boolean> => {
+        try {
+            await navigator.clipboard.write([
+                new ClipboardItem({
+                    'text/html': new Blob([html], { type: 'text/html' }),
+                    'text/plain': new Blob([text], { type: 'text/plain' }),
+                }),
+            ])
+            return true
+        } catch (error) {
+            console.debug('Clipboard API refused, falling back to selection copy', error)
+            return copyWithSelection(preview)
+        }
+    }
+
+    const copyText = async (text: string): Promise<boolean> => {
+        try {
+            await navigator.clipboard.writeText(text)
+            return true
+        } catch (error) {
+            console.debug('Clipboard API refused, falling back to selection copy', error)
+            const textarea = document.createElement('textarea')
+            textarea.value = text
+            textarea.style.position = 'fixed'
+            textarea.style.opacity = '0'
+            document.body.append(textarea)
+            textarea.select()
+            const copied = document.execCommand('copy')
+            textarea.remove()
+            return copied
+        }
+    }
+
+    class EmailSignature extends HTMLElement {
+        connectedCallback() {
+            const form = this.querySelector<HTMLFormElement>('.signature-form')
+            const preview = this.querySelector<HTMLElement>('.signature-preview')
+            const status = this.querySelector<HTMLElement>('.signature-status')
+            if (!form || !preview || !status) return
+
+            const siteUrl = this.dataset.siteUrl ?? 'https://sunny-tech.io'
+            const field = (name: string) => form.elements.namedItem(name) as HTMLInputElement
+
+            const read = (): SignatureInput => ({
+                firstName: field('firstName').value.trim(),
+                lastName: field('lastName').value.trim(),
+                phone: field('phone').value.trim(),
+            })
+
+            const render = () => {
+                const input = read()
+                preview.innerHTML = input.firstName || input.lastName ? signatureHtml(input, siteUrl) : ''
+                status.textContent = ''
+            }
+
+            form.addEventListener('input', render)
+            form.addEventListener('submit', (event) => event.preventDefault())
+
+            this.querySelectorAll<HTMLButtonElement>('[data-copy]').forEach((button) => {
+                button.addEventListener('click', async () => {
+                    const input = read()
+                    if (!input.firstName || !input.lastName) {
+                        status.textContent = 'Renseigne ton prénom et ton nom.'
+                        return
+                    }
+                    const html = signatureHtml(input, siteUrl)
+                    const asHtml = button.dataset.copy === 'html'
+                    const copied = asHtml ? await copyText(html) : await copyRich(html, signatureText(input), preview)
+                    status.textContent = copied
+                        ? 'Copié !'
+                        : 'Copie impossible, sélectionne l’aperçu et copie-le à la main.'
+                })
+            })
+
+            render()
+        }
+    }
+
+    if (!customElements.get('email-signature')) customElements.define('email-signature', EmailSignature)
+</script>
+
+<style>
+    .signature-page {
+        display: grid;
+        gap: 2.5rem;
+        max-width: 60rem;
+    }
+
+    .signature-form {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+        gap: 1rem 1.5rem;
+
+        label {
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+            font-weight: 600;
+        }
+
+        input {
+            font: inherit;
+            font-weight: 400;
+            padding: 0.6rem 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: var(--border-radius);
+            background: var(--component);
+            color: var(--text);
+        }
+    }
+
+    .optional {
+        font-weight: 400;
+        color: var(--text-subtle);
+    }
+
+    .signature-result {
+        display: grid;
+        gap: 1rem;
+    }
+
+    .signature-preview {
+        min-height: 6rem;
+        padding: 1.25rem;
+        border: 1px dashed var(--border);
+        border-radius: var(--border-radius);
+        /* Signatures are read on white mail backgrounds, preview them the same way. */
+        background: #fff;
+        overflow-x: auto;
+    }
+
+    .signature-actions {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.75rem;
+
+        button {
+            font: inherit;
+            font-weight: 600;
+            padding: 0.6rem 1rem;
+            border: 1px solid var(--brand-solid);
+            border-radius: var(--border-radius);
+            background: var(--brand-solid);
+            color: var(--brand-contrast);
+            cursor: pointer;
+        }
+
+        button.secondary {
+            background: transparent;
+            color: var(--brand-solid);
+        }
+    }
+
+    .signature-status {
+        color: var(--text-subtle);
+    }
+
+    .signature-help {
+        color: var(--text-subtle);
+        font-size: var(--fs-1);
+    }
+</style>

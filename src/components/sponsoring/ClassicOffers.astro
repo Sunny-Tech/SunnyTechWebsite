@@ -1,0 +1,174 @@
+---
+import { Picture } from 'astro:assets'
+import ContentContainer from '../ui-elements/ContentContainer.astro'
+import ButtonLink from '../ui-elements/ButtonLink.astro'
+import { CLASSIC_OFFERS, SPONSORS_FORM_URL } from './sponsoringData'
+---
+
+<ContentContainer spaceBlock="3rem">
+    <div class="section-head" id="formules">
+        <h2>Formules classiques</h2>
+        <p>
+            Pour conserver une qualité d’événement à la hauteur des attentes des participant·e·s, l’équipe a légèrement
+            revu les offres par rapport à l’édition 2026. Tous les prix sont affichés hors taxes.
+        </p>
+    </div>
+
+    <div class="offers">
+        {
+            CLASSIC_OFFERS.map((offer) => (
+                <article class:list={['offer', { highlighted: offer.highlighted }]}>
+                    <figure>
+                        <Picture
+                            src={offer.image}
+                            formats={['avif', 'webp']}
+                            widths={[480, 800]}
+                            sizes="(min-width: 960px) 400px, 100vw"
+                            alt={`Exemple d’emplacement ${offer.name}`}
+                        />
+                        <figcaption>{offer.imageCaption}</figcaption>
+                    </figure>
+                    <div class="offer-body">
+                        <h3>{offer.name}</h3>
+                        <p class="price">
+                            {offer.price} <span>HT</span>
+                        </p>
+                        <ul class="facts">
+                            <li>
+                                <strong>{offer.stand}</strong>
+                            </li>
+                            <li>
+                                <strong>{offer.tickets} billets</strong> pour votre équipe (inclus stand)
+                            </li>
+                            <li>
+                                <strong>+{offer.networkingTickets}</strong> entrée{offer.networkingTickets > 1 && 's'}{' '}
+                                soirée Networking
+                            </li>
+                        </ul>
+                        <ul class="perks">
+                            {offer.perks.map((perk) => (
+                                <li>{perk}</li>
+                            ))}
+                        </ul>
+                        <div class="offer-cta">
+                            <ButtonLink href={SPONSORS_FORM_URL} target="_blank" rel="noopener noreferrer" external>
+                                Choisir {offer.name}
+                            </ButtonLink>
+                        </div>
+                    </div>
+                </article>
+            ))
+        }
+    </div>
+
+    <a class="compare-link" href="#comparatif">Comparer les 7 formules en détail ↓</a>
+</ContentContainer>
+
+<style>
+    .offers {
+        display: grid;
+        gap: 1.5rem;
+        grid-template-columns: repeat(auto-fit, minmax(min(18rem, 100%), 1fr));
+    }
+
+    .offer {
+        display: flex;
+        flex-direction: column;
+        border: 1px solid var(--line);
+        border-radius: 0.75rem;
+        overflow: hidden;
+        background: var(--background);
+
+        &.highlighted {
+            border: 2px solid var(--brand-solid);
+            box-shadow: 0 0.75rem 2rem rgb(214 63 73 / 0.15);
+        }
+    }
+
+    figure {
+        position: relative;
+        margin: 0;
+
+        :global(img) {
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            object-fit: cover;
+        }
+    }
+
+    figcaption {
+        position: absolute;
+        inset: auto 0 0;
+        padding: 1.5rem 1rem 0.5rem;
+        font-size: var(--fs-1);
+        color: var(--brand-contrast);
+        background: linear-gradient(transparent, rgb(0 0 0 / 0.7));
+    }
+
+    .offer-body {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1.5rem;
+    }
+
+    .price {
+        font-size: var(--fs4);
+        font-weight: 700;
+        color: var(--brand-solid);
+        line-height: 1;
+
+        span {
+            font-size: var(--fs0);
+            font-weight: 500;
+            color: var(--text-subtle);
+        }
+    }
+
+    .facts {
+        display: grid;
+        gap: 0.25rem;
+        padding: 1rem;
+        list-style: none;
+        border-radius: 0.5rem;
+        background: var(--component);
+    }
+
+    .perks {
+        display: grid;
+        gap: 0.5rem;
+        padding-left: 1.25rem;
+        color: var(--text-subtle);
+
+        li::marker {
+            content: '🦩 ';
+        }
+    }
+
+    .offer-cta {
+        margin-top: auto;
+        padding-top: 0.5rem;
+
+        :global(a) {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+
+    .compare-link {
+        align-self: center;
+        padding: 0.75rem 1.5rem;
+        font-weight: 700;
+        text-decoration: none;
+        border: 2px solid var(--brand-solid);
+        border-radius: 999px;
+        color: var(--brand-solid);
+        transition: all var(--animation);
+
+        &:hover {
+            color: var(--brand-contrast);
+            background: var(--brand-solid);
+        }
+    }
+</style>

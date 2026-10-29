@@ -37,11 +37,6 @@ const PAGES: Record<string, PageSpec> = {
         title: "Offres d'emploi",
         description: 'Les opportunités proposées par nos sponsors.',
     },
-    location: {
-        eyebrow: 'Venue',
-        title: 'Lieu & accès',
-        description: `Faculté des Sciences de ${EVENT.city} — place Eugène Bataillon.`,
-    },
     anecdotes: {
         eyebrow: 'Bonus',
         title: 'Anecdotes des sponsors',
@@ -59,6 +54,11 @@ const PAGES: Record<string, PageSpec> = {
         eyebrow: 'Blog',
         title: 'Blog',
         description: "Coulisses, chiffres et décisions de l'équipe Sunny Tech.",
+    },
+    'sponsors-new': {
+        eyebrow: 'Sponsoring',
+        title: `Sponsoriser Sunny Tech ${EVENT.year}`,
+        description: `Stands, soirées et recrutement : toutes les formules, les ${EVENT.displayDates}.`,
     },
     '404': {
         eyebrow: 'Erreur 404',

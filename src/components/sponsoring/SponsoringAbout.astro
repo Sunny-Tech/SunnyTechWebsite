@@ -1,0 +1,154 @@
+---
+import { Picture } from 'astro:assets'
+import team from '../../assets/sponsoring/team.jpg'
+import ContentContainer from '../ui-elements/ContentContainer.astro'
+import { BENEFITS, KEY_FIGURES } from './sponsoringData'
+---
+
+<ContentContainer spaceBlock="3rem">
+    <div class="about">
+        <div class="section-head">
+            <h2>Sunny Tech</h2>
+            <p class="fs1">
+                Depuis 2018, Sunny Tech donne la parole aux passionné·e·s des technologies du numérique dans une
+                conférence annuelle responsable, à Montpellier, avec l’ambition d’un rayonnement international.
+            </p>
+            <div class="association">
+                <p class="association-title">Association loi 1901 depuis 2016</p>
+                <p>
+                    Sunny Tech est organisée par une association à but non lucratif, créée par des membres de la
+                    communauté tech de Montpellier, toutes et tous bénévoles. Votre sponsoring finance l’événement.
+                </p>
+            </div>
+            <p>En 2027, nous vous proposons de vous y associer.</p>
+        </div>
+        <Picture
+            src={team}
+            formats={['avif', 'webp']}
+            widths={[480, 800]}
+            sizes="(min-width: 960px) 480px, 100vw"
+            alt="L’équipe de bénévoles Sunny Tech dans les escaliers avec une bouée flamant rose"
+            class="about-photo"
+        />
+    </div>
+
+    <dl class="figures">
+        {
+            KEY_FIGURES.map((figure) => (
+                <div>
+                    <dt>{figure.label}</dt>
+                    <dd>{figure.value}</dd>
+                </div>
+            ))
+        }
+    </dl>
+
+    <div class="section-head">
+        <h2>Pourquoi sponsoriser</h2>
+    </div>
+    <ol class="benefits">
+        {
+            BENEFITS.map((benefit) => (
+                <li>
+                    <h3>{benefit.title}</h3>
+                    <p>{benefit.text}</p>
+                </li>
+            ))
+        }
+    </ol>
+</ContentContainer>
+
+<style>
+    .about {
+        display: grid;
+        gap: 2rem;
+        align-items: center;
+
+        @media (min-width: 960px) {
+            grid-template-columns: 3fr 2fr;
+        }
+
+        :global(.about-photo) {
+            width: 100%;
+            aspect-ratio: 3 / 2;
+            object-fit: cover;
+            border-radius: 0.75rem;
+        }
+    }
+
+    .association {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+        padding: 1rem 1.25rem;
+        border-left: 4px solid var(--brand-solid);
+        border-radius: 0 0.5rem 0.5rem 0;
+        background: var(--component);
+    }
+
+    .association-title {
+        font-size: var(--fs1);
+        font-weight: 700;
+        color: var(--brand-solid);
+    }
+
+    .figures {
+        display: grid;
+        gap: 1rem;
+        grid-template-columns: repeat(auto-fit, minmax(min(9rem, 100%), 1fr));
+
+        div {
+            display: flex;
+            flex-direction: column-reverse;
+            justify-content: flex-end;
+            padding: 1.25rem 1rem;
+            text-align: center;
+            border-radius: 0.75rem;
+            background: var(--component);
+        }
+
+        dd {
+            font-size: var(--fs4);
+            font-weight: 700;
+            color: var(--brand-solid);
+            line-height: 1.1;
+        }
+
+        dt {
+            color: var(--text-subtle);
+        }
+    }
+
+    .benefits {
+        display: grid;
+        gap: 1.5rem;
+        grid-template-columns: repeat(auto-fit, minmax(min(11rem, 100%), 1fr));
+        list-style: none;
+        counter-reset: benefit;
+
+        li {
+            counter-increment: benefit;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            padding-top: 1rem;
+            border-top: 2px solid var(--brand-solid);
+
+            &::before {
+                content: counter(benefit, decimal-leading-zero);
+                font-weight: 700;
+                color: var(--brand-border);
+            }
+        }
+
+        h3 {
+            text-transform: uppercase;
+            font-weight: 700;
+            font-size: var(--fs1);
+        }
+
+        p {
+            color: var(--text-subtle);
+        }
+    }
+</style>

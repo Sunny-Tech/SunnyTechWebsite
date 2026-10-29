@@ -1,0 +1,45 @@
+---
+import Layout from '../layouts/Layout.astro'
+import SponsoringHero from '../components/sponsoring/SponsoringHero.astro'
+import SponsoringAbout from '../components/sponsoring/SponsoringAbout.astro'
+import ClassicOffers from '../components/sponsoring/ClassicOffers.astro'
+import SpecialOffers from '../components/sponsoring/SpecialOffers.astro'
+import OfferComparison from '../components/sponsoring/OfferComparison.astro'
+import EditionHighlights from '../components/sponsoring/EditionHighlights.astro'
+import SponsoringSignup from '../components/sponsoring/SponsoringSignup.astro'
+import { EVENT } from '../og/event'
+---
+
+<Layout
+    title={`Sponsoriser Sunny Tech ${EVENT.year}`}
+    description={`Stands, soirées, recrutement : toutes les formules pour sponsoriser Sunny Tech, les ${EVENT.displayDates} à ${EVENT.city}.`}
+    noindex>
+    <div class="sponsoring">
+        <SponsoringHero />
+        <SponsoringAbout />
+        <ClassicOffers />
+        <SpecialOffers />
+        <OfferComparison />
+        <EditionHighlights />
+
+        <SponsoringSignup />
+    </div>
+</Layout>
+
+<style is:global>
+    /* White menu over the dark hero, as on the home page. */
+    [data-transparent='true'] {
+        --hero-text-color: white;
+        --nav-drawer-bg-color: rgba(0, 0, 0, 0.8);
+    }
+</style>
+
+<style>
+    .sponsoring :global(.section-head) {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        max-width: 48rem;
+        scroll-margin-top: 5rem;
+    }
+</style>

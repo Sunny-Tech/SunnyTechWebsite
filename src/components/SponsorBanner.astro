@@ -1,5 +1,6 @@
 ---
 import type { Sponsor } from '../type'
+import { PROGRAM_EDITION } from '../og/event'
 
 interface Props {
     sponsors: Sponsor[]
@@ -13,7 +14,9 @@ const { sponsors, otherSponsorsCount } = Astro.props
     sponsors.length > 0 && (
         <div id="sponsor-banner" class="sponsor-banner">
             <div class="sponsor-banner-content">
-                <span class="sponsor-banner-text">Cet évènement est permis grâce au soutien de</span>
+                <span class="sponsor-banner-text">
+                    L'édition {PROGRAM_EDITION.year} a été rendue possible grâce au soutien de
+                </span>
                 <div class="sponsor-banner-logos">
                     {sponsors.map((sponsor) => (
                         <a href={sponsor.website} target="_blank" rel="noopener noreferrer" class="sponsor-banner-link">
