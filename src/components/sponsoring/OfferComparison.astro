@@ -1,12 +1,18 @@
 ---
 import ContentContainer from '../ui-elements/ContentContainer.astro'
-import { CLASSIC_OFFERS, OFFER_COMPARISON, SPECIAL_OFFERS } from './sponsoringData'
+import { availabilityLabel, CLASSIC_OFFERS, OFFER_COMPARISON, SPECIAL_OFFERS } from './sponsoringData'
 
+interface Props {
+    /** The page shows the table twice, so each copy needs its own anchor. */
+    id: string
+}
+
+const { id } = Astro.props
 const offers = [...CLASSIC_OFFERS, ...SPECIAL_OFFERS]
 ---
 
 <ContentContainer spaceBlock="3rem">
-    <details class="comparison" id="comparatif">
+    <details class="comparison" id={id}>
         <summary>
             <span class="summary-text">
                 <span class="summary-title">Comparer les 7 formules</span>
@@ -53,6 +59,10 @@ const offers = [...CLASSIC_OFFERS, ...SPECIAL_OFFERS]
                         <th scope="row">Tarif HT</th>
                         {offers.map((offer) => <td>{offer.price}</td>)}
                     </tr>
+                    <tr>
+                        <th scope="row">Disponibilité</th>
+                        {offers.map((offer) => <td>{availabilityLabel(offer.quantity)}</td>)}
+                    </tr>
                 </tfoot>
             </table>
         </div>
@@ -60,17 +70,21 @@ const offers = [...CLASSIC_OFFERS, ...SPECIAL_OFFERS]
 </ContentContainer>
 
 <script>
-    // Links to #comparatif (e.g. under the classic offers) open the table on arrival.
+    // Links to a comparison (e.g. under the classic offers) open the table on arrival.
     document.addEventListener('astro:page-load', () => {
-        const details = document.querySelector<HTMLDetailsElement>('#comparatif')
-        document.querySelectorAll('a[href="#comparatif"]').forEach((link) => {
-            link.addEventListener('click', () => {
-                if (details) details.open = true
+        document.querySelectorAll<HTMLDetailsElement>('details.comparison').forEach((details) => {
+            document.querySelectorAll(`a[href="#${details.id}"]`).forEach((link) => {
+                link.addEventListener('click', () => {
+                    details.open = true
+                })
             })
-        })
 
-        const table = document.querySelector<HTMLTableElement>('#comparatif table')
-        if (!table) return
+            const table = details.querySelector('table')
+            if (table) enhanceTable(table)
+        })
+    })
+
+    function enhanceTable(table: HTMLTableElement) {
         const head = table.tHead!
 
         // Group titles stick right under the table head, whatever its height.
@@ -89,7 +103,7 @@ const offers = [...CLASSIC_OFFERS, ...SPECIAL_OFFERS]
             }
         })
         table.addEventListener('pointerleave', clearColumn)
-    })
+    }
 </script>
 
 <style>

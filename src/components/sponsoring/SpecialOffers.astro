@@ -3,7 +3,7 @@ import { Picture } from 'astro:assets'
 import speakersParty from '../../assets/sponsoring/speakers-party.jpg'
 import ContentContainer from '../ui-elements/ContentContainer.astro'
 import ButtonLink from '../ui-elements/ButtonLink.astro'
-import { OPTIONS, SPECIAL_COMMON_PERKS, SPECIAL_OFFERS, SPONSORS_FORM_URL } from './sponsoringData'
+import { availabilityLabel, OPTIONS, SPECIAL_COMMON_PERKS, SPECIAL_OFFERS, SPONSORS_FORM_URL } from './sponsoringData'
 ---
 
 <section class="specials">
@@ -35,6 +35,7 @@ import { OPTIONS, SPECIAL_COMMON_PERKS, SPECIAL_OFFERS, SPONSORS_FORM_URL } from
                             <p class="price">
                                 {offer.price} <span>HT</span>
                             </p>
+                            <p class="availability">{availabilityLabel(offer.quantity)}</p>
                         </header>
                         <p class="tagline">{offer.tagline}</p>
                         {offer.audience && <p class="audience">{offer.audience}</p>}
@@ -157,6 +158,12 @@ import { OPTIONS, SPECIAL_COMMON_PERKS, SPECIAL_OFFERS, SPONSORS_FORM_URL } from
 
     .tagline {
         font-weight: 600;
+    }
+
+    .availability {
+        font-size: var(--fs-1);
+        font-weight: 600;
+        color: var(--text-subtle);
     }
 
     .audience {

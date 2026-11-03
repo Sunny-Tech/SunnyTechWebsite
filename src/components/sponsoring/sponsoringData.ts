@@ -45,6 +45,8 @@ export const BENEFITS = [
 export type ClassicOffer = {
     name: string
     price: string
+    /** How many sponsors can take this offer. */
+    quantity: number
     image: ImageMetadata
     imageCaption: string
     stand: string
@@ -58,6 +60,7 @@ export const CLASSIC_OFFERS: ClassicOffer[] = [
     {
         name: 'Platinium',
         price: '6 750 €',
+        quantity: 3,
         image: standPlatinium,
         imageCaption: 'Stand 15 m², arrivée électrique incluse',
         stand: 'Stand de 15 m²',
@@ -75,6 +78,7 @@ export const CLASSIC_OFFERS: ClassicOffer[] = [
     {
         name: 'Gold',
         price: '4 700 €',
+        quantity: 8,
         image: standGold,
         imageCaption: 'Stand 9 m², arrivée électrique incluse',
         stand: 'Stand de 9 m²',
@@ -90,6 +94,7 @@ export const CLASSIC_OFFERS: ClassicOffer[] = [
     {
         name: 'Silver',
         price: '2 450 €',
+        quantity: 10,
         image: standSilver,
         imageCaption: 'Votre kakémono en avant, table et chaise fournies',
         stand: 'Espace partagé',
@@ -103,9 +108,15 @@ export const CLASSIC_OFFERS: ClassicOffer[] = [
     },
 ]
 
+/** `Offre unique` for a single slot, `8 sponsors maximum` otherwise. */
+export const availabilityLabel = (quantity: number): string =>
+    quantity === 1 ? 'Offre unique' : `${quantity} sponsors maximum`
+
 export type SpecialOffer = {
     name: string
     price: string
+    /** How many sponsors can take this offer. */
+    quantity: number
     tagline: string
     audience?: string
     tickets: string
@@ -116,6 +127,7 @@ export const SPECIAL_OFFERS: SpecialOffer[] = [
     {
         name: 'Apéro Networking',
         price: '3 000 €',
+        quantity: 1,
         tagline: 'Votre marque auprès des acteurs de la région',
         audience: '300 participant·e·s',
         tickets: '2 billets + 4 entrées soirée Networking',
@@ -128,6 +140,7 @@ export const SPECIAL_OFFERS: SpecialOffer[] = [
     {
         name: 'Soirée Speakers',
         price: '2 200 €',
+        quantity: 1,
         tagline: 'Votre marque auprès d’expert·e·s venu·e·s de toute la France',
         audience: '80+ speakers',
         tickets: '2 billets + 2 entrées soirée Speakers',
@@ -140,6 +153,7 @@ export const SPECIAL_OFFERS: SpecialOffer[] = [
     {
         name: 'Espace détente',
         price: '2 000 €',
+        quantity: 1,
         tagline: 'Dites tout fort quel travail rime avec confort',
         tickets: '2 billets',
         perks: [
@@ -150,6 +164,7 @@ export const SPECIAL_OFFERS: SpecialOffer[] = [
     {
         name: 'Soutien',
         price: '1 000 €',
+        quantity: 8,
         tagline: 'Un coup de pouce qui se voit',
         tickets: '1 billet',
         perks: ['Un tee-shirt spécial pour vous distinguer pendant la conférence'],
