@@ -108,6 +108,8 @@ const offers = [...CLASSIC_OFFERS, ...SPECIAL_OFFERS]
 
 <style>
     .comparison {
+        /* Sticky offset under the site menu (4rem + its 1px border). */
+        --sticky-top: calc(4rem + 1px);
         scroll-margin-top: 5rem;
         border: 2px solid var(--brand-solid);
         border-radius: 0.75rem;
@@ -167,6 +169,8 @@ const offers = [...CLASSIC_OFFERS, ...SPECIAL_OFFERS]
     @media (max-width: 61rem) {
         .table-scroll {
             overflow-x: auto;
+            /* Sticky cells now stick inside this box, which never scrolls vertically: a menu offset would push them down. */
+            --sticky-top: 0px;
         }
     }
 
@@ -193,10 +197,9 @@ const offers = [...CLASSIC_OFFERS, ...SPECIAL_OFFERS]
             background: var(--background);
         }
 
-        /* Sticks under the site menu (4rem + its 1px border). */
         thead {
             position: sticky;
-            top: calc(4rem + 1px);
+            top: var(--sticky-top);
             z-index: 1;
             background: var(--background);
             box-shadow: 0 1px 0 var(--line);
@@ -213,6 +216,13 @@ const offers = [...CLASSIC_OFFERS, ...SPECIAL_OFFERS]
             font-size: var(--fs0);
         }
 
+        /* On phones the table scrolls sideways, so the family labels end up off screen anyway. */
+        @media (max-width: 40rem) {
+            .families {
+                display: none;
+            }
+        }
+
         .families th {
             font-size: var(--fs-1);
             font-weight: 700;
@@ -227,7 +237,7 @@ const offers = [...CLASSIC_OFFERS, ...SPECIAL_OFFERS]
 
         .group th {
             position: sticky;
-            top: calc(4rem + 1px + var(--head-height, 0px));
+            top: calc(var(--sticky-top) + var(--head-height, 0px));
             z-index: 1;
             text-align: left;
             font-weight: 600;
