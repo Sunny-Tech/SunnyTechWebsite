@@ -21,12 +21,12 @@
             },
             {
                 "source": "/sponsors-form",
-                "destination": "https://sunnytech.fillout.com/sponsors-2026",
+                "destination": "https://sunnytech.fillout.com/sponsors-2027",
                 "type": 302
             },
             {
                 "source": "/sponsoring-form",
-                "destination": "https://sunnytech.fillout.com/sponsors-2026",
+                "destination": "https://sunnytech.fillout.com/sponsors-2027",
                 "type": 302
             },
             {
