@@ -1,34 +1,34 @@
 ## Nom du lieu
 
-**Faculté des Sciences de Montpellier**
+**L'Institut Agro Montpellier** (anciennement SupAgro)
 
-30 Faculté des Sciences de Montpellier, Place E. Bataillon, 34095 Montpellier
+2 Place Pierre Viala, 34060 Montpellier
 
 ## Horaires
 
-Les portes ouvrent à 8h30 et ferment à 19h les deux jours
+Les portes ouvrent de 8h30 à 19h les deux jours.
 
 ## Comment venir ?
 
-La Faculté des Sciences et Technologies de Montpellier est desservie directement par le tram, l'arrêt est "Université Montpellier Triolet" (Tram 1 bleu).
+L'Institut Agro n'est pas desservi directement par le tram.
 
-### Le moins de changement : en tram + à pied (25 min)
+### Le moins de changement : en tram + à pied (32 min)
 
-Itinéraire: ➡️ [ici](https://www.tam-voyages.com/ri/?rub_code=4&laction=synthese&comDep=34172&pointDep=5472%24Gare+Saint%2DRoch%244%2434172&numDep=0&comArr=34172&pointArr=5665%24Universit%C3%A9+Montpellier+%2D+Triolet%244%2434172&numArr=0&laMinute=20&critereRI=2&keywordsDep=Gare+Saint%2DRoch+%28Arr%C3%AAt%29+%2D+MONTPELLIER&keywordsArr=Universit%C3%A9+Montpellier+%2D+Triolet+%28Arr%C3%AAt%29+%2D+MONTPELLIER&bikeDistance=10&laDate=30%2F06%2F2022&typeDate=68&lHeure=08&walkDistance=4000&noscript=0&carDistance=20&search=Lancer+la+recherche)
+Itinéraire: ➡️ [ici](https://www.tam-voyages.com/ri/?rub_code=4&laction=synthese&comDep=34172&pointDep=5472%24Gare+Saint%2DRoch%244%2434172&numDep=0&comArr=34172&pointArr=212000011%24Montpellier+Sup+Agro+%2D+INRA+%2D+CIESSAM+%28ENSAM%2C+CNEARC%2C+ENSIA%2DSIARC%2C+CEP+de+Florac%29%241%2434172&numArr=0&laMinute=20&critereRI=2&keywordsDep=Gare+Saint%2DRoch+%28Arr%C3%AAt%29+%2D+MONTPELLIER&keywordsArr=Montpellier+Sup+Agro+%2D+INRA+%2D+CIESSAM+%28ENSAM%2C+CNEARC%2C+ENSIA%2DSIARC%2C+CEP+de+Florac%29+%28Lieu%29+%2D+MONTPEL&bikeDistance=10&laDate=30%2F06%2F2022&typeDate=68&lHeure=08&walkDistance=4000&noscript=0&carDistance=20&search=Lancer+la+recherche)
 
 Une fois à la Gare Montpellier Saint-Roch :
 
--   Prendre le **Tram 1 (bleu) direction Mosson** jusqu'à l'arrêt "Université Montpellier Triolet".
--   Marcher vers le nord pendant 5 minutes.
+- Prendre le **Tram 1 (bleu) direction Mosson** jusqu'à l'arrêt Stade Philippidès
+- Marcher vers l'ouest pendant 15-20 min
 
 ### En voiture
 
-Il n'y a pas de parking disponible dédié à l'événement. Il est toujours possible de se garer dans les rues avoisinantes, mais nous recommandons d’utiliser le tram et les parkings [P+Tram](https://www.tam-voyages.com/presentation/?rub_code=1&thm_id=26&gpl_id=&part_id=) pour vous rendre à l’événement
+Un parking **gratuit** est disponible à l'Institut Agro. Il est accessible directement après l'entrée dans le campus à droite.
 
 ### En vélo
 
-Un parking à vélos est disponible à l'Université des Sciences et Technologies de Montpellier, il se trouve juste à gauche de l'entrée. Il est indiqué sur le plan par un petit 🚲.
+Deux parkings à vélos sont disponibles à l'Institut Agro, indiqués sur le plan par un petit 🚲. Pour venir de la gare, le plus sûr est de passer par l'avenue d'Assas via Le Pérou.
 
 ### En train
 
-Montpellier Saint-Roch est à 3h-4h de Paris Gare de Lyon et à 2h de Lyon Part-Dieu. Une fois à Montpellier, prendre le tram/bus, voir ci-dessus.
+Montpellier Saint-Roch est à 3h-4h de Paris Gare de Lyon et à 2h de Lyon Part-Dieu. Une fois à Montpellier, prendre le tram/bus, voir au dessus.

@@ -160,6 +160,7 @@ const STATIC_LLMS_SECTIONS = [
     {
         title: 'Informations pratiques',
         links: [
+            { title: 'Lieu', url: '/location' },
             { title: 'Code de conduite', url: '/coc' },
             { title: 'Équipe', url: '/team' },
             { title: 'Jobs', url: '/jobs' },
@@ -214,7 +215,7 @@ export async function buildSiteFilesOptions() {
             description:
                 "Sunny Tech est la 1ère conférence Tech organisée à Montpellier. Conférence annuelle des technologies du numérique, créée par des passionnés, pour des passionnés, avec l'ambition de rayonner nationalement et internationalement à travers l'intervention de conférencier·e·s français de renom.",
             details:
-                "L'édition 2027 se tiendra les 1er et 2 juillet 2027 à Montpellier. Le lieu sera annoncé prochainement.",
+                "L'édition 2027 se tiendra les 1er et 2 juillet 2027 à L'Institut Agro Montpellier (anciennement SupAgro, 2 place Pierre Viala, 34060 Montpellier), le lieu de l'édition 2025.",
             sections: [...STATIC_LLMS_SECTIONS, ...dynamicSections],
         },
 

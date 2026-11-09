@@ -37,6 +37,11 @@ const PAGES: Record<string, PageSpec> = {
         title: "Offres d'emploi",
         description: 'Les opportunités proposées par nos sponsors.',
     },
+    location: {
+        eyebrow: 'Venue',
+        title: 'Lieu & accès',
+        description: `${EVENT.venue.name} — ${EVENT.venue.streetAddress}.`,
+    },
     anecdotes: {
         eyebrow: 'Bonus',
         title: 'Anecdotes des sponsors',

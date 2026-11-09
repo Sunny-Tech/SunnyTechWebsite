@@ -11,6 +11,13 @@ export const EVENT = {
     startDate: '2027-07-01',
     endDate: '2027-07-02',
     city: 'Montpellier',
+    venue: {
+        name: 'L’Institut Agro Montpellier',
+        streetAddress: '2 place Pierre Viala',
+        postalCode: '34060',
+        latitude: 43.618423,
+        longitude: 3.855472,
+    },
     domain: 'sunny-tech.io',
     /** Pre-formatted FR display string for the footer & hero copy. */
     displayDates: '1er & 2 juillet 2027',
