@@ -220,7 +220,7 @@ export async function buildSiteFilesOptions() {
         },
 
         sitemap: {
-            exclude: ['/og-preview/', '/signature/'],
+            exclude: ['/og-preview/', '/signature/', '/sponsors-new/'],
             rss: RSS_CONFIG,
         },
 

@@ -1,6 +1,6 @@
 ---
 import { Picture } from 'astro:assets'
-import venuePlan from '../../assets/plan.png'
+import venue from '../../assets/sponsoring/venue-institut-agro.jpg'
 import theme2026 from '../../assets/sponsoring/theme-magic.png'
 import standCrowd from '../../assets/sponsoring/stand-crowd.jpg'
 import talk from '../../assets/sponsoring/talk.jpg'
@@ -22,10 +22,8 @@ const gallery = [
 const news = [
     {
         title: 'L’Institut Agro (SupAgro)',
-        image: venuePlan,
-        imageAlt: 'Plan du campus de L’Institut Agro avec le bâtiment des conférences et l’espace sponsors',
-        // The campus plan is tall: show the conference building and the sponsors area.
-        imagePosition: 'center 30%',
+        image: venue,
+        imageAlt: 'Les participant·e·s entre les stands sponsors, sous les pins du campus de L’Institut Agro',
         points: [
             'Le campus de l’édition 2025, au cœur d’un parc arboré',
             'L’espace sponsors devant l’entrée des amphithéâtres',
@@ -118,7 +116,6 @@ const news = [
                             formats={['avif', 'webp']}
                             widths={[400, 700]}
                             sizes="(min-width: 960px) 400px, 100vw"
-                            style={item.imagePosition && `object-position: ${item.imagePosition}`}
                         />
                         {item.upcoming && <span class="upcoming-badge">À venir</span>}
                     </div>
