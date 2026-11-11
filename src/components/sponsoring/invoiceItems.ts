@@ -33,6 +33,9 @@ const INVOICE_NAMES: Record<string, { key: string; title: string }> = {
 /** Comparison rows that are paid options, not part of an offer. */
 const OPTION_ROW_PREFIX = 'Option '
 
+/** Each line ends with a comma, as in the former hand-written file: the Qonto invoices rely on it. */
+const LINE_SEPARATOR = ', \n'
+
 const EMPTY_CELL = '–'
 const INCLUDED_CELL = '✔'
 
@@ -49,14 +52,14 @@ function invoiceName(name: string) {
     return invoice
 }
 
-/** One "- label : value" line per comparison row the offer includes. */
+/** One "- label : value" line per comparison row the offer includes, comma-separated like the original file. */
 function offerDescription(column: number): string {
     return OFFER_COMPARISON.flatMap((group) => group.rows)
         .filter((row) => !row.label.startsWith(OPTION_ROW_PREFIX))
         .map((row) => ({ label: row.label, value: row.values[column] }))
         .filter(({ value }) => value !== EMPTY_CELL)
         .map(({ label, value }) => (value === INCLUDED_CELL ? `- ${label}` : `- ${label} : ${value}`))
-        .join('\n')
+        .join(LINE_SEPARATOR)
 }
 
 function item(name: string, price: string, description: string): [string, InvoiceItem] {
