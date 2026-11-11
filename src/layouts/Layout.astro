@@ -17,8 +17,9 @@ const { title, description, metaImage, noindex = false } = Astro.props
 
 const url = import.meta.env.SITE
 // Speaker pages pass an explicit metaImage (see src/pages/speakers/[slug].astro);
-// other pages fall back to the path-derived endpoint.
-const image = metaImage || url + computeOgPath(Astro.url.pathname)
+// other pages fall back to the path-derived endpoint. The edition year in the
+// query makes social networks fetch the image again when the site rolls over.
+const image = metaImage || `${url}${computeOgPath(Astro.url.pathname)}?v=${EVENT.year}`
 const ogImageType = computeOgImageType(image)
 const siteName = 'Sunny Tech'
 const siteNameWithTagline = 'Sunny Tech 2027, la conférence Tech organisée à Montpellier — 1er & 2 juillet'
