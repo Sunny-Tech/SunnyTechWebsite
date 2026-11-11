@@ -203,8 +203,9 @@ export const OFFER_COMPARISON: { group: string; rows: { label: string; values: s
         rows: [
             { label: 'Stand', values: ['15 m²', '9 m²', 'Espace partagé', '–', '–', '–', '–'] },
             {
-                label: 'Billets pour votre équipe (inclus stand)',
-                values: ['8', '6', '3', '2', '2', '2', '1'],
+                label: 'Billets pour votre équipe',
+                // No comma in values: invoice descriptions use ", " as their line separator.
+                values: ['8 (inclus stand)', '6 (inclus stand)', '3 (inclus stand)', '2', '2', '2', '1'],
             },
             { label: 'Entrées soirée Networking en plus', values: ['4', '2', '1', '4', '–', '–', '–'] },
             { label: 'Entrées soirée Speakers', values: ['–', '–', '–', '–', '2', '–', '–'] },
