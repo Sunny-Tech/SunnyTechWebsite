@@ -3,7 +3,7 @@
  * Colors align with site tokens (src/layouts/Layout.astro):
  *   pink-2 #d63f49, pink-3 #901f26, pink-1 #e89399, white.
  */
-import { EVENT, EVENT_FOOTER_LOCATION, EVENT_FULL_NAME } from './event'
+import { EVENT, EVENT_FOOTER_LOCATION, EVENT_FULL_NAME, PROGRAM_EDITION } from './event'
 
 const BG_GRADIENT = 'linear-gradient(135deg, #f4724e 0%, #d63f49 55%, #901f26 100%)'
 const WHITE = '#ffffff'
@@ -111,7 +111,7 @@ function frame(children: Node[], flamingoUri?: string): Node {
     )
 }
 
-function brandFooter(monoLogoUri: string): Node {
+function brandFooter(monoLogoUri: string, displayDates: string = EVENT.displayDates): Node {
     return el(
         'div',
         {
@@ -149,7 +149,7 @@ function brandFooter(monoLogoUri: string): Node {
                                 opacity: 0.95,
                             },
                         },
-                        EVENT.displayDates
+                        displayDates
                     ),
                     el(
                         'div',
@@ -413,7 +413,7 @@ export function speakerTemplate(
                 },
                 [photo, textBlock]
             ),
-            brandFooter(logoUri),
+            brandFooter(logoUri, PROGRAM_EDITION.displayDates),
         ],
         flamingoUri
     )

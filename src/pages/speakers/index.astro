@@ -4,6 +4,7 @@ import type { OpenPlannerType } from '../../type'
 import LayoutWithTitle from '../../layouts/LayoutWithTitle.astro'
 import Grid from '../../components/ui-elements/Grid.astro'
 import Speaker from '../../components/schedule/Speaker.astro'
+import { PROGRAM_EDITION } from '../../og/event'
 
 const response = await fetch(OPENPLANNER_URL)
 const openPlannerData: OpenPlannerType = await response.json()
@@ -11,7 +12,7 @@ const openPlannerData: OpenPlannerType = await response.json()
 const { speakers } = openPlannerData
 ---
 
-<LayoutWithTitle htmlTitle="SunnyTech speakers" title="Speakers">
+<LayoutWithTitle htmlTitle={`SunnyTech ${PROGRAM_EDITION.year} speakers`} title={`Speakers ${PROGRAM_EDITION.year}`}>
     <Grid space="2rem" min="20rem">
         {
             speakers.map((speaker) => (

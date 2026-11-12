@@ -1,49 +1,28 @@
 ---
 import { ClientRouter } from 'astro:transitions'
-import { OPENPLANNER_URL } from 'astro:env/client'
-import type { OpenPlannerType } from '../type'
 import FooterBlock from '../components/footer/FooterBlock.astro'
 import Menu from '../components/Menu.astro'
-import SponsorBanner from '../components/SponsorBanner.astro'
 import { computeOgImageType, computeOgPath } from '../og/ogImage'
+import { EVENT, EVENT_FULL_NAME } from '../og/event'
 
 interface Props {
     title?: string
     description?: string
     metaImage?: string | null
+    /** Keeps unlisted pages out of search engines. */
+    noindex?: boolean
 }
 
-const { title, description, metaImage } = Astro.props
-
-type BannerSponsor = OpenPlannerType['sponsors'][number]['sponsors'][number]
-let bannerSponsors: BannerSponsor[] = []
-let otherSponsorsCount = 0
-
-if (OPENPLANNER_URL) {
-    try {
-        const response = await fetch(OPENPLANNER_URL)
-        if (response.ok) {
-            const openPlannerData: OpenPlannerType = await response.json()
-            bannerSponsors = openPlannerData.sponsors.flatMap((cat) =>
-                cat.sponsors.filter((s) => s.customFields?.['option-comm'] === true)
-            )
-            const totalSponsors = openPlannerData.sponsors
-                .filter((cat) => !cat.name.toLowerCase().includes('partenaire'))
-                .flatMap((cat) => cat.sponsors).length
-            otherSponsorsCount = totalSponsors - bannerSponsors.length
-        }
-    } catch {
-        bannerSponsors = []
-    }
-}
+const { title, description, metaImage, noindex = false } = Astro.props
 
 const url = import.meta.env.SITE
 // Speaker pages pass an explicit metaImage (see src/pages/speakers/[slug].astro);
-// other pages fall back to the path-derived endpoint.
-const image = metaImage || url + computeOgPath(Astro.url.pathname)
+// other pages fall back to the path-derived endpoint. The edition year in the
+// query makes social networks fetch the image again when the site rolls over.
+const image = metaImage || `${url}${computeOgPath(Astro.url.pathname)}?v=${EVENT.year}`
 const ogImageType = computeOgImageType(image)
 const siteName = 'Sunny Tech'
-const siteNameWithTagline = 'Sunny Tech 2026, la conférence Tech organisée à Montpellier — 2 & 3 juillet'
+const siteNameWithTagline = 'Sunny Tech 2027, la conférence Tech organisée à Montpellier — 1er & 2 juillet'
 const pageTitle = title || siteName
 const fullPageTitle = title ? `${title} | ${siteName}` : siteNameWithTagline
 const pageDescription =
@@ -58,28 +37,28 @@ const organizerTwitter = '@sunnyTech_MTP'
 const eventJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Event',
-    name: `${siteName} 2026`,
+    name: EVENT_FULL_NAME,
     description: pageDescription,
     url,
-    startDate: '2026-07-02',
-    endDate: '2026-07-03',
+    startDate: EVENT.startDate,
+    endDate: EVENT.endDate,
     eventStatus: 'https://schema.org/EventScheduled',
     eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
     image,
     location: {
         '@type': 'Place',
-        name: 'Faculté des Sciences de Montpellier',
+        name: EVENT.venue.name,
         address: {
             '@type': 'PostalAddress',
-            streetAddress: 'Place Eugène Bataillon',
-            addressLocality: 'Montpellier',
-            postalCode: '34095',
+            streetAddress: EVENT.venue.streetAddress,
+            addressLocality: EVENT.city,
+            postalCode: EVENT.venue.postalCode,
             addressCountry: 'FR',
         },
         geo: {
             '@type': 'GeoCoordinates',
-            latitude: 43.6312537,
-            longitude: 3.8612405,
+            latitude: EVENT.venue.latitude,
+            longitude: EVENT.venue.longitude,
         },
     },
     organizer: {
@@ -95,7 +74,7 @@ const eventJsonLd = {
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="robots" content="index, follow" />
+        <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow'} />
 
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
@@ -145,7 +124,6 @@ const eventJsonLd = {
     </head>
     <body>
         <a href="#main-content" class="skip-link">Aller au contenu principal</a>
-        <SponsorBanner sponsors={bannerSponsors} otherSponsorsCount={otherSponsorsCount} />
         <Menu />
         <main id="#main-content">
             <slot />
