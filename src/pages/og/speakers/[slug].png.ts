@@ -1,5 +1,4 @@
 import type { APIRoute } from 'astro'
-import { OPENPLANNER_URL } from 'astro:env/client'
 import type { OpenPlannerType } from '../../../type'
 import {
     getFlamingoDataUri,
@@ -11,9 +10,10 @@ import {
 } from '../../../og/render'
 import { speakerTemplate } from '../../../og/templates'
 import { speakerOgSlug } from '../../../og/speakerSlug'
+import { PROGRAM_EDITION } from '../../../og/event'
 
 export async function getStaticPaths() {
-    const response = await fetch(OPENPLANNER_URL)
+    const response = await fetch(PROGRAM_EDITION.openPlannerUrl)
     const data: OpenPlannerType = await response.json()
     const seen = new Map<string, number>()
     return data.speakers.map((speaker) => {

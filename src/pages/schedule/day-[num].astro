@@ -1,6 +1,6 @@
 ---
-import { OPENPLANNER_URL } from 'astro:env/client'
 import type { OpenPlannerType } from '../../type'
+import { PROGRAM_EDITION } from '../../og/event'
 import type { AugmentedSession, CrossDaySession } from '../../utils/scheduleSearch'
 import Cluster from '../../components/ui-elements/Cluster.astro'
 import ButtonLink from '../../components/ui-elements/ButtonLink.astro'
@@ -27,7 +27,7 @@ export async function getStaticPaths() {
         return byDay
     }
 
-    const response = await fetch(OPENPLANNER_URL)
+    const response = await fetch(PROGRAM_EDITION.openPlannerUrl)
     const openPlannerData: OpenPlannerType = await response.json()
 
     const { event, speakers, sessions } = openPlannerData

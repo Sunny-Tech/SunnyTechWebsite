@@ -1,5 +1,4 @@
 ---
-import { OPENPLANNER_URL } from 'astro:env/client'
 import { Markdown } from 'astro-md-2'
 import { markdownToTxt } from 'markdown-to-txt'
 import type { OpenPlannerType } from '../../type'
@@ -15,7 +14,7 @@ import ShareSession from '../../components/schedule/ShareSession.astro'
 import { PROGRAM_EDITION } from '../../og/event'
 
 export async function getStaticPaths() {
-    const response = await fetch(OPENPLANNER_URL)
+    const response = await fetch(PROGRAM_EDITION.openPlannerUrl)
     const openPlannerData: OpenPlannerType = await response.json()
 
     const { speakers, sessions, event } = openPlannerData
