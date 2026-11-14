@@ -1,12 +1,11 @@
 ---
-import { OPENPLANNER_URL } from 'astro:env/client'
 import type { OpenPlannerType } from '../../type'
 import LayoutWithTitle from '../../layouts/LayoutWithTitle.astro'
 import Grid from '../../components/ui-elements/Grid.astro'
 import Speaker from '../../components/schedule/Speaker.astro'
 import { PROGRAM_EDITION } from '../../og/event'
 
-const response = await fetch(OPENPLANNER_URL)
+const response = await fetch(PROGRAM_EDITION.openPlannerUrl)
 const openPlannerData: OpenPlannerType = await response.json()
 
 const { speakers } = openPlannerData

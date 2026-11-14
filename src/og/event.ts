@@ -27,15 +27,18 @@ export const EVENT = {
 } as const
 
 /**
- * Edition whose programme, speakers and sponsors the site still shows. The
- * OpenPlanner payload keeps the previous edition until the next programme is
- * published, so those pages are labelled with this year. Align it with EVENT
- * once OpenPlanner holds the new edition.
+ * Edition whose programme (speakers, sessions, schedule) the site still shows,
+ * labelled with this year. OPENPLANNER_URL now points to the new edition, which
+ * has no programme yet, so the programme pages read the archived export of this
+ * edition instead. Align it with EVENT and drop `openPlannerUrl` once
+ * OpenPlanner holds the new programme.
  */
 export const PROGRAM_EDITION = {
     year: 2026,
     startDate: '2026-07-02',
     displayDates: '2 & 3 juillet 2026',
+    openPlannerUrl:
+        'https://storage.googleapis.com/conferencecenterr.appspot.com/events/YFlN9koUK0qPuYkvbqQg/1f8cd1c0-b0ed-4f24-811d-d8b64718ea29.json',
 } as const
 
 /** `sunnytech-2026-07` — appended to speaker OG filenames. */

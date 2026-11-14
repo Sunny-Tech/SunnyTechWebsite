@@ -2,9 +2,9 @@
 // Dev-only visual QA gallery. In production builds the page renders a
 // minimal 404 body (and skips the OpenPlanner fetch) so nothing useful
 // ships to sunny-tech.io.
-import { OPENPLANNER_URL } from 'astro:env/client'
 import type { OpenPlannerType } from '../type'
 import { speakerOgSlug } from '../og/speakerSlug'
+import { PROGRAM_EDITION } from '../og/event'
 
 const isProd = import.meta.env.PROD
 
@@ -12,7 +12,7 @@ type SampleSpeaker = { name: string; slug: string }
 let sampleSpeakers: SampleSpeaker[] = []
 
 if (!isProd) {
-    const response = await fetch(OPENPLANNER_URL)
+    const response = await fetch(PROGRAM_EDITION.openPlannerUrl)
     const data: OpenPlannerType = await response.json()
     const seen = new Map<string, number>()
     sampleSpeakers = data.speakers.slice(0, 4).map((s) => {
