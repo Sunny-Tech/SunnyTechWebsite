@@ -1,7 +1,6 @@
 ---
 import { Picture } from 'astro:assets'
 import venue from '../../assets/sponsoring/venue-institut-agro.jpg'
-import theme2026 from '../../assets/sponsoring/theme-magic.png'
 import standCrowd from '../../assets/sponsoring/stand-crowd.jpg'
 import talk from '../../assets/sponsoring/talk.jpg'
 import workshop from '../../assets/sponsoring/workshop.jpg'
@@ -31,11 +30,9 @@ const news = [
         ],
     },
     {
-        // The 2027 theme isn't revealed yet: the 2026 artwork stands in, blurred.
-        title: 'Thème 2027',
-        image: theme2026,
-        imageAlt: '',
-        upcoming: true,
+        // No artwork for the 2027 theme yet: a CSS starfield stands in for it.
+        title: 'Thème 2027 : l’Espace',
+        theme: 'Espace',
         points: [
             'Une thématique renouvelée chaque année',
             'Déco, activités et communication autour du thème',
@@ -109,7 +106,7 @@ const news = [
         {
             news.map((item) => (
                 <article>
-                    <div class:list={['news-image', { upcoming: item.upcoming }]}>
+                    {item.image ? (
                         <Picture
                             src={item.image}
                             alt={item.imageAlt ?? ''}
@@ -117,8 +114,11 @@ const news = [
                             widths={[400, 700]}
                             sizes="(min-width: 960px) 400px, 100vw"
                         />
-                        {item.upcoming && <span class="upcoming-badge">À venir</span>}
-                    </div>
+                    ) : (
+                        <div class="theme-visual">
+                            <span>{item.theme}</span>
+                        </div>
+                    )}
                     <div class="news-body">
                         <h3>{item.title}</h3>
                         <ul>
@@ -217,29 +217,33 @@ const news = [
             background: var(--white);
         }
 
-        .news-image {
-            position: relative;
-            overflow: hidden;
-        }
+        .theme-visual {
+            display: grid;
+            place-items: center;
+            aspect-ratio: 16 / 10;
+            /* Small stars, a few bright ones, then the night sky. */
+            background:
+                radial-gradient(1px 1px at 12% 18%, #fff 50%, transparent),
+                radial-gradient(1px 1px at 28% 72%, #fff 50%, transparent),
+                radial-gradient(1.5px 1.5px at 41% 33%, #fff 50%, transparent),
+                radial-gradient(1px 1px at 57% 84%, #fff 50%, transparent),
+                radial-gradient(2px 2px at 68% 22%, #fff 50%, transparent),
+                radial-gradient(1px 1px at 79% 61%, #fff 50%, transparent),
+                radial-gradient(1.5px 1.5px at 88% 12%, #fff 50%, transparent),
+                radial-gradient(1px 1px at 93% 78%, #fff 50%, transparent),
+                radial-gradient(1px 1px at 6% 88%, #fff 50%, transparent),
+                radial-gradient(2px 2px at 20% 45%, #fff 50%, transparent),
+                radial-gradient(circle at 80% 110%, #d63f49 0%, transparent 45%),
+                radial-gradient(circle at 15% -10%, #4b2a7a 0%, transparent 55%), #0d0b1e;
 
-        /* Teases a theme that isn't revealed yet. */
-        .upcoming :global(img) {
-            filter: blur(10px);
-            transform: scale(1.1);
-        }
-
-        .upcoming-badge {
-            position: absolute;
-            inset: 50% auto auto 50%;
-            translate: -50% -50%;
-            padding: 0.5rem 1.25rem;
-            font-size: var(--fs1);
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            border-radius: 999px;
-            color: var(--brand-contrast);
-            background: var(--brand-solid);
+            span {
+                font-size: var(--fs5);
+                font-weight: 700;
+                letter-spacing: 0.12em;
+                text-transform: uppercase;
+                color: #fff;
+                text-shadow: 0 0 24px rgba(232, 147, 153, 0.8);
+            }
         }
 
         ul {
